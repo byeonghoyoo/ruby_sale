@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>루비성형외과 2025 전략 대시보드 (최종 개편안)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals (Slate) with a Muted Teal/Cyan Accent -->
+    <!-- Application Structure Plan: A single-page dashboard with a sticky top navigation bar. The structure prioritizes user exploration, starting with a high-level financial summary, then moving to an interactive package explorer (the app's core), followed by market analysis visualizations (price ranges, keywords), and concluding with strategic summaries. This non-linear structure is more engaging than a simple report scroll, allowing users to jump directly to the information they need, which enhances usability. -->
+    <!-- Visualization & Content Choices: Report Info: Financial Goals -> Goal: Inform -> Viz: Chart.js Doughnut Gauge -> Interaction: Hover for details -> Justification: Quick, high-impact visualization of the core business objective. | Report Info: 70 Package Proposals -> Goal: Compare/Organize -> Viz: Interactive Card Grid with Tabbed Filtering -> Interaction: Click tabs to filter, click cards for details -> Justification: Allows easy comparison within and across categories without overwhelming the user. | Report Info: Market Price Ranges -> Goal: Compare -> Viz: Chart.js Horizontal Bar Chart -> Interaction: Tooltips -> Justification: Clearly shows price segmentation and competitive landscape. | Report Info: Trend Keywords -> Goal: Inform -> Viz: HTML/CSS Tag Cloud -> Interaction: Hover -> Justification: Simple, effective display of qualitative trend data without library overhead. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8fafc; }
+        .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 300px; max-height: 400px; }
+        @media (min-width: 768px) { .chart-container { height: 350px; } }
+        .card-enter { animation: card-enter 0.5s ease-out forwards; }
+        @keyframes card-enter {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .nav-link { transition: color 0.3s, border-bottom-color 0.3s; }
+        .nav-link.active { color: #0891b2; border-bottom-color: #0891b2; }
+        .category-tab.active { background-color: #0891b2; color: white; }
+        .category-tab { transition: background-color 0.3s, color 0.3s; }
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 50; opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
+        }
+        .modal-overlay.visible { opacity: 1; pointer-events: auto; }
+        .modal-content {
+            background: white; padding: 2rem; border-radius: 0.5rem;
+            max-width: 90%; width: 600px; max-height: 90vh; overflow-y: auto;
+            transform: scale(0.95); transition: transform 0.3s ease;
+        }
+        .modal-overlay.visible .modal-content { transform: scale(1); }
+    </style>
+</head>
+<body class="text-slate-700">
+
+    <header class="bg-white/80 backdrop-blur-lg shadow-sm sticky top-0 z-40">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-xl font-bold text-cyan-700">RUBY</span>
+                    <span class="text-xl font-light text-slate-600">STRATEGY 2025</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#overview" class="nav-link text-slate-600 hover:text-cyan-600 border-b-2 border-transparent pb-1">핵심 목표</a>
+                    <a href="#explorer" class="nav-link text-slate-600 hover:text-cyan-600 border-b-2 border-transparent pb-1">패키지 익스플로러</a>
+                    <a href="#market" class="nav-link text-slate-600 hover:text-cyan-600 border-b-2 border-transparent pb-1">시장 분석</a>
+                    <a href="#strategy" class="nav-link text-slate-600 hover:text-cyan-600 border-b-2 border-transparent pb-1">최종 전략</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="bg-white py-12 md:py-20">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h1 class="text-3xl md:text-5xl font-bold text-slate-800 leading-tight">2025년 시장 경쟁력 강화를 위한</h1>
+                <h2 class="text-3xl md:text-5xl font-bold text-cyan-600 mt-2">전략적 상품 패키지 대시보드</h2>
+                <p class="mt-6 max-w-3xl mx-auto text-lg text-slate-600">
+                    본 대시보드는 2025년 강남 미용 시장의 패러다임 분석을 통해 루비성형외과의 새로운 성장 전략을 제시합니다.
+                    핵심은 **가치 소비, 트렌드 동조, 신뢰 확보**라는 세 가지 축을 중심으로 한 고부가가치 패키지 전략입니다.
+                </p>
+            </div>
+        </section>
+
+        <section id="overview" class="py-16 md:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-slate-800">핵심 목표 및 수익성 분석</h2>
+                    <p class="mt-2 text-lg text-slate-500">월 목표 매출 7억 원 달성을 기반으로 한 예상 수익성 지표입니다.</p>
+                </div>
+                <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                        <h3 class="font-semibold text-slate-800 mb-2 text-xl">월 목표 매출액</h3>
+                        <p class="text-4xl font-bold text-cyan-600">7억원</p>
+                        <p class="text-slate-500 mt-2">고부가가치 패키지 판매를 통한 목표 설정</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                        <h3 class="font-semibold text-slate-800 mb-2 text-xl">예상 영업이익률</h3>
+                        <div class="relative w-40 h-40 mx-auto">
+                           <canvas id="profitMarginChart"></canvas>
+                           <div class="absolute inset-0 flex items-center justify-center text-3xl font-bold text-cyan-600">15.7%</div>
+                        </div>
+                         <p class="text-slate-500 mt-2">고정비 5.5억, 광고비 0.4억 기준</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="explorer" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-slate-800">전략 패키지 익스플로러</h2>
+                    <p class="mt-2 text-lg text-slate-500">카테고리별 2025년 트렌드 맞춤형 패키지를 탐색해 보세요. 카드를 클릭하면 상세 구성을 확인할 수 있습니다.</p>
+                </div>
+                <div id="category-tabs" class="flex flex-wrap justify-center gap-2 mb-8"></div>
+                <div id="package-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                </div>
+            </div>
+        </section>
+
+        <section id="market" class="py-16 md:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl font-bold text-slate-800">2025 강남 성형 시장 분석</h2>
+                    <p class="mt-2 text-lg text-slate-500">핵심 트렌드 키워드와 주요 시술의 가격대 분포를 통해 시장을 이해합니다.</p>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="bg-white p-8 rounded-lg shadow-md">
+                        <h3 class="text-xl font-bold text-slate-800 mb-4 text-center">소비자 니즈 & 트렌드 키워드</h3>
+                        <div class="flex flex-wrap justify-center items-center gap-3">
+                            <span class="bg-cyan-100 text-cyan-800 text-lg font-semibold px-4 py-2 rounded-full">#자려한</span>
+                            <span class="bg-slate-100 text-slate-800 text-md font-medium px-3 py-1 rounded-full">#무보형물</span>
+                            <span class="bg-cyan-100 text-cyan-800 text-md font-medium px-3 py-1 rounded-full">#기능코</span>
+                            <span class="bg-slate-100 text-slate-800 text-lg font-semibold px-4 py-2 rounded-full">#실리프팅</span>
+                            <span class="bg-cyan-100 text-cyan-800 text-md font-medium px-3 py-1 rounded-full">#자연유착</span>
+                            <span class="bg-slate-100 text-slate-800 text-md font-medium px-3 py-1 rounded-full">#리쥬란</span>
+                            <span class="bg-cyan-100 text-cyan-800 text-md font-medium px-3 py-1 rounded-full">#쥬베룩</span>
+                            <span class="bg-slate-100 text-slate-800 text-md font-medium px-3 py-1 rounded-full">#최소절개</span>
+                            <span class="bg-cyan-100 text-cyan-800 text-md font-medium px-3 py-1 rounded-full">#정품정량</span>
+                             <span class="bg-slate-100 text-slate-800 text-md font-medium px-3 py-1 rounded-full">#안전제일</span>
+                            <span class="bg-cyan-100 text-cyan-800 text-md font-medium px-3 py-1 rounded-full">#안티에이징</span>
+                        </div>
+                         <p class="text-center mt-6 text-slate-600">소비자들은 자연스러움, 안전성, 그리고 특정 시술 브랜드에 대한 높은 관심을 보이며, 이는 패키지 구성의 핵심 고려사항입니다.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-lg shadow-md">
+                        <h3 class="text-xl font-bold text-slate-800 mb-4 text-center">주요 시술별 시장 가격대 분석</h3>
+                        <div class="chart-container h-[350px] max-h-[450px]">
+                            <canvas id="priceRangeChart"></canvas>
+                        </div>
+                        <p class="text-center mt-6 text-slate-600">재수술 및 고난도 수술은 높은 가격대를 형성하며, 이는 전문성과 신뢰도에 대한 고객의 높은 가치 평가를 의미합니다.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="strategy" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-slate-800">최종 시장 진입 전략</h2>
+                    <p class="mt-2 text-lg text-slate-500">선택과 집중을 통해 마케팅 효율을 극대화하고 브랜드 가치를 제고합니다.</p>
+                </div>
+                <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+                        <h3 class="font-bold text-xl text-cyan-700 mb-3">1. 플래그십 패키지 집중</h3>
+                        <p class="text-slate-600">카테고리별 가장 소구력 높은 패키지를 선정, 마케팅 자원을 집중하여 초기 시장을 선도합니다. '루비 프리미엄 리프팅', '기능코 마스터' 등이 핵심입니다.</p>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+                        <h3 class="font-bold text-xl text-cyan-700 mb-3">2. 타겟 디지털 마케팅</h3>
+                        <p class="text-slate-600">주요 성형 플랫폼에서 핵심 키워드 광고를 집행하고, 고객의 문제 상황에 공감하는 콘텐츠를 제작하여 잠재 고객을 유치합니다.</p>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+                        <h3 class="font-bold text-xl text-cyan-700 mb-3">3. 내부 상담 역량 강화</h3>
+                        <p class="text-slate-600">단순 가격 상담을 넘어, 패키지의 조합 원리와 차별점을 설명하는 전문 '미용 컨설팅'을 제공하여 고객 신뢰도와 전환율을 높입니다.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-800 text-white py-8">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center text-slate-400">
+            <p>Ruby Plastic Surgery | 2025 Strategic Dashboard</p>
+            <p class="text-sm mt-2">본 데이터는 제공된 '2025년 루비성형외과 시장 경쟁력 강화를 위한 전략적 상품 패키지 제안서'를 기반으로 시각화되었습니다.</p>
+        </div>
+    </footer>
+
+    <div id="modal-overlay" class="modal-overlay">
+        <div id="modal-content" class="modal-content"></div>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    const packageData = [
+        { category: "눈성형", name: "첫눈 완성 프로토콜", components: "자연유착 쌍꺼풀 + 눈가 보톡스 + LDM 붓기관리 1회", points: "첫수술, 자연스러움, 풀림걱정 최소화, 빠른회복", marketPrice: 1000000, sellPrice: 790000 },
+        { category: "눈성형", name: "아이돌 눈매 완성", components: "절개 눈매교정 + 앞트임 + 윗트임 + LDM 붓기관리 2회", points: "화려함, 세미아웃, 트임 시너지, 또렷함", marketPrice: 2800000, sellPrice: 2200000 },
+        { category: "눈성형", name: "프리미엄 눈밑 동안술", components: "눈밑지방재배치 + 눈밑 쥬베룩 1회 + LDM 재생관리 2회", points: "다크서클, 눈밑꺼짐, 잔주름, 종합케어", marketPrice: 2400000, sellPrice: 1890000 },
+        { category: "눈성형", name: "루비 시그니처 눈매 디자인", components: "3D-CT 진단 + 맞춤 눈성형(재수술 포함) + LDM 붓기관리 3회", points: "정밀진단, 맞춤디자인, 재수술 전문, 빠른 회복", marketPrice: 4500000, sellPrice: 3500000 },
+        { category: "눈성형", name: "중년의 품격, 상안검 리프팅", components: "상안검 수술 + 눈썹하거상술 + 미간 보톡스", points: "중년눈성형, 처진눈, 인상개선, 종합 솔루션", marketPrice: 4200000, sellPrice: 3300000 },
+        { category: "눈성형", name: "하안검 토탈 케어", components: "하안검 수술 + 눈밑 지방이동 + 고주파 탄력관리 2회", points: "눈밑주름, 눈물고랑, 탄력증진", marketPrice: 3500000, sellPrice: 2800000 },
+        { category: "눈성형", name: "남자의 자신감, 맨즈 눈매교정", components: "비절개 눈매교정 + 앞트임 + LDM 붓기관리 1회", points: "남자눈성형, 무쌍, 또렷한 눈매, 느끼함 방지", marketPrice: 2000000, sellPrice: 1590000 },
+        { category: "눈성형", name: "시원한 풀트임 패키지", components: "앞트임 + 윗트임 + 뒤트임 + 밑트임", points: "답답한 눈, 사방트임, 최대효과", marketPrice: 2800000, sellPrice: 2200000 },
+        { category: "눈성형", name: "눈꺼풀 지방제거 + 쌍꺼풀", components: "눈꺼풀 지방제거 + 자연유착 쌍꺼풀", points: "두툼한 눈, 지방제거, 슬림 라인", marketPrice: 1500000, sellPrice: 1200000 },
+        { category: "눈성형", name: "VVIP 토탈 아이 컨투어링", components: "눈 재수술 + 풀트임 + 눈밑지방재배치 + LDM 관리 3회", points: "VVIP, 종합 눈성형, 한번에 해결, 최상의 결과", marketPrice: 7000000, sellPrice: 5800000 },
+        
+        { category: "코성형", name: "기능코 마스터 프로토콜", components: "3D-CT 정밀진단 + 기능코(비중격/비염) + 미용코 성형 + LDM 붓기관리 2회", points: "기능코, 코막힘 개선, 미용 동시, 안전 제일", marketPrice: 6000000, sellPrice: 4800000 },
+        { category: "코성형", name: "자려한 첫코 디자인", components: "자가연골 코끝 성형 + 콧대(실리콘) + 매부리 정리 + 3D-CT 진단", points: "첫코, 자려한, 무보형물(코끝), 정밀진단", marketPrice: 4000000, sellPrice: 3200000 },
+        { category: "코성형", name: "남자의 직선, 맨즈 코어 성형", components: "3D-CT 진단 + 직선라인 콧대 + 비중격 코끝 성형 + 콧볼축소", points: "남자코성형, 직선라인, 정밀진단", marketPrice: 4800000, sellPrice: 3900000 },
+        { category: "코성형", name: "뭉툭한 복코 슬림핏", components: "복코 교정(연골묶기+지방제거) + 콧볼축소 + 코끝 연골이식", points: "복코, 주먹코, 슬림한 코끝, 오똑함", marketPrice: 3500000, sellPrice: 2800000 },
+        { category: "코성형", name: "프리미엄 코 재수술", components: "3D-CT 진단 + 고난도 코 재수술(구축/염증) + 자가늑 사용", points: "코재수술, 구축코, 염증, 자가늑, 마지막수술", marketPrice: 8500000, sellPrice: 6800000 },
+        { category: "코성형", name: "실리콘 제로, 100% 자가조직", components: "3D-CT 진단 + 자가진피 콧대 + 자가연골 코끝 성형", points: "무보형물, 자가조직, 안전성, 자연스러움", marketPrice: 6500000, sellPrice: 5200000 },
+        { category: "코성형", name: "코끝 디테일 성형", components: "코끝 연골묶기 + 코끝 연골이식 + 콧볼축소(택1)", points: "코끝만, 디테일 교정, 최소성형", marketPrice: 2500000, sellPrice: 1900000 },
+        { category: "코성형", name: "휜코 교정 바로잡기", components: "3D-CT 진단 + 휜코 절골술 + 기능코 수술", points: "휜코, 비대칭, 기능문제 동시해결", marketPrice: 5000000, sellPrice: 4000000 },
+        { category: "코성형", name: "매부리코 스무딩", components: "매부리코 교정(절골) + 코끝 연골 성형", points: "매부리, 부드러운 인상, 매끈한 라인", marketPrice: 4000000, sellPrice: 3200000 },
+        { category: "코성형", name: "VVIP 풀페이스 밸런스", components: "코 재수술 + 풀페이스 지방이식 + 턱끝 필러", points: "VVIP, 코와 얼굴의 완벽 조화, 입체감", marketPrice: 10000000, sellPrice: 8000000 },
+
+        { category: "피부", name: "프리미엄 덴서티 리프팅", components: "덴서티 고주파 리프팅 + LDM 재생관리 + 프리미엄 앰플 관리", points: "프리미엄 RF, 타이트닝, 피부결 개선, 토탈케어", marketPrice: 1800000, sellPrice: 1400000},
+        { category: "피부", name: "루비 프리미엄 울쎄라", components: "울쎄라 300샷 + 턱라인 보톡스 + LDM 재생관리 2회", points: "정품팁, 통증케어, V라인 시너지, 집중관리", marketPrice: 2200000, sellPrice: 1790000},
+        { category: "피부", name: "토탈 색소 지우개 프로그램", components: "루카스토닝 5회 + 비타민 이온토 관리 5회", points: "잡티, 기미, 주근깨, 맑은 피부톤", marketPrice: 900000, sellPrice: 600000},
+        { category: "피부", name: "아기모공 만들기 프로젝트", components: "쥬베룩 3회 + LDM 재생관리 3회 + 고주파 모공관리 3회", points: "모공, 흉터, 콜라겐재생, 매끈피부", marketPrice: 2500000, sellPrice: 1900000},
+        { category: "피부", name: "속광채 리쥬란 프로그램", components: "리쥬란 힐러 2cc 3회 + LDM 재생관리 3회", points: "속건조, 피부결개선, 수분광채, 통증최소화", marketPrice: 1500000, sellPrice: 990000},
+        { category: "피부", name: "트러블 AC-Care 솔루션", components: "염증주사 + 피지조절 스킨케어 3회 + LDM 진정관리 3회", points: "성인여드름, 트러블 진정, 재발방지", marketPrice: 700000, sellPrice: 490000},
+        { category: "피부", name: "탄력&광채 UP, 덴서티X리쥬란", components: "덴서티 리프팅 1회 + 리쥬란 힐러 2cc 1회", points: "고주파 시너지, 속탄력, 속광채 동시", marketPrice: 1900000, sellPrice: 1500000},
+        { category: "피부", name: "루비 웨딩 케어 (2개월)", components: "루카스토닝 4회 + LDM 관리 4회 + 리쥬란 1회 + 턱라인 보톡스 1회", points: "웨딩준비, 집중관리, 토탈케어", marketPrice: 2300000, sellPrice: 1800000 },
+        { category: "피부", name: "피부 장벽 강화, 엑소좀 부스터", components: "엑소좀 스킨부스터 3회 + LDM 재생 관리 3회", points: "피부장벽, 민감성, 피부결 개선", marketPrice: 1300000, sellPrice: 950000},
+        { category: "피부", name: "VVIP 토탈 스킨 솔루션", components: "울쎄라 300샷 + 덴서티 1회 + 리쥬란 2cc 2회 + LDM 4회", points: "VVIP, 리프팅, 탄력, 재생, 광채 올인원", marketPrice: 5000000, sellPrice: 4000000 },
+
+        { category: "지방성형", name: "V라인 정밀 지방조각술", components: "이중턱&턱라인 지방흡입 + 근육묶기 + 고주파 탄력관리 2회", points: "이중턱, V라인, 근육묶기, 처짐방지", marketPrice: 2800000, sellPrice: 2200000 },
+        { category: "지방성형", name: "대용량 얼굴 지방흡입", components: "얼굴전체 지방흡입(광대,볼,이중턱) + 심부볼 제거", points: "얼굴지방흡입, 대용량, 소멸, 심부볼", marketPrice: 3000000, sellPrice: 2200000 },
+        { category: "지방성형", name: "프리미엄 풀페이스 지방이식", components: "풀페이스 자가지방이식(2차 포함) + PRP + LDM 2회", points: "지방이식, 동안, 높은 생착률, 붓기완화", marketPrice: 3200000, sellPrice: 2500000 },
+        { category: "지방성형", name: "슬림 바디 컨투어링 (팔/복부/허벅지 택1)", components: "선택 부위 360도 지방흡입 + 고주파 탄력관리 3회", points: "바디지방흡입, 360도, 탄력 후관리", marketPrice: 4000000, sellPrice: 3200000 },
+        { category: "지방성형", name: "지방이식 재수술 클리닉", components: "지방이식 재수술(석회화/울퉁불퉁) + 줄기세포 + 고주파 관리 2회", points: "지방이식재수술, 생착률, 자연스러움", marketPrice: 4500000, sellPrice: 3600000 },
+        { category: "지방성형", name: "지흡 후 탄력까지, 바디 덴서티", components: "지방흡입(1부위 선택) + 덴서티 리프팅 1회", points: "지방흡입, 피부처짐 방지, 강력한 타이트닝", marketPrice: 3200000, sellPrice: 2500000 },
+        { category: "지방성형", name: "꺼진 눈, 생기있게 눈두덩이 지방이식", components: "눈꺼풀 미세 지방이식 + PRP 포함", points: "꺼진눈, 퀭한 인상 개선, 미세주입, 생착률", marketPrice: 1500000, sellPrice: 1100000 },
+        { category: "지방성형", name: "S라인 골반 지방이식", components: "힙딥&골반 자가지방이식 + 복부/허벅지 지방흡입 포함", points: "힙딥, 애플힙, S라인, 몸매 교정", marketPrice: 6000000, sellPrice: 4800000 },
+        { category: "지방성형", name: "얼굴 비대칭 교정 지방이식", components: "비대칭 부위 정밀 지방이식 + 3D-CT 진단", points: "얼굴비대칭, 맞춤 교정, 정밀진단", marketPrice: 3000000, sellPrice: 2400000 },
+        { category: "지방성형", name: "VVIP 풀바디 컨투어링", components: "지방흡입(2부위) + 풀페이스 지방이식 + 고주파/LDM 관리 4회", points: "VVIP, 전신 몸매 디자인, 얼굴+바디 동시", marketPrice: 10000000, sellPrice: 8000000 },
+        
+        { category: "리프팅", name: "루비 프리미엄 리프팅", components: "울쎄라 300샷 + 덴서티 1회 + LDM 재생관리 2회", points: "속리프팅, 겉타이트닝, 피부결 개선, 종합 안티에이징", marketPrice: 3800000, sellPrice: 3000000},
+        { category: "리프팅", name: "즉각 V라인, 민트실 리프팅", components: "민트실 8줄 + 턱 보톡스 + LDM 1회", points: "강력한 고정, V라인, 붓기완화", marketPrice: 2400000, sellPrice: 1800000},
+        { category: "리프팅", name: "콜라겐 볼륨, 실루엣소프트", components: "실루엣소프트 4줄 + 쥬베룩 1병", points: "콜라겐재생, 자연스러운 볼륨, 유지기간", marketPrice: 3200000, sellPrice: 2500000},
+        { category: "리프팅", name: "팔자주름 지우개", components: "캐번실(팔자주름) 4줄 + 팔자 필러 1cc", points: "깊은 팔자주름, 볼륨업, 콜라겐 생성", marketPrice: 1800000, sellPrice: 1300000},
+        { category: "리프팅", name: "이중턱 완전 박멸", components: "이중턱 지방분해 주사 3회 + 턱라인 민트실 4줄", points: "지방분해, V라인 리프팅, 동시 시술", marketPrice: 2000000, sellPrice: 1500000},
+        { category: "리프팅", "name": "4D 타임락 리프팅 (울쎄라+실)", "components": "울쎄라 300샷 + 민트실 4줄 + LDM 관리 2회", "points": "종합 안티에이징, 즉각효과, 유지력 강화", "marketPrice": 4200000, "sellPrice": 3400000 },
+        { category: "리프팅", name: "눈썹처짐 개선, 비절개 리프팅", components: "눈썹 위 실리프팅(4줄) + 미간/이마 보톡스", points: "처진눈썹, 비절개, 또렷한 눈매", marketPrice: 1500000, sellPrice: 1100000},
+        { category: "리프팅", "name": "결혼 전 필수, 웨딩드레스 핏", "components": "턱라인 보톡스 + 승모근/팔뚝 보톡스 200유닛", "points": "웨딩케어, V라인, 드레스라인, 바디컨투어링", "marketPrice": 900000, "sellPrice": 650000 },
+        { category: "리프팅", name: "넥 케어, 목주름 올인원", components: "덴서티 목 1회 + 목주름 필러 + LDM 재생관리", points: "세로목주름, 가로목주름, 탄력", marketPrice: 2000000, sellPrice: 1600000},
+        { category: "리프팅", "name": "VVIP 토탈 안면 거상술", "components": "풀 안면거상술 + 이마거상술 + 목거상술 + LDM 관리 4회", "points": "VVIP, 토탈 안티에이징, 최상의 결과", "marketPrice": 16000000, "sellPrice": 13000000 },
+
+        { category: "안면윤곽", name: "루비 V라인 조각술", components: "긴곡선 사각턱 + T절골 턱끝 + 3D-CT 진단 + 고주파 관리 3회", points: "V라인, 2차각 예방, 정밀진단, 붓기케어", marketPrice: 6800000, sellPrice: 5500000 },
+        { category: "안면윤곽", name: "슬림핏 3D 광대축소술", components: "3D 광대축소술 + 피질골 절제 + 3D-CT 진단", points: "광대축소, 45도광대, 옆광대, 작은 얼굴", marketPrice: 5000000, sellPrice: 4000000 },
+        { category: "안면윤곽", name: "시그니처 V라인 컨투어링", components: "윤곽 3종(광대+사각턱+턱끝) + 3D-CT 진단 + 고주파 관리 3회", points: "윤곽3종, 정밀진단, 붓기/탄력 후관리 포함", marketPrice: 12000000, sellPrice: 9500000 },
+        { category: "안면윤곽", name: "노핀(No-Pin) 광대축소", components: "무고정 광대축소술 + 3D-CT 진단", points: "노핀, 무고정, 핀제거 불필요, 안전성", marketPrice: 6000000, sellPrice: 4800000 },
+        { category: "안면윤곽", name: "맨즈 파워 윤곽", components: "사각턱(각 살리기) + 광대축소술 + 3D-CT 진단", points: "남자안면윤곽, 선굵은 라인, 남성미", marketPrice: 7500000, sellPrice: 6200000 },
+        { category: "안면윤곽", name: "미니 V라인 (턱끝)", components: "T절골 턱끝 수술 + 사각턱 보톡스 + 3D-CT 진단", points: "뭉툭한 턱끝 개선, 퀵 V라인", marketPrice: 4500000, sellPrice: 3500000},
+        { category: "안면윤곽", name: "윤곽 재수술 마스터", components: "안면윤곽 재수술 + 3D-CT 정밀 진단 + 고주파 관리 3회", points: "윤곽재수술, 2차각, 비대칭 교정, 전문성", marketPrice: 13000000, sellPrice: 10500000 },
+        { category: "안면윤곽", name: "귀뒤 사각턱, 퀵 V라인", components: "귀뒤 접근 최소절개 사각턱 수술", points: "퀵안면윤곽, 최소절개, 빠른 회복", marketPrice: 3500000, sellPrice: 2800000 },
+        { category: "안면윤곽", name: "입체감 UP, 귀족+무턱", components: "귀족수술(보형물) + 무턱수술(보형물)", points: "팔자주름, 돌출입 개선, 입체감", marketPrice: 4000000, sellPrice: 3200000 },
+        { category: "안면윤곽", "name": "VVIP 풀페이스 디자인", "components": "안면윤곽 3종 + 코성형 + 풀페이스 지방이식", "points": "VVIP, 얼굴 전체 조화, 한번의 수술로 완성", "marketPrice": 20000000, "sellPrice": 16000000 },
+
+        { category: "기타/거상", name: "40대를 위한, 미니거상", components: "최소절개 미니거상 + 턱라인 지방흡입 + 고주파 관리 2회", points: "미니거상, 최소절개, 빠른 회복, 초기노화", marketPrice: 5500000, sellPrice: 4300000 },
+        { category: "기타/거상", name: "5060 프리미엄, 풀 안면거상", components: "안면거상술(SMAS층) + 목거상술 + LDM 관리 3회", points: "안면거상, 목주름, 확실한 리프팅, 유지기간", marketPrice: 13000000, sellPrice: 10000000 },
+        { category: "기타/거상", name: "내시경 이마거상술", components: "내시경 이마거상술(엔도타인) + 미간 보톡스", points: "이마거상, 눈썹처짐, 이마주름, 내시경", marketPrice: 7000000, sellPrice: 5500000 },
+        { category: "기타/거상", name: "대표원장 집도, 풀페이스 거상", components: "대표원장 집도 안면거상 + 이마거상 + 목거상", points: "대표원장 책임 집도, 섬세함, 토탈케어", marketPrice: 18000000, sellPrice: 14500000 },
+        { category: "기타/거상", name: "인중&입꼬리 리프팅", components: "인중축소 거상술 + 입꼬리 거상술", points: "인중축소, 입꼬리 리프팅, 동안 인상", marketPrice: 5500000, sellPrice: 4500000 },
+        { category: "기타/거상", name: "거상 후 재생, 줄기세포", components: "안면거상술 + 줄기세포 스킨부스터 2회", points: "거상술, 피부재생, 회복촉진, 피부결 개선", marketPrice: 13500000, sellPrice: 10500000 },
+        { category: "기타/거상", name: "남성 전용 이마눈썹거상", components: "남성 맞춤 디자인 이마눈썹거상술", points: "남자거상, 강한 인상, 눈썹처짐", marketPrice: 7500000, sellPrice: 6000000 },
+        { category: "기타/거상", name: "이중턱 근본 해결 거상", components: "이중턱 근육묶기 + 턱밑 피부 절제 및 리프팅", points: "심한 이중턱, 처진 턱밑살, 근본적 해결", marketPrice: 4000000, sellPrice: 3200000 },
+        { category: "기타/거상", name: "매력 포인트, 큐피트 보조개", components: "비절개 보조개 시술(양측) + 입꼬리 필러", points: "보조개, 사랑스러운 인상, 비절개, 퀵시술", marketPrice: 1000000, sellPrice: 690000 },
+        { category: "기타/거상", name: "VVIP 풀 안티에이징", components: "안면거상 + 이마거상 + 눈성형(상/하안검) + 지방이식", points: "VVIP, 1:1 맞춤, 종합 노화 솔루션, 프라이빗", marketPrice: 25000000, sellPrice: 20000000 },
+    ];
+
+    const categories = [...new Set(packageData.map(p => p.category))];
+    let currentCategory = categories[0];
+
+    const categoryTabsContainer = document.getElementById('category-tabs');
+    const packageGrid = document.getElementById('package-grid');
+    const modalOverlay = document.getElementById('modal-overlay');
+    const modalContent = document.getElementById('modal-content');
+    
+    function formatKRW(number) {
+        if (number >= 100000000) {
+            return `${Math.floor(number / 100000000)}억원`;
+        }
+        if (number >= 10000) {
+            return `${Math.floor(number / 10000)}만원`;
+        }
+        return `${number}원`;
+    }
+
+    function showModal(pkg) {
+        const discountRate = Math.round((1 - pkg.sellPrice / pkg.marketPrice) * 100);
+        modalContent.innerHTML = `
+            <div class="flex justify-between items-start">
+                <h3 class="text-2xl font-bold text-slate-800 mb-4">${pkg.name}</h3>
+                <button id="close-modal" class="text-slate-500 hover:text-slate-800">&times;</button>
+            </div>
+            <p class="text-lg text-cyan-600 font-semibold mb-4">${pkg.points}</p>
+            <div class="bg-slate-50 p-4 rounded-md mb-4">
+                <h4 class="font-semibold text-slate-700 mb-2">패키지 구성</h4>
+                <p class="text-slate-600">${pkg.components}</p>
+            </div>
+            <div>
+                <h4 class="font-semibold text-slate-700 mb-2">가격 정보</h4>
+                <div class="flex items-end space-x-4">
+                    <div>
+                        <p class="text-sm text-slate-500">시장 기준가</p>
+                        <p class="text-lg text-slate-500 line-through">${formatKRW(pkg.marketPrice)}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-cyan-700 font-bold">제안 판매가</p>
+                        <p class="text-2xl font-bold text-cyan-600">${formatKRW(pkg.sellPrice)}</p>
+                    </div>
+                    <div class="bg-red-100 text-red-700 font-bold text-lg px-3 py-1 rounded-full">
+                        ${discountRate}% OFF
+                    </div>
+                </div>
+            </div>
+        `;
+        modalOverlay.classList.add('visible');
+        document.getElementById('close-modal').onclick = hideModal;
+    }
+    
+    function hideModal() {
+        modalOverlay.classList.remove('visible');
+    }
+
+    modalOverlay.addEventListener('click', (e) => {
+        if (e.target === modalOverlay) {
+            hideModal();
+        }
+    });
+
+    function renderPackageCards() {
+        packageGrid.innerHTML = '';
+        const filteredPackages = packageData.filter(p => p.category === currentCategory);
+        
+        if (filteredPackages.length === 0) {
+            packageGrid.innerHTML = `<div class="col-span-full text-center text-slate-500 py-10">해당 카테고리에 제안된 패키지가 없습니다.</div>`;
+            return;
+        }
+
+        filteredPackages.forEach((pkg, index) => {
+                const discountRate = Math.round((1 - pkg.sellPrice / pkg.marketPrice) * 100);
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-lg shadow-md p-5 flex flex-col hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer card-enter';
+                card.style.animationDelay = `${index * 50}ms`;
+                card.innerHTML = `
+                    <div class="flex-grow">
+                        <div class="flex justify-between items-start">
+                            <span class="text-sm font-semibold text-cyan-600">${pkg.category}</span>
+                            <span class="text-sm font-bold bg-red-100 text-red-600 px-2 py-0.5 rounded-full">${discountRate}%</span>
+                        </div>
+                        <h3 class="font-bold text-lg mt-2 text-slate-800">${pkg.name}</h3>
+                        <p class="text-sm text-slate-500 mt-1">${pkg.points}</p>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-slate-100">
+                        <p class="text-right text-2xl font-bold text-slate-700">${formatKRW(pkg.sellPrice)}</p>
+                    </div>
+                `;
+                card.addEventListener('click', () => showModal(pkg));
+                packageGrid.appendChild(card);
+            });
+    }
+
+    function renderCategoryTabs() {
+        categoryTabsContainer.innerHTML = '';
+        categories.forEach(category => {
+            const tab = document.createElement('button');
+            tab.className = 'category-tab px-4 py-2 text-sm font-semibold rounded-full border border-slate-300 text-slate-600';
+            if (category === currentCategory) {
+                tab.classList.add('active');
+            }
+            tab.textContent = category.replace('/', '·');
+            tab.addEventListener('click', () => {
+                currentCategory = category;
+                renderCategoryTabs();
+                renderPackageCards();
+            });
+            categoryTabsContainer.appendChild(tab);
+        });
+    }
+    
+    new Chart(document.getElementById('profitMarginChart'), {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                data: [15.7, 100-15.7],
+                backgroundColor: ['#0891b2', '#e2e8f0'],
+                borderWidth: 0,
+                circumference: 270,
+                rotation: 225,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '80%',
+            plugins: { tooltip: { enabled: false } }
+        }
+    });
+
+    new Chart(document.getElementById('priceRangeChart'), {
+        type: 'bar',
+        data: {
+            labels: ['눈재수술', '코재수술', '안면윤곽 3종', '안면거상', '자연유착'],
+            datasets: [{
+                label: '시장 가격대 (만원)',
+                data: [[72, 210], [500, 800], [490, 900], [500, 900], [36, 85]],
+                backgroundColor: 'rgba(8, 145, 178, 0.6)',
+                borderColor: 'rgba(8, 145, 178, 1)',
+                borderWidth: 1,
+                borderRadius: 4,
+                borderSkipped: false,
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    title: { display: true, text: '가격 (만원)' }
+                }
+            },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const val = context.raw;
+                            return ` ${val[0]}만원 ~ ${val[1]}만원`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('main > section');
+
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (pageYOffset >= sectionTop - 80) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href').substring(1) === current) {
+                link.classList.add('active');
+            }
+        });
+    });
+    
+    navLinks.forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        });
+    });
+
+    renderCategoryTabs();
+    renderPackageCards();
+});
+</script>
+</body>
+</html>
