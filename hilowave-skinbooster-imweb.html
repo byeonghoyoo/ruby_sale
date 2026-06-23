@@ -25,7 +25,7 @@
   --grad-dark:linear-gradient(150deg,#141228 0%,#241a57 60%,#2f3aa0 100%);
   font-family:'Pretendard','Noto Sans KR',-apple-system,BlinkMacSystemFont,sans-serif;
   color:var(--ink); line-height:1.75; letter-spacing:-0.012em; -webkit-font-smoothing:antialiased;
-  max-width:1180px; margin:0 auto; padding:0 22px; box-sizing:border-box;
+  max-width:1180px; margin:0 auto; padding:0 22px; box-sizing:border-box; overflow-x:clip;
 }
 .hilo *{box-sizing:border-box;}
 .hilo img{max-width:100%;display:block;}
@@ -133,8 +133,13 @@
 .hilo .point .pt-txt h3{font-size:26px;font-weight:800;margin:0 0 12px;color:#fff;letter-spacing:-0.02em;}
 .hilo .point .pt-txt p{margin:0;font-size:15.5px;color:rgba(255,255,255,.72);line-height:1.85;}
 .hilo .point .pt-vis{aspect-ratio:16/10;border-radius:18px;background:linear-gradient(135deg,rgba(90,69,214,.5),rgba(22,182,207,.4));
-  position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
-.hilo .point .pt-vis span{font-size:74px;font-weight:900;color:rgba(255,255,255,.22);}
+  position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center;}
+.hilo .point .pt-vis .wm{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:78px;font-weight:900;font-style:normal;color:rgba(255,255,255,.13);z-index:0;}
+.hilo .point .pt-vis .ph{position:relative;z-index:1;max-width:84%;color:rgba(255,255,255,.85);font-size:13px;line-height:1.7;letter-spacing:.01em;}
+.hilo .point .pt-vis .ph b{display:block;font-size:11px;font-weight:800;color:var(--aqua-2);letter-spacing:.14em;margin-bottom:7px;}
+.hilo .point .pt-vis img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2;}
+.hilo .point .pt-vis img[src=""],.hilo .point .pt-vis img:not([src]){display:none;}
 
 /* 시술 정보 */
 .hilo .facts{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:48px;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;}
@@ -178,10 +183,39 @@
 /* 안내문구 */
 .hilo .disc{font-size:12.5px;color:var(--faint);text-align:center;padding:60px 0 24px;line-height:1.8;border-top:1px solid var(--line);margin-top:44px;}
 
-/* 스크롤 등장 */
-.hilo.js-reveal .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1);}
-.hilo.js-reveal .reveal.in{opacity:1;transform:none;}
-@media (prefers-reduced-motion:reduce){.hilo.js-reveal .reveal{opacity:1!important;transform:none!important;transition:none;}}
+/* 스크롤 등장 (리치) */
+.hilo.js-reveal .reveal{opacity:0;transform:translateY(46px);filter:blur(7px);
+  transition:opacity .9s cubic-bezier(.16,.84,.3,1),transform .95s cubic-bezier(.16,.84,.3,1),filter .9s ease;}
+.hilo.js-reveal .reveal.in{opacity:1;transform:none;filter:none;}
+/* 좌우 슬라이드 인 (분할 섹션) */
+.hilo.js-reveal .reveal.rv-l{transform:translateX(-56px) translateY(16px);}
+.hilo.js-reveal .reveal.rv-r{transform:translateX(56px) translateY(16px);}
+.hilo.js-reveal .reveal.rv-l.in,.hilo.js-reveal .reveal.rv-r.in{transform:none;}
+/* 이미지 클립 와이프 등장 */
+.hilo.js-reveal .reveal-media{clip-path:inset(14% 16% 14% 16% round 24px);opacity:0;
+  transition:clip-path 1.1s cubic-bezier(.16,.84,.3,1),opacity .9s ease;}
+.hilo.js-reveal .reveal-media.in{clip-path:inset(0 0 0 0 round 24px);opacity:1;}
+
+/* 은은한 모션 */
+@keyframes hw-bounce{0%,100%{transform:translateY(0);opacity:.65;}50%{transform:translateY(7px);opacity:1;}}
+.hilo .scroll-cue{animation:hw-bounce 2s ease-in-out infinite;}
+@keyframes hw-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+.hilo .circles .c1{animation:hw-float 5.5s ease-in-out infinite;}
+.hilo .circles .c2{animation:hw-float 5.5s ease-in-out infinite 1.1s;}
+.hilo .pill{position:relative;overflow:hidden;}
+.hilo .pill::after{content:"";position:absolute;top:0;left:-70%;width:45%;height:100%;transform:skewX(-20deg);
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.55),transparent);animation:hw-shine 3.6s ease-in-out infinite;}
+@keyframes hw-shine{0%{left:-70%;}55%,100%{left:140%;}}
+/* 미세 인터랙션 */
+.hilo .icons .ic .dot{transition:transform .28s ease,background .28s ease,color .28s ease;}
+.hilo .icons .ic:hover .dot{transform:translateY(-5px);background:var(--grad);color:#fff;}
+.hilo .point .pt-vis{transition:transform .35s ease,box-shadow .35s ease;}
+.hilo .point:hover .pt-vis{transform:translateY(-5px);box-shadow:0 22px 50px rgba(20,18,40,.4);}
+
+@media (prefers-reduced-motion:reduce){
+  .hilo.js-reveal .reveal,.hilo.js-reveal .reveal-media{opacity:1!important;transform:none!important;filter:none!important;clip-path:none!important;transition:none;}
+  .hilo .scroll-cue,.hilo .circles .c1,.hilo .circles .c2,.hilo .pill::after{animation:none!important;}
+}
 
 /* 반응형 */
 @media (max-width:900px){
@@ -303,15 +337,15 @@
       <div class="points">
         <div class="point">
           <div class="pt-txt"><div class="pt-no">MINIMIZE 01</div><h3>부작용 최소화</h3><p>결절·이물반응 걱정 없이 안심하고 받을 수 있는 안전한 제품입니다.</p></div>
-          <div class="pt-vis"><span>01</span></div>
+          <div class="pt-vis"><i class="wm">01</i><img src="" alt=""><span class="ph"><b>넣을 이미지</b>결절 없는 매끈한 피부 클로즈업<br>또는 멸균 일회용 제품 컷</span></div>
         </div>
         <div class="point rev">
           <div class="pt-txt"><div class="pt-no">MINIMIZE 02</div><h3>통증 최소화</h3><p>적은 통증으로 수면·무통마취 없이도 원활하게 시술이 가능합니다.</p></div>
-          <div class="pt-vis"><span>02</span></div>
+          <div class="pt-vis"><i class="wm">02</i><img src="" alt=""><span class="ph"><b>넣을 이미지</b>편안한 표정의 시술 장면<br>또는 가는 니들·메조 시술 클로즈업</span></div>
         </div>
         <div class="point">
           <div class="pt-txt"><div class="pt-no">MINIMIZE 03</div><h3>다운타임 최소화</h3><p>중요한 일정 직전, 퇴근 후 시술해도 다음날 일상생활이 가능합니다.</p></div>
-          <div class="pt-vis"><span>03</span></div>
+          <div class="pt-vis"><i class="wm">03</i><img src="" alt=""><span class="ph"><b>넣을 이미지</b>시술 직후 외출·메이크업 등<br>일상 복귀하는 인물 컷</span></div>
         </div>
       </div>
     </div>
@@ -342,19 +376,19 @@
       <div class="points" style="margin-top:34px;">
         <div class="point">
           <div class="pt-txt"><div class="pt-no">POINT 01</div><h3>More HA, Less Crosslinking</h3><p>가교제(BDDE)를 최소화하면서 HA 함량을 높인 Dual-HA Hybrid Complex. 점성이 낮아 혈관 사고 리스크가 매우 낮습니다.</p></div>
-          <div class="pt-vis"><span>HA</span></div>
+          <div class="pt-vis"><i class="wm">HA</i><img src="" alt=""><span class="ph"><b>넣을 이미지</b>HA 분자구조·가교(crosslinking) 비교 그래픽<br>또는 물성(점도) 비교 영상 캡처</span></div>
         </div>
         <div class="point rev">
           <div class="pt-txt"><div class="pt-no">POINT 02</div><h3>Diffusion + Retention</h3><p>덩어리(Mass) 없이 볼륨을 만들고, 확산되면서도 사라지지 않고 유지되는 구조입니다.</p></div>
-          <div class="pt-vis"><span>02</span></div>
+          <div class="pt-vis"><i class="wm">02</i><img src="" alt=""><span class="ph"><b>넣을 이미지</b>조직 내 확산·유지 3D 모식도(애니메이션 캡처)<br>또는 피부 단면 일러스트</span></div>
         </div>
         <div class="point">
           <div class="pt-txt"><div class="pt-no">POINT 03</div><h3>Skin Quality + Volume</h3><p>피부결·톤·보습·글로우와 자연스러운 볼륨을 한 번의 시술로 동시에 개선합니다.</p></div>
-          <div class="pt-vis"><span>03</span></div>
+          <div class="pt-vis"><i class="wm">03</i><img src="" alt=""><span class="ph"><b>넣을 이미지</b>전후 피부결·볼륨 개선이 보이는<br>인물 클로즈업</span></div>
         </div>
         <div class="point rev">
           <div class="pt-txt"><div class="pt-no">POINT 04</div><h3>EBD 컴바인 가능</h3><p>RF·HIFU·다파장 레이저 등 다양한 시술과 컴바인이 가능해 시너지를 낼 수 있습니다.</p></div>
-          <div class="pt-vis"><span>04</span></div>
+          <div class="pt-vis"><i class="wm">04</i><img src="" alt=""><span class="ph"><b>넣을 이미지</b>RF·HIFU 등 EBD 장비 시술 장면 컷</span></div>
         </div>
       </div>
     </div>
@@ -480,11 +514,37 @@
     var io = new IntersectionObserver(function(entries){
       entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
     }, {threshold:0.12, rootMargin:'0px 0px -7% 0px'});
+
+    /* 등장 대상 수집: 분할은 좌우 슬라이드, 포인트는 개별 */
+    function collect(parent, out){
+      Array.prototype.forEach.call(parent.children, function(ch){
+        if(ch.classList.contains('split')){
+          var im = ch.querySelector('.split-img'), tx = ch.querySelector('.split-txt');
+          var rev = ch.classList.contains('reverse');
+          if(im){ im.classList.add(rev ? 'rv-r' : 'rv-l'); out.push(im); }
+          if(tx){ tx.classList.add(rev ? 'rv-l' : 'rv-r'); out.push(tx); }
+        } else if(ch.classList.contains('points')){
+          Array.prototype.forEach.call(ch.querySelectorAll('.point'), function(p){ out.push(p); });
+        } else { out.push(ch); }
+      });
+    }
+
     c.querySelectorAll('section').forEach(function(sec){
       if(sec.classList.contains('hero')) return;
-      Array.prototype.forEach.call(sec.children, function(ch, i){
-        ch.classList.add('reveal'); ch.style.transitionDelay = (i * 0.07).toFixed(2) + 's'; io.observe(ch);
+      var base = sec;
+      var only = sec.children.length === 1 ? sec.firstElementChild : null;
+      if(only && (only.classList.contains('dark') || only.classList.contains('soft'))) base = only;
+      var out = []; collect(base, out);
+      out.forEach(function(el, i){
+        el.classList.add('reveal');
+        el.style.transitionDelay = (i * 0.08).toFixed(2) + 's';
+        io.observe(el);
       });
+    });
+
+    /* 이미지/밴드/포인트 비주얼: 클립 와이프 등장 */
+    c.querySelectorAll('.img, .band, .pt-vis').forEach(function(m){
+      m.classList.add('reveal-media'); io.observe(m);
     });
   }
 })();
