@@ -163,10 +163,9 @@
 /* FAQ */
 .hilo .faq{margin-top:30px;border-top:1px solid var(--line);}
 .hilo .faq details{border-bottom:1px solid var(--line);}
-.hilo .faq summary{list-style:none;cursor:pointer;padding:24px 4px;font-weight:700;font-size:17px;color:var(--navy);
-  display:flex;justify-content:space-between;align-items:center;gap:16px;}
+.hilo .faq summary{list-style:none;cursor:pointer;position:relative;padding:24px 46px 24px 4px;font-weight:700;font-size:17px;color:var(--navy);line-height:1.5;}
 .hilo .faq summary::-webkit-details-marker{display:none;}
-.hilo .faq summary::after{content:"+";font-size:24px;color:var(--aqua);font-weight:300;flex:0 0 auto;transition:transform .2s;}
+.hilo .faq summary::after{content:"+";position:absolute;right:6px;top:50%;transform:translateY(-50%);font-size:24px;color:var(--aqua);font-weight:300;}
 .hilo .faq details[open] summary::after{content:"\2212";}
 .hilo .faq .a{padding:0 4px 24px;color:var(--gray);font-size:15.5px;line-height:1.85;}
 
