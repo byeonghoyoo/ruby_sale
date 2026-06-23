@@ -194,6 +194,11 @@
 .hilo .banner:hover{transform:translateY(-3px);box-shadow:0 26px 64px rgba(10,42,67,.24);}
 .hilo .cmp tbody tr{transition:background .2s ease;}
 .hilo .cmp tbody tr:hover td{background:var(--mist);}
+/* 스크롤 등장(페이드업) — JS 활성 시에만 숨김 */
+.hilo.js-reveal .reveal{opacity:0;transform:translateY(28px);
+  transition:opacity .75s cubic-bezier(.2,.7,.2,1),transform .75s cubic-bezier(.2,.7,.2,1);}
+.hilo.js-reveal .reveal.in{opacity:1;transform:none;}
+@media (prefers-reduced-motion:reduce){.hilo.js-reveal .reveal{opacity:1!important;transform:none!important;transition:none;}}
 
 /* 안내문구 */
 .hilo .disc{font-size:12.5px;color:var(--faint);text-align:center;padding:60px 0 24px;line-height:1.8;border-top:1px solid var(--line);margin-top:40px;}
@@ -506,6 +511,24 @@
       im.style.transform = '';
     });
   });
+
+  /* 스크롤 시 자연스러운 등장 (페이드업, 섹션별 스태거) */
+  if('IntersectionObserver' in window){
+    c.classList.add('js-reveal');
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, {threshold:0.12, rootMargin:'0px 0px -7% 0px'});
+    c.querySelectorAll('section').forEach(function(sec){
+      if(sec.classList.contains('hero')) return; /* 히어로는 즉시 노출 */
+      Array.prototype.forEach.call(sec.children, function(ch, i){
+        ch.classList.add('reveal');
+        ch.style.transitionDelay = (i * 0.07).toFixed(2) + 's';
+        io.observe(ch);
+      });
+    });
+  }
 })();
 </script>
 </body></html>
