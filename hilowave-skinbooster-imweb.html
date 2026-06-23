@@ -1,0 +1,567 @@
+<!--
+======================================================================
+  뷰티블라썸 · 스킨부스터 카테고리 - 힐로웨이브(HILO WAVE®) 소개 페이지
+  아임웹(Imweb) "코드 입력 / HTML" 위젯 전용 초안
+======================================================================
+  [사용법]
+  1. 아임웹 편집화면 → "코드 입력" 또는 "HTML" 위젯 추가
+  2. 이 주석을 제외한 <link> 부터 마지막 </div> 까지 전체 복사 후 붙여넣기
+  3. 이미지는 직접 삽입이 아닌 "링크(URL)" 방식입니다.
+     → 아임웹에 이미지를 업로드한 뒤 그 주소를 {{IMG: ...}} 부분의
+        src="" 에 넣으세요. (값이 비어있으면 회색 자리표시자가 보입니다)
+  4. {{ }} 로 표시된 텍스트만 최종본에 맞게 다듬으면 됩니다.
+
+  [특징]
+  - 외부 라이브러리 의존성 없음 (Pretendard 폰트 + 유튜브 임베드만 사용)
+  - 모든 CSS가 .hilo 로 스코프 → 아임웹 기본 스타일과 충돌 없음
+  - JS는 IIFE로 격리, .hilo 범위 안에서만 동작 (탭 전환 / 부드러운 스크롤)
+  - FAQ는 <details> 로 무(無)JS 동작, 모바일 반응형
+
+  [영상]
+  - 프로토콜 영상 5종은 유튜브 임베드로 삽입됨
+  - 브랜드필름(가로/세로 mp4)은 구글드라이브에 있으니, 아임웹에 업로드 후
+    ⑧영상 섹션 상단 자리에 추가하거나 유튜브에 올려 임베드하세요.
+======================================================================
+-->
+
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+<style>
+/* =================== HILO WAVE 스코프 스타일 =================== */
+.hilo{
+  --hw-navy:#0a2a43;        /* 딥 네이비 */
+  --hw-aqua:#16b6cf;        /* 아쿠아(물/HA 컨셉) */
+  --hw-aqua-d:#0c8fa0;
+  --hw-aqua-2:#3fd0e3;
+  --hw-ink:#1c2b36;
+  --hw-gray:#5d6b76;
+  --hw-line:#e6edf1;
+  --hw-soft:#f1f8fb;        /* 연한 아쿠아 배경 */
+  --hw-bg:#ffffff;
+  --hw-radius:20px;
+  --hw-grad:linear-gradient(135deg,#0a2a43 0%,#0e4f66 55%,#16b6cf 100%);
+  font-family:'Pretendard','Noto Sans KR',-apple-system,BlinkMacSystemFont,sans-serif;
+  color:var(--hw-ink); line-height:1.7; letter-spacing:-0.01em;
+  -webkit-font-smoothing:antialiased;
+  max-width:1080px; margin:0 auto; padding:0 20px; box-sizing:border-box;
+}
+.hilo *{box-sizing:border-box;}
+.hilo img{max-width:100%;display:block;}
+
+/* 공통 */
+.hilo .hw-sec{padding:72px 0;border-bottom:1px solid var(--hw-line);}
+.hilo .hw-sec:last-of-type{border-bottom:none;}
+.hilo .hw-eyebrow{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.18em;
+  color:var(--hw-aqua);text-transform:uppercase;margin-bottom:14px;}
+.hilo .hw-h2{font-size:32px;font-weight:800;line-height:1.32;margin:0 0 16px;color:var(--hw-navy);}
+.hilo .hw-lead{font-size:17px;color:var(--hw-gray);margin:0 auto;max-width:720px;}
+.hilo .hw-center{text-align:center;}
+.hilo .hw-reg{font-size:.6em;vertical-align:super;}
+
+/* 이미지 자리표시자 */
+.hilo .hw-imgbox{position:relative;background:var(--hw-soft);border:1px dashed #b9d4de;
+  border-radius:14px;min-height:220px;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.hilo .hw-imgbox img{width:100%;height:100%;object-fit:cover;}
+.hilo .hw-imgbox .hw-ph{color:#8aa7b3;font-size:13px;text-align:center;padding:16px;}
+.hilo .hw-imgbox img[src=""],.hilo .hw-imgbox img:not([src]){display:none;}
+
+/* 버튼 */
+.hilo .hw-btn{display:inline-block;background:var(--hw-aqua);color:#fff;font-weight:800;font-size:16px;
+  padding:16px 42px;border-radius:999px;text-decoration:none;transition:transform .15s,box-shadow .15s;
+  box-shadow:0 8px 24px rgba(22,182,207,.35);}
+.hilo .hw-btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(22,182,207,.45);}
+.hilo .hw-btn-ghost{background:transparent;border:1.5px solid #fff;color:#fff;box-shadow:none;}
+
+/* ① 히어로 */
+.hilo .hw-hero{position:relative;background:var(--hw-grad);border-radius:var(--hw-radius);
+  color:#fff;text-align:center;padding:90px 24px;margin-top:24px;overflow:hidden;}
+.hilo .hw-hero::after{content:"";position:absolute;left:-10%;right:-10%;bottom:-40%;height:80%;
+  background:radial-gradient(ellipse at center,rgba(63,208,227,.35),transparent 70%);}
+.hilo .hw-hero > *{position:relative;z-index:1;}
+.hilo .hw-hero .hw-brand{font-size:15px;font-weight:700;letter-spacing:.3em;opacity:.85;margin-bottom:18px;}
+.hilo .hw-hero h1{font-size:52px;font-weight:900;line-height:1.15;margin:0 0 18px;letter-spacing:-.02em;}
+.hilo .hw-hero h1 small{display:block;font-size:20px;font-weight:600;opacity:.9;letter-spacing:.05em;margin-top:10px;}
+.hilo .hw-hero p{font-size:18px;opacity:.92;max-width:620px;margin:0 auto 32px;}
+.hilo .hw-pill{display:inline-block;background:rgba(255,255,255,.16);backdrop-filter:blur(4px);
+  font-size:13px;font-weight:700;padding:8px 18px;border-radius:999px;margin-bottom:24px;}
+
+/* 영상 임베드 (16:9 반응형) */
+.hilo .hw-video{position:relative;width:100%;padding-top:56.25%;border-radius:14px;overflow:hidden;
+  background:#000;box-shadow:0 10px 30px rgba(0,0,0,.12);}
+.hilo .hw-video iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;}
+
+/* ② 브랜드 스토리 - 3컬럼 */
+.hilo .hw-3col{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:36px;}
+.hilo .hw-feat{background:var(--hw-bg);border:1px solid var(--hw-line);border-radius:var(--hw-radius);
+  padding:30px 26px;transition:transform .2s,box-shadow .2s;}
+.hilo .hw-feat:hover{transform:translateY(-4px);box-shadow:0 14px 34px rgba(10,42,67,.08);}
+.hilo .hw-feat .hw-tag{font-size:13px;font-weight:800;color:var(--hw-aqua);letter-spacing:.1em;margin-bottom:10px;}
+.hilo .hw-feat h3{font-size:19px;font-weight:800;margin:0 0 8px;color:var(--hw-navy);}
+.hilo .hw-feat p{font-size:15px;color:var(--hw-gray);margin:0;}
+
+/* ③ 비교표 */
+.hilo .hw-tablewrap{overflow-x:auto;margin-top:32px;-webkit-overflow-scrolling:touch;}
+.hilo table.hw-tbl{width:100%;min-width:680px;border-collapse:collapse;font-size:14px;}
+.hilo table.hw-tbl th,.hilo table.hw-tbl td{padding:16px 14px;text-align:center;border:1px solid var(--hw-line);}
+.hilo table.hw-tbl thead th{background:var(--hw-navy);color:#fff;font-weight:700;}
+.hilo table.hw-tbl thead th.hw-hl{background:var(--hw-aqua);}
+.hilo table.hw-tbl tbody th{background:var(--hw-soft);color:var(--hw-navy);font-weight:700;text-align:left;white-space:nowrap;}
+.hilo table.hw-tbl td.hw-hl{background:#eafafc;font-weight:700;color:var(--hw-navy);}
+.hilo table.hw-tbl tr:nth-child(even) td{background:#fafcfd;}
+
+/* 시술 정보 한눈에 */
+.hilo .hw-info{display:grid;grid-template-columns:repeat(6,1fr);gap:0;margin-top:32px;
+  border:1px solid var(--hw-line);border-radius:var(--hw-radius);overflow:hidden;}
+.hilo .hw-info > div{padding:26px 14px;text-align:center;border-right:1px solid var(--hw-line);}
+.hilo .hw-info > div:last-child{border-right:none;}
+.hilo .hw-info .hw-info-label{font-size:13px;color:var(--hw-gray);margin-bottom:10px;}
+.hilo .hw-info .hw-info-value{font-size:16px;font-weight:800;color:var(--hw-navy);line-height:1.4;}
+.hilo .hw-info .hw-info-value small{font-size:11px;font-weight:500;color:var(--hw-gray);}
+
+/* 시술 후 주의사항 */
+.hilo .hw-care{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 26px;margin-top:30px;}
+.hilo .hw-care li{list-style:none;display:flex;gap:12px;align-items:flex-start;font-size:15.5px;color:var(--hw-ink);}
+.hilo .hw-care li::before{content:"!";flex:0 0 auto;width:24px;height:24px;border-radius:7px;
+  background:var(--hw-navy);color:#fff;font-weight:900;font-size:13px;display:flex;align-items:center;justify-content:center;margin-top:2px;}
+
+/* ④ DHC 효과 카드 */
+.hilo .hw-dhc{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:34px;}
+.hilo .hw-dhc .hw-num{display:flex;align-items:flex-start;gap:18px;background:var(--hw-soft);
+  border-radius:var(--hw-radius);padding:26px 24px;}
+.hilo .hw-dhc .hw-num span{flex:0 0 auto;width:44px;height:44px;border-radius:12px;background:var(--hw-aqua);
+  color:#fff;font-weight:900;font-size:18px;display:flex;align-items:center;justify-content:center;}
+.hilo .hw-dhc .hw-num h4{margin:4px 0 6px;font-size:17px;font-weight:800;color:var(--hw-navy);}
+.hilo .hw-dhc .hw-num p{margin:0;font-size:14.5px;color:var(--hw-gray);}
+.hilo .hw-quote{margin-top:34px;text-align:center;background:var(--hw-grad);color:#fff;
+  border-radius:var(--hw-radius);padding:46px 28px;}
+.hilo .hw-quote strong{display:block;font-size:24px;font-weight:900;margin-bottom:10px;}
+.hilo .hw-quote span{opacity:.9;font-size:16px;}
+
+/* ⑤ 2개 라인 탭 */
+.hilo .hw-tabs{display:flex;gap:10px;justify-content:center;margin-top:34px;flex-wrap:wrap;}
+.hilo .hw-tab{cursor:pointer;border:1.5px solid var(--hw-line);background:#fff;color:var(--hw-gray);
+  font-weight:800;font-size:15px;padding:14px 28px;border-radius:999px;transition:all .2s;}
+.hilo .hw-tab.is-active{background:var(--hw-navy);color:#fff;border-color:var(--hw-navy);}
+.hilo .hw-panel{display:none;margin-top:30px;}
+.hilo .hw-panel.is-active{display:block;animation:hwfade .35s ease;}
+@keyframes hwfade{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+.hilo .hw-prod{display:grid;grid-template-columns:0.9fr 1.1fr;gap:34px;align-items:center;}
+.hilo .hw-prod .hw-name{font-size:26px;font-weight:900;color:var(--hw-navy);margin:0 0 6px;}
+.hilo .hw-prod .hw-sub{font-size:15px;color:var(--hw-aqua);font-weight:800;margin:0 0 18px;}
+.hilo .hw-spec{list-style:none;padding:0;margin:0;}
+.hilo .hw-spec li{display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px dashed var(--hw-line);font-size:15px;}
+.hilo .hw-spec li b{color:var(--hw-navy);font-weight:700;}
+.hilo .hw-spec li span{color:var(--hw-gray);text-align:right;}
+
+/* ⑥ Minimize */
+.hilo .hw-min{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:34px;}
+.hilo .hw-min .hw-card{border:1px solid var(--hw-line);border-radius:var(--hw-radius);padding:32px 26px;text-align:center;}
+.hilo .hw-min .hw-card .hw-big{font-size:15px;font-weight:900;letter-spacing:.05em;color:var(--hw-aqua);margin-bottom:8px;}
+.hilo .hw-min .hw-card h3{font-size:20px;font-weight:800;color:var(--hw-navy);margin:0 0 10px;}
+.hilo .hw-min .hw-card p{font-size:14.5px;color:var(--hw-gray);margin:0;}
+
+/* ⑦ 추천 대상 */
+.hilo .hw-reco{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 26px;margin-top:30px;}
+.hilo .hw-reco li{list-style:none;display:flex;gap:12px;align-items:flex-start;font-size:16px;}
+.hilo .hw-reco li::before{content:"✓";flex:0 0 auto;width:26px;height:26px;border-radius:50%;
+  background:var(--hw-soft);color:var(--hw-aqua);font-weight:900;display:flex;align-items:center;justify-content:center;font-size:14px;margin-top:2px;}
+
+/* ⑧ 영상 그리드 */
+.hilo .hw-vids{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;margin-top:34px;}
+.hilo .hw-vids .hw-vcap{margin:12px 2px 0;font-size:15px;font-weight:700;color:var(--hw-navy);}
+.hilo .hw-vids .hw-vnote{font-size:13px;color:var(--hw-gray);margin:2px 2px 0;}
+
+/* ⑨ 임상 */
+.hilo .hw-evi{background:var(--hw-soft);border-radius:var(--hw-radius);padding:30px 28px;margin-top:30px;}
+.hilo .hw-evi h4{margin:0 0 8px;font-size:17px;color:var(--hw-navy);font-weight:800;}
+.hilo .hw-evi p{margin:0;font-size:14.5px;color:var(--hw-gray);}
+.hilo .hw-ba{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;margin-top:26px;}
+.hilo .hw-ba figure{margin:0;}
+.hilo .hw-ba figcaption{font-size:13.5px;color:var(--hw-gray);margin-top:10px;text-align:center;}
+
+/* ⑩ FAQ */
+.hilo .hw-faq{margin-top:28px;}
+.hilo .hw-faq details{border:1px solid var(--hw-line);border-radius:14px;margin-bottom:12px;background:#fff;overflow:hidden;}
+.hilo .hw-faq summary{list-style:none;cursor:pointer;padding:20px 22px;font-weight:700;font-size:16px;color:var(--hw-navy);
+  display:flex;justify-content:space-between;align-items:center;gap:14px;}
+.hilo .hw-faq summary::-webkit-details-marker{display:none;}
+.hilo .hw-faq summary::after{content:"+";font-size:24px;color:var(--hw-aqua);font-weight:400;flex:0 0 auto;}
+.hilo .hw-faq details[open] summary::after{content:"\2212";}
+.hilo .hw-faq .hw-ans{padding:0 22px 20px;color:var(--hw-gray);font-size:15px;}
+
+/* ⑪ 인증 */
+.hilo .hw-cert{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:30px;}
+.hilo .hw-cert .hw-imgbox{min-height:150px;}
+
+/* ⑫ CTA */
+.hilo .hw-cta{text-align:center;background:var(--hw-grad);border-radius:var(--hw-radius);padding:64px 24px;margin-top:40px;}
+.hilo .hw-cta h2{color:#fff;font-size:30px;font-weight:900;margin:0 0 12px;}
+.hilo .hw-cta p{color:rgba(255,255,255,.9);margin:0 0 28px;font-size:17px;}
+
+/* 안내문구 */
+.hilo .hw-disc{font-size:12.5px;color:#9aa9b2;text-align:center;padding:34px 0 16px;line-height:1.7;}
+
+/* 반응형 */
+@media (max-width:860px){
+  .hilo .hw-3col,.hilo .hw-dhc,.hilo .hw-min,.hilo .hw-vids,.hilo .hw-cert,.hilo .hw-reco,.hilo .hw-ba{grid-template-columns:1fr;}
+  .hilo .hw-prod{grid-template-columns:1fr;gap:24px;}
+  .hilo .hw-cert{grid-template-columns:repeat(2,1fr);}
+  .hilo .hw-hero{padding:64px 18px;}
+  .hilo .hw-hero h1{font-size:36px;}
+  .hilo .hw-h2{font-size:25px;}
+  .hilo .hw-sec{padding:52px 0;}
+}
+</style>
+
+<div class="hilo">
+
+  <!-- ===== ① 히어로 ===== -->
+  <section class="hw-hero">
+    <div class="hw-brand">HILO WAVE<span class="hw-reg">®</span> &nbsp;·&nbsp; HIGHER</div>
+    <div class="hw-pill">Dual-HA Collagen Booster</div>
+    <h1>WAVE into your skin
+      <small>피부 환경을 바꾸는 새로운 기준, 힐로웨이브</small>
+    </h1>
+    <p>채우지도(Filling), 자극하지도(Stimulating) 않습니다. 피부 환경 자체를 <b>조절(Modulating)</b>하는<br>Dual-HA 콜라겐 부스터로 자연스러운 볼륨과 피부결을 동시에.</p>
+  </section>
+
+  <!-- ===== 인트로 (SEO 정보성 리드) ===== -->
+  <section class="hw-sec hw-center">
+    <span class="hw-eyebrow">About</span>
+    <h2 class="hw-h2">힐로웨이브, 콜라겐을 깨우는 듀얼HA 부스터</h2>
+    <p class="hw-lead">힐로웨이브(HILO WAVE<span class="hw-reg">®</span>)는 고분자 히알루론산과 저분자 히알루론산을 함께 사용하는
+      <b>듀얼HA 콜라겐 부스터(콜라겐주사)</b>입니다. 저분자 HA가 피부 깊은 층의 속건조를 직접 개선하고, 고분자 HA가 안정적인 볼륨과 탄력을
+      더해 보습·피부결·톤·잔주름·팔자·볼패임·눈밑 꺼짐까지 폭넓게 관리합니다. 콜라겐과 엘라스틴 생성을 유도해 피부 스스로 재생하도록 돕는 것이 핵심입니다.</p>
+  </section>
+
+  <!-- ===== ② 브랜드 스토리 ===== -->
+  <section class="hw-sec hw-center">
+    <span class="hw-eyebrow">Brand Story</span>
+    <h2 class="hw-h2">New Bio-Wave, 피부 속으로</h2>
+    <p class="hw-lead">힐로웨이브는 고분자HA와 저분자HA를 결합한 <b>DHC<span class="hw-reg">®</span></b> 기술로,
+      염증·결절·다운타임을 최소화하면서 피부 재생과 볼륨을 동시에 만드는 안전한 Dual-HA 부스터입니다.</p>
+    <div class="hw-3col">
+      <div class="hw-feat"><div class="hw-tag">COMFORT</div><h3>편안한 시술</h3><p>낮은 점성과 적은 통증으로 수면·무통마취 없이도 편안하게. 시술 후 바로 일상 복귀가 가능합니다.</p></div>
+      <div class="hw-feat"><div class="hw-tag">RELIABLE</div><h3>믿을 수 있는 안전성</h3><p>매우 낮은 가교율의 HA로 결절·이물반응 부담을 최소화하고, ECM 환경을 안정적으로 리모델링합니다.</p></div>
+      <div class="hw-feat"><div class="hw-tag">REFINED</div><h3>정제된 결과</h3><p>Mass 없이 Volume을 만드는 접근으로 자연스러운 볼륨과 피부결·톤·보습·글로우까지 정교하게.</p></div>
+    </div>
+  </section>
+
+  <!-- ===== ③ 왜 힐로웨이브 (비교표) ===== -->
+  <section class="hw-sec">
+    <div class="hw-center">
+      <span class="hw-eyebrow">Why HILO WAVE</span>
+      <h2 class="hw-h2">기존 인젝터블의 한계를 넘어서</h2>
+      <p class="hw-lead">스킨부스터·콜라겐부스터·HA필러는 각각의 한계가 뚜렷했습니다.
+        힐로웨이브는 이 사이의 빈 자리를 채우는 새로운 포지션의 Dual-HA 부스터입니다.</p>
+    </div>
+    <div class="hw-tablewrap">
+      <table class="hw-tbl">
+        <thead>
+          <tr>
+            <th>구분</th>
+            <th>스킨부스터</th>
+            <th>콜라겐부스터</th>
+            <th>HA 필러</th>
+            <th class="hw-hl">힐로웨이브<span class="hw-reg">®</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th>작용 방식</th><td>직접 공급</td><td>Bio-stimulation</td><td>물리적 볼륨</td><td class="hw-hl">확산 + 환경 조절</td></tr>
+          <tr><th>임상 효과</th><td>피부결·톤 개선</td><td>탄력·주름 개선</td><td>볼륨·윤곽</td><td class="hw-hl">자연 볼륨 + 피부결</td></tr>
+          <tr><th>효과 발현</th><td>즉각적</td><td>지연형(점진적)</td><td>즉각적</td><td class="hw-hl">즉각적 + 점진적</td></tr>
+          <tr><th>주요 한계</th><td>짧은 유지력</td><td>결절 리스크</td><td>이물감·혈관사고</td><td class="hw-hl">한계 최소화</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===== ④ DHC 기술 ===== -->
+  <section class="hw-sec">
+    <div class="hw-center">
+      <span class="hw-eyebrow">Technology · DHC<span class="hw-reg">®</span></span>
+      <h2 class="hw-h2">More HA. Less Crosslinking. Different Outcome.</h2>
+      <p class="hw-lead">고분자HA·저분자HA를 결합한 <b>Dual-HA Hybrid Complex</b>는 가교제(BDDE)를 최소화하면서
+        HA 함량을 높여, 자극이 아닌 <b>‘조절’</b>로 피부 환경 자체를 바꿉니다.</p>
+    </div>
+    <div class="hw-dhc">
+      <div class="hw-num"><span>1</span><div><h4>Bio-Stimulation</h4><p>섬유아세포를 균형 있게 활성화해 콜라겐 I·III와 엘라스틴 생성을 유도합니다.</p></div></div>
+      <div class="hw-num"><span>2</span><div><h4>항산화 · 항염</h4><p>항산화 효소 활성을 높이고 염증성 사이토카인을 낮춰 피부 환경을 안정화합니다.</p></div></div>
+      <div class="hw-num"><span>3</span><div><h4>탄력 개선 · 멜라닌 감소</h4><p>진피 리모델링을 통해 피부 탄력을 개선하고 멜라닌을 감소시킵니다.</p></div></div>
+      <div class="hw-num"><span>4</span><div><h4>항섬유화(Anti-Fibrosis)</h4><p>섬유아세포 과활성을 억제해 섬유화 없이 재생을 유도하는 메커니즘입니다.</p></div></div>
+    </div>
+    <div class="hw-quote">
+      <strong>Not Filling, Not Stimulating — Modulating.</strong>
+      <span>Control the Environment, Control the Result.</span>
+    </div>
+  </section>
+
+  <!-- ===== ⑤ 2가지 라인 ===== -->
+  <section class="hw-sec">
+    <div class="hw-center">
+      <span class="hw-eyebrow">Line-up</span>
+      <h2 class="hw-h2">목적과 타겟에 따른 2가지 라인</h2>
+      <p class="hw-lead">볼륨을 위한 <b>힐로웨이브<span class="hw-reg">®</span></b>, 스킨 퀄리티를 위한 <b>힐로웨이브 id<span class="hw-reg">®</span></b>.</p>
+    </div>
+    <div class="hw-tabs">
+      <div class="hw-tab is-active" data-tab="wave">힐로웨이브<span class="hw-reg">®</span> · 볼륨</div>
+      <div class="hw-tab" data-tab="id">힐로웨이브 id<span class="hw-reg">®</span> · 글로우</div>
+    </div>
+
+    <div class="hw-panel is-active" data-panel="wave">
+      <div class="hw-prod">
+        <div class="hw-imgbox"><!--{{IMG: 힐로웨이브 제품컷 - 아임웹 업로드 후 src에 주소}}-->
+          <img src="" alt="힐로웨이브 제품 이미지"><span class="hw-ph">힐로웨이브<sup>®</sup> 제품 이미지<br>(아임웹 업로드 후 링크 삽입)</span>
+        </div>
+        <div>
+          <p class="hw-name">힐로웨이브<span class="hw-reg">®</span></p>
+          <p class="hw-sub">DUAL-HA COLLAGEN BOOSTER · 결절 걱정 없는 1Day 볼륨 부스터</p>
+          <ul class="hw-spec">
+            <li><b>분류</b><span>Dual-HA 콜라겐 부스터</span></li>
+            <li><b>주요 효과</b><span>자연스러운 볼륨 · 윤곽 · 리프팅</span></li>
+            <li><b>타겟층</b><span>Subdermal (Immediate Subdermal Plane)</span></li>
+            <li><b>추천 부위</b><span>중안부(눈밑·앞볼·옆볼·팔자) · 마리오넷 · 손등</span></li>
+            <li><b>니들</b><span>29G ½ inch needle</span></li>
+            <li><b>파티클 사이즈</b><span>약 200μm</span></li>
+            <li><b>시술 간격</b><span>3~6개월 (3회 권장)</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="hw-panel" data-panel="id">
+      <div class="hw-prod">
+        <div class="hw-imgbox"><!--{{IMG: 힐로웨이브 id 제품컷 - 아임웹 업로드 후 src에 주소}}-->
+          <img src="" alt="힐로웨이브 id 제품 이미지"><span class="hw-ph">힐로웨이브 id<sup>®</sup> 제품 이미지<br>(아임웹 업로드 후 링크 삽입)</span>
+        </div>
+        <div>
+          <p class="hw-name">힐로웨이브 id<span class="hw-reg">®</span></p>
+          <p class="hw-sub">DUAL-HA SKIN BOOSTER · 통증/다운타임 없는 1Day 글로우 부스터</p>
+          <ul class="hw-spec">
+            <li><b>분류</b><span>Dual-HA 스킨 부스터</span></li>
+            <li><b>주요 효과</b><span>피부결·톤·보습·글로우 개선</span></li>
+            <li><b>타겟층</b><span>Intradermal (Mid-to-Deep Dermis)</span></li>
+            <li><b>추천 부위</b><span>풀페이스 · 목주름</span></li>
+            <li><b>니들</b><span>30G 4mm meso needle</span></li>
+            <li><b>파티클 사이즈</b><span>약 20~40μm</span></li>
+            <li><b>시술 간격</b><span>1~2개월 (반복 시술 권장)</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 시술 정보 한눈에 ===== -->
+  <section class="hw-sec">
+    <div class="hw-center">
+      <span class="hw-eyebrow">At a Glance</span>
+      <h2 class="hw-h2">시술 정보 한눈에</h2>
+    </div>
+    <div class="hw-info">
+      <div><div class="hw-info-label">시술 시간</div><div class="hw-info-value">약 15~30분</div></div>
+      <div><div class="hw-info-label">마취 방법</div><div class="hw-info-value">마취 연고<br><small>(캐뉼라 시 국소마취 병행)</small></div></div>
+      <div><div class="hw-info-label">권장 용량</div><div class="hw-info-value">풀페이스 4~6cc</div></div>
+      <div><div class="hw-info-label">시술 간격</div><div class="hw-info-value">WAVE 3~6개월<br>id 1~2개월</div></div>
+      <div><div class="hw-info-label">다운타임</div><div class="hw-info-value">거의 없음<br><small>(멍 없으면 당일 일상)</small></div></div>
+      <div><div class="hw-info-label">적용 부위</div><div class="hw-info-value">중안부·팔자·옆볼<br>목·손등 등</div></div>
+    </div>
+    <p class="hw-lead hw-center" style="margin-top:22px;font-size:14px;">※ 시술 용량·간격·부위는 피부 상태에 따라 의료진 판단으로 조절될 수 있습니다.</p>
+  </section>
+
+  <!-- ===== ⑥ 3 Minimize ===== -->
+  <section class="hw-sec hw-center">
+    <span class="hw-eyebrow">Why Safe</span>
+    <h2 class="hw-h2">3 Minimize</h2>
+    <p class="hw-lead">시술자도, 환자도 안심할 수 있도록 부작용·통증·다운타임을 최소화했습니다.</p>
+    <div class="hw-min">
+      <div class="hw-card"><div class="hw-big">MINIMIZE SIDE</div><h3>부작용 최소화</h3><p>결절·이물반응 걱정 없이 안심하고 받을 수 있는 안전한 제품입니다.</p></div>
+      <div class="hw-card"><div class="hw-big">MINIMIZE PAIN</div><h3>통증 최소화</h3><p>적은 시술 통증으로 수면·무통마취 없이도 원활하게 시술이 가능합니다.</p></div>
+      <div class="hw-card"><div class="hw-big">MINIMIZE DOWNTIME</div><h3>다운타임 최소화</h3><p>짧은 다운타임으로 중요한 일정 직전, 퇴근 후 시술해도 다음날 일상생활이 가능합니다.</p></div>
+    </div>
+  </section>
+
+  <!-- ===== ⑦ 추천 대상 ===== -->
+  <section class="hw-sec">
+    <div class="hw-center">
+      <span class="hw-eyebrow">Recommend</span>
+      <h2 class="hw-h2">이런 분께 추천합니다</h2>
+    </div>
+    <ul class="hw-reco">
+      <li>결절 등 부작용 걱정 없이 안전하게 시술받고 싶으신 분</li>
+      <li>피부결·탄력·보습·톤 등 전반적인 스킨 퀄리티 개선을 원하는 분</li>
+      <li>중안부(앞볼·팔자·옆볼)·마리오넷 볼륨을 자연스럽게 개선하고 싶으신 분</li>
+      <li>결혼식 등 중요한 일정을 앞두고 다운타임 없이 시술하고 싶으신 분</li>
+      <li>주사 흔적·엠보·멍 등 다운타임에 매우 민감하신 분</li>
+      <li>속건조를 효과적으로 개선하고 싶은 분</li>
+      <li>눈밑 꺼짐·눈물고랑을 결절 없이 자연스럽게 개선하고 싶으신 분</li>
+      <li>타 인젝터블·EBD 시술 전후 조직 상태 개선·회복이 필요하신 분</li>
+    </ul>
+  </section>
+
+  <!-- ===== ⑧ 시술 프로토콜 영상 ===== -->
+  <section class="hw-sec">
+    <div class="hw-center">
+      <span class="hw-eyebrow">Protocol Films</span>
+      <h2 class="hw-h2">시술 프로토콜 영상</h2>
+      <p class="hw-lead">전문 의료진의 시술 프로토콜과 3D 애니메이션으로 힐로웨이브를 확인하세요.</p>
+    </div>
+    <div class="hw-vids">
+      <div>
+        <div class="hw-video"><iframe src="https://www.youtube.com/embed/7FW0kzm6o1c" title="최호성 원장님 프로토콜" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <p class="hw-vcap">최호성 원장님 프로토콜</p>
+      </div>
+      <div>
+        <div class="hw-video"><iframe src="https://www.youtube.com/embed/ELA3BqF2DmY" title="정의철 원장님 프로토콜" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <p class="hw-vcap">정의철 원장님 프로토콜</p>
+      </div>
+      <div>
+        <div class="hw-video"><iframe src="https://www.youtube.com/embed/X77pVReoiuE" title="힐로웨이브 3D 애니메이션" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <p class="hw-vcap">힐로웨이브 3D 애니메이션</p>
+      </div>
+      <div>
+        <div class="hw-video"><iframe src="https://www.youtube.com/embed/CEldG0WL6ig" title="물성 비교 영상" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <p class="hw-vcap">물성 비교 영상</p>
+        <p class="hw-vnote">※ 일부공개 영상 (링크 보유자만 시청 가능)</p>
+      </div>
+      <div>
+        <div class="hw-video"><iframe src="https://www.youtube.com/embed/oWT0eyxQJpE" title="힐로웨이브 간략 영상" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <p class="hw-vcap">힐로웨이브 간략 소개</p>
+      </div>
+      <div>
+        <div class="hw-imgbox"><!--{{영상: 브랜드필름(가로형) - 유튜브 업로드 후 위 형식처럼 임베드하거나 아임웹 영상위젯 사용}}-->
+          <span class="hw-ph">브랜드필름 (가로형)<br>유튜브 업로드 후 임베드 또는<br>아임웹 영상 위젯으로 삽입</span>
+        </div>
+        <p class="hw-vcap">힐로웨이브 브랜드필름</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ⑨ 임상 근거 + Before/After ===== -->
+  <section class="hw-sec">
+    <div class="hw-center">
+      <span class="hw-eyebrow">Clinical Evidence</span>
+      <h2 class="hw-h2">과학적 근거로 검증된 피부 재생</h2>
+    </div>
+    <div class="hw-evi">
+      <h4>International Journal of Molecular Sciences, 2026</h4>
+      <p>Dual-HA Hybrid Complex(DHC<span class="hw-reg">®</span>)의 재생적 피부 리모델링 효과를 다중 전임상 모델에서 검증한 연구가
+        국제 학술지에 게재되었습니다. (Roh H, Nguyen NH, Hwang JK, et al. <i>Int. J. Mol. Sci.</i> 2026)</p>
+    </div>
+    <div class="hw-ba">
+      <figure>
+        <div class="hw-imgbox" style="min-height:300px"><!--{{IMG: 임상사례 Before/After 1}}-->
+          <img src="" alt="임상 사례 1"><span class="hw-ph">Before / After 임상 사진 1<br>(아임웹 업로드 후 링크 삽입)</span>
+        </div>
+        <figcaption>여성 40대 · 힐로웨이브<span class="hw-reg">®</span> 4cc (눈밑·앞볼·팔자·옆볼) — 1개월 후</figcaption>
+      </figure>
+      <figure>
+        <div class="hw-imgbox" style="min-height:300px"><!--{{IMG: 임상사례 Before/After 2}}-->
+          <img src="" alt="임상 사례 2"><span class="hw-ph">Before / After 임상 사진 2<br>(아임웹 업로드 후 링크 삽입)</span>
+        </div>
+        <figcaption>남성 30대 · 힐로웨이브<span class="hw-reg">®</span> 4cc (눈밑·앞볼·팔자·옆볼) — 1개월 후</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===== 시술 후 주의사항 ===== -->
+  <section class="hw-sec">
+    <div class="hw-center">
+      <span class="hw-eyebrow">Aftercare</span>
+      <h2 class="hw-h2">시술 후 주의사항</h2>
+      <p class="hw-lead">다운타임이 적은 시술이지만, 아래 사항을 지키면 회복과 효과에 도움이 됩니다.</p>
+    </div>
+    <ul class="hw-care">
+      <li>시술 후 1주일 정도는 음주·사우나·찜질·격한 운동을 피해주세요.</li>
+      <li>시술 부위를 강하게 문지르거나 압박하지 마세요.</li>
+      <li>시술 당일은 메이크업·세안 시 자극을 최소화해주세요.</li>
+      <li>충분한 수분 섭취와 보습으로 피부 컨디션을 유지해주세요.</li>
+      <li>강한 자외선 노출을 피하고 자외선 차단제를 사용해주세요.</li>
+      <li>붓기·멍이 있을 수 있으나 대부분 수일 내 자연스럽게 가라앉습니다.</li>
+    </ul>
+  </section>
+
+  <!-- ===== ⑩ FAQ ===== -->
+  <section class="hw-sec">
+    <div class="hw-center">
+      <span class="hw-eyebrow">FAQ</span>
+      <h2 class="hw-h2">자주 묻는 질문</h2>
+    </div>
+    <div class="hw-faq">
+      <details open>
+        <summary>힐로웨이브<span class="hw-reg">®</span>는 피부에 직접 주입 가능한 의료기기인가요?</summary>
+        <div class="hw-ans">네. 힐로웨이브<span class="hw-reg">®</span>, 힐로웨이브 id<span class="hw-reg">®</span>는 피부에 직접 주입 가능한 4등급 의료기기입니다. (일회용 멸균 제품으로 재사용 불가)</div>
+      </details>
+      <details>
+        <summary>1회 권장 시술 용량은 어떻게 되나요?</summary>
+        <div class="hw-ans">권장 시술 용량은 풀페이스 기준 4~6cc이며, 시술 범위와 환자 케이스에 따라 의료진 판단으로 용량을 조절할 수 있습니다.</div>
+      </details>
+      <details>
+        <summary>권장 시술 간격은 어떻게 되나요?</summary>
+        <div class="hw-ans">힐로웨이브<span class="hw-reg">®</span>는 3~6개월 간격 3회 시술, 힐로웨이브 id<span class="hw-reg">®</span>는 1~2개월 간격 반복 시술을 권장합니다. 반복 시술 시 유지 기간이 더 길어집니다.</div>
+      </details>
+      <details>
+        <summary>마취는 어떻게 하나요? 아프지 않나요?</summary>
+        <div class="hw-ans">통증이 낮은 편으로 마취 연고만으로도 충분히 받으실 수 있습니다. 다만 힐로웨이브<span class="hw-reg">®</span> 캐뉼라 시술 시 국소마취를 병행하기도 합니다.</div>
+      </details>
+      <details>
+        <summary>혈관 사고(실명·괴사) 위험은 없나요?</summary>
+        <div class="hw-ans">매우 낮은 가교율의 HA로 점성이 낮아 일반 HA필러 대비 혈관 사고 리스크가 매우 낮습니다. 정확한 타겟층에 주사하고 니들 시술 시 aspiration을 통해 리스크를 더욱 줄일 수 있습니다.</div>
+      </details>
+      <details>
+        <summary>다른 인젝터블·레이저(EBD) 시술과 함께 받아도 되나요?</summary>
+        <div class="hw-ans">RF·HIFU·다파장 레이저 등 다양한 EBD 시술과 컴바인 가능합니다. (당일 컴바인 시 레이저 시술 후 힐로웨이브 시술 권장) PN·PLLA·CaHA 등 타 스킨부스터와도 컴바인 가능하나, 동일 부위 HA필러는 시일 간격을 두고 시술하시길 권장합니다.</div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ===== ⑪ 품질 · 인증 ===== -->
+  <section class="hw-sec hw-center">
+    <span class="hw-eyebrow">Quality Assurance</span>
+    <h2 class="hw-h2">믿을 수 있는 품질과 인증</h2>
+    <p class="hw-lead">식품의약품안전처(MFDS) 허가와 국제 품질 인증을 획득한 제품입니다.</p>
+    <div class="hw-cert">
+      <div class="hw-imgbox"><img src="" alt="MFDS 제조허가증"><span class="hw-ph">MFDS<br>의료기기 제조 허가증</span></div>
+      <div class="hw-imgbox"><img src="" alt="MFDS 허가증"><span class="hw-ph">MFDS<br>의료기기 허가증</span></div>
+      <div class="hw-imgbox"><img src="" alt="GMP 적합인정서"><span class="hw-ph">제조·품질관리기준<br>적합 인정서</span></div>
+      <div class="hw-imgbox"><img src="" alt="ISO13485"><span class="hw-ph">ISO 13485:2016<br>Certificate</span></div>
+    </div>
+  </section>
+
+  <!-- ===== 의료광고 안내 문구 ===== -->
+  <p class="hw-disc">
+    ※ 본 시술의 효과 및 반응은 개인에 따라 차이가 있을 수 있으며, 부작용이 발생할 수 있습니다.<br>
+    이 제품은 ‘의료기기’이며, ‘사용상의 주의사항’과 ‘사용방법’을 잘 읽고 사용하십시오. 시술 전 반드시 전문 의료진과 충분한 상담을 받으시기 바랍니다.
+  </p>
+
+</div>
+
+<script>
+/* HILO WAVE - 라인 탭 전환 (IIFE로 격리, .hilo 범위 안에서만 동작) */
+(function(){
+  var root = document.currentScript ? document.currentScript.previousElementSibling : null;
+  // 안전하게 마지막 .hilo 컨테이너를 탐색
+  var containers = document.querySelectorAll('.hilo');
+  var c = containers[containers.length - 1];
+  if(!c) return;
+  var tabs = c.querySelectorAll('.hw-tab');
+  var panels = c.querySelectorAll('.hw-panel');
+  tabs.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      var key = tab.getAttribute('data-tab');
+      tabs.forEach(function(t){ t.classList.remove('is-active'); });
+      panels.forEach(function(p){ p.classList.remove('is-active'); });
+      tab.classList.add('is-active');
+      var target = c.querySelector('.hw-panel[data-panel="'+key+'"]');
+      if(target) target.classList.add('is-active');
+    });
+  });
+  // 내부 앵커 부드러운 스크롤
+  c.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var id = a.getAttribute('href').slice(1);
+      var el = document.getElementById(id);
+      if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'}); }
+    });
+  });
+})();
+</script>
