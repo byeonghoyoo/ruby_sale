@@ -5,22 +5,25 @@
 ======================================================================
   [사용법]
   1. 아임웹 편집화면 → "코드 입력" 또는 "HTML" 위젯 추가
-  2. 이 주석을 제외한 <link> 부터 마지막 </div> 까지 전체 복사 후 붙여넣기
-  3. 이미지는 직접 삽입이 아닌 "링크(URL)" 방식입니다.
-     → 아임웹에 이미지를 업로드한 뒤 그 주소를 {{IMG: ...}} 부분의
-        src="" 에 넣으세요. (값이 비어있으면 회색 자리표시자가 보입니다)
-  4. {{ }} 로 표시된 텍스트만 최종본에 맞게 다듬으면 됩니다.
+  2. 이 주석을 제외한 <link> 부터 마지막 </script> 까지 전체 복사 후 붙여넣기
+  3. {{ }} 로 표시된 텍스트만 최종본에 맞게 다듬으면 됩니다.
 
   [특징]
   - 외부 라이브러리 의존성 없음 (Pretendard 폰트 + 유튜브 임베드만 사용)
   - 모든 CSS가 .hilo 로 스코프 → 아임웹 기본 스타일과 충돌 없음
-  - JS는 IIFE로 격리, .hilo 범위 안에서만 동작 (탭 전환 / 부드러운 스크롤)
+  - JS는 IIFE로 격리, .hilo 범위 안에서만 동작 (라인 탭 전환 / 부드러운 스크롤)
   - FAQ는 <details> 로 무(無)JS 동작, 모바일 반응형
 
-  [영상]
-  - 프로토콜 영상 5종은 유튜브 임베드로 삽입됨
-  - 브랜드필름(가로/세로 mp4)은 구글드라이브에 있으니, 아임웹에 업로드 후
-    ⑧영상 섹션 상단 자리에 추가하거나 유튜브에 올려 임베드하세요.
+  [히어로 배경 영상]
+  - 힐로웨이브 3D 애니메이션(youtu.be/X77pVReoiuE)이 자동재생·무음·반복으로 깔림
+  - 타 병원 프로토콜 영상은 사용하지 않음 (디자인 참고용)
+
+  [이미지 — 링크(URL) 방식]
+  - 제품컷: 구글드라이브 직접링크(thumbnail)로 연결되어 있음.
+    → 드라이브의 해당 폴더/파일을 "링크가 있는 모든 사용자(보기)"로 공개하면 표시됩니다.
+    → 운영 배포 시에는 아임웹에 이미지를 업로드하고 그 주소로 src 를 교체하는 것을 권장.
+  - 임상 Before/After, 인증서: 민감/특정 자료라 빈 자리표시자로 둠.
+    아임웹 업로드 후 해당 <img> 의 src="" 에 주소를 넣으세요.
 ======================================================================
 -->
 
@@ -65,24 +68,23 @@
 .hilo .hw-imgbox .hw-ph{color:#8aa7b3;font-size:13px;text-align:center;padding:16px;}
 .hilo .hw-imgbox img[src=""],.hilo .hw-imgbox img:not([src]){display:none;}
 
-/* 버튼 */
-.hilo .hw-btn{display:inline-block;background:var(--hw-aqua);color:#fff;font-weight:800;font-size:16px;
-  padding:16px 42px;border-radius:999px;text-decoration:none;transition:transform .15s,box-shadow .15s;
-  box-shadow:0 8px 24px rgba(22,182,207,.35);}
-.hilo .hw-btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(22,182,207,.45);}
-.hilo .hw-btn-ghost{background:transparent;border:1.5px solid #fff;color:#fff;box-shadow:none;}
-
-/* ① 히어로 */
+/* ① 히어로 (영상 배경) */
 .hilo .hw-hero{position:relative;background:var(--hw-grad);border-radius:var(--hw-radius);
-  color:#fff;text-align:center;padding:90px 24px;margin-top:24px;overflow:hidden;}
-.hilo .hw-hero::after{content:"";position:absolute;left:-10%;right:-10%;bottom:-40%;height:80%;
-  background:radial-gradient(ellipse at center,rgba(63,208,227,.35),transparent 70%);}
-.hilo .hw-hero > *{position:relative;z-index:1;}
-.hilo .hw-hero .hw-brand{font-size:15px;font-weight:700;letter-spacing:.3em;opacity:.85;margin-bottom:18px;}
-.hilo .hw-hero h1{font-size:52px;font-weight:900;line-height:1.15;margin:0 0 18px;letter-spacing:-.02em;}
-.hilo .hw-hero h1 small{display:block;font-size:20px;font-weight:600;opacity:.9;letter-spacing:.05em;margin-top:10px;}
-.hilo .hw-hero p{font-size:18px;opacity:.92;max-width:620px;margin:0 auto 32px;}
-.hilo .hw-pill{display:inline-block;background:rgba(255,255,255,.16);backdrop-filter:blur(4px);
+  color:#fff;text-align:center;padding:120px 24px;margin-top:24px;overflow:hidden;
+  min-height:520px;display:flex;align-items:center;justify-content:center;}
+/* 배경 영상 레이어 (16:9 커버) */
+.hilo .hw-hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;}
+.hilo .hw-hero-bg iframe{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:100%;height:100%;min-width:177.78vh;min-height:56.25vw;border:0;}
+/* 가독성 오버레이 (영상 위 그라데이션) */
+.hilo .hw-hero-overlay{position:absolute;inset:0;z-index:1;
+  background:linear-gradient(135deg,rgba(8,32,52,.86) 0%,rgba(12,64,86,.7) 55%,rgba(22,182,207,.5) 100%);}
+.hilo .hw-hero-inner{position:relative;z-index:2;width:100%;}
+.hilo .hw-hero .hw-brand{font-size:15px;font-weight:700;letter-spacing:.3em;opacity:.9;margin-bottom:18px;}
+.hilo .hw-hero h1{font-size:52px;font-weight:900;line-height:1.15;margin:0 0 18px;letter-spacing:-.02em;text-shadow:0 2px 20px rgba(0,0,0,.25);}
+.hilo .hw-hero h1 small{display:block;font-size:20px;font-weight:600;opacity:.92;letter-spacing:.05em;margin-top:10px;}
+.hilo .hw-hero p{font-size:18px;opacity:.95;max-width:620px;margin:0 auto;text-shadow:0 1px 12px rgba(0,0,0,.3);}
+.hilo .hw-pill{display:inline-block;background:rgba(255,255,255,.18);backdrop-filter:blur(4px);
   font-size:13px;font-weight:700;padding:8px 18px;border-radius:999px;margin-bottom:24px;}
 
 /* 영상 임베드 (16:9 반응형) */
@@ -166,11 +168,6 @@
 .hilo .hw-reco li::before{content:"✓";flex:0 0 auto;width:26px;height:26px;border-radius:50%;
   background:var(--hw-soft);color:var(--hw-aqua);font-weight:900;display:flex;align-items:center;justify-content:center;font-size:14px;margin-top:2px;}
 
-/* ⑧ 영상 그리드 */
-.hilo .hw-vids{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;margin-top:34px;}
-.hilo .hw-vids .hw-vcap{margin:12px 2px 0;font-size:15px;font-weight:700;color:var(--hw-navy);}
-.hilo .hw-vids .hw-vnote{font-size:13px;color:var(--hw-gray);margin:2px 2px 0;}
-
 /* ⑨ 임상 */
 .hilo .hw-evi{background:var(--hw-soft);border-radius:var(--hw-radius);padding:30px 28px;margin-top:30px;}
 .hilo .hw-evi h4{margin:0 0 8px;font-size:17px;color:var(--hw-navy);font-weight:800;}
@@ -193,17 +190,15 @@
 .hilo .hw-cert{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:30px;}
 .hilo .hw-cert .hw-imgbox{min-height:150px;}
 
-/* ⑫ CTA */
-.hilo .hw-cta{text-align:center;background:var(--hw-grad);border-radius:var(--hw-radius);padding:64px 24px;margin-top:40px;}
-.hilo .hw-cta h2{color:#fff;font-size:30px;font-weight:900;margin:0 0 12px;}
-.hilo .hw-cta p{color:rgba(255,255,255,.9);margin:0 0 28px;font-size:17px;}
-
 /* 안내문구 */
 .hilo .hw-disc{font-size:12.5px;color:#9aa9b2;text-align:center;padding:34px 0 16px;line-height:1.7;}
 
 /* 반응형 */
 @media (max-width:860px){
-  .hilo .hw-3col,.hilo .hw-dhc,.hilo .hw-min,.hilo .hw-vids,.hilo .hw-cert,.hilo .hw-reco,.hilo .hw-ba{grid-template-columns:1fr;}
+  .hilo .hw-3col,.hilo .hw-dhc,.hilo .hw-min,.hilo .hw-cert,.hilo .hw-reco,.hilo .hw-ba{grid-template-columns:1fr;}
+  .hilo .hw-info{grid-template-columns:repeat(2,1fr);}
+  .hilo .hw-info > div{border-bottom:1px solid var(--hw-line);}
+  .hilo .hw-care{grid-template-columns:1fr;}
   .hilo .hw-prod{grid-template-columns:1fr;gap:24px;}
   .hilo .hw-cert{grid-template-columns:repeat(2,1fr);}
   .hilo .hw-hero{padding:64px 18px;}
@@ -215,14 +210,23 @@
 
 <div class="hilo">
 
-  <!-- ===== ① 히어로 ===== -->
+  <!-- ===== ① 히어로 (3D 영상 배경) ===== -->
   <section class="hw-hero">
-    <div class="hw-brand">HILO WAVE<span class="hw-reg">®</span> &nbsp;·&nbsp; HIGHER</div>
-    <div class="hw-pill">Dual-HA Collagen Booster</div>
-    <h1>WAVE into your skin
-      <small>피부 환경을 바꾸는 새로운 기준, 힐로웨이브</small>
-    </h1>
-    <p>채우지도(Filling), 자극하지도(Stimulating) 않습니다. 피부 환경 자체를 <b>조절(Modulating)</b>하는<br>Dual-HA 콜라겐 부스터로 자연스러운 볼륨과 피부결을 동시에.</p>
+    <!-- 배경 영상: 힐로웨이브 3D 애니메이션 (자동재생/무음/반복) -->
+    <div class="hw-hero-bg">
+      <iframe src="https://www.youtube.com/embed/X77pVReoiuE?autoplay=1&mute=1&loop=1&playlist=X77pVReoiuE&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&disablekb=1"
+        title="힐로웨이브 3D 애니메이션 배경" frameborder="0"
+        allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+    <div class="hw-hero-overlay"></div>
+    <div class="hw-hero-inner">
+      <div class="hw-brand">HILO WAVE<span class="hw-reg">®</span> &nbsp;·&nbsp; HIGHER</div>
+      <div class="hw-pill">Dual-HA Collagen Booster</div>
+      <h1>WAVE into your skin
+        <small>피부 환경을 바꾸는 새로운 기준, 힐로웨이브</small>
+      </h1>
+      <p>채우지도(Filling), 자극하지도(Stimulating) 않습니다. 피부 환경 자체를 <b>조절(Modulating)</b>하는<br>Dual-HA 콜라겐 부스터로 자연스러운 볼륨과 피부결을 동시에.</p>
+    </div>
   </section>
 
   <!-- ===== 인트로 (SEO 정보성 리드) ===== -->
@@ -310,8 +314,8 @@
 
     <div class="hw-panel is-active" data-panel="wave">
       <div class="hw-prod">
-        <div class="hw-imgbox"><!--{{IMG: 힐로웨이브 제품컷 - 아임웹 업로드 후 src에 주소}}-->
-          <img src="" alt="힐로웨이브 제품 이미지"><span class="hw-ph">힐로웨이브<sup>®</sup> 제품 이미지<br>(아임웹 업로드 후 링크 삽입)</span>
+        <div class="hw-imgbox"><!-- 드라이브 직접링크(공개 필요). 단독 제품컷으로 교체 권장 -->
+          <img src="https://drive.google.com/thumbnail?id=1ygJ7jMczAFUKCcTwKdnUAmYd0jqMUNn3&sz=w1200" alt="힐로웨이브 제품 이미지"><span class="hw-ph">힐로웨이브<sup>®</sup> 제품 이미지<br>(드라이브 폴더 공개 시 표시)</span>
         </div>
         <div>
           <p class="hw-name">힐로웨이브<span class="hw-reg">®</span></p>
@@ -331,8 +335,8 @@
 
     <div class="hw-panel" data-panel="id">
       <div class="hw-prod">
-        <div class="hw-imgbox"><!--{{IMG: 힐로웨이브 id 제품컷 - 아임웹 업로드 후 src에 주소}}-->
-          <img src="" alt="힐로웨이브 id 제품 이미지"><span class="hw-ph">힐로웨이브 id<sup>®</sup> 제품 이미지<br>(아임웹 업로드 후 링크 삽입)</span>
+        <div class="hw-imgbox"><!-- 드라이브 직접링크(공개 필요) -->
+          <img src="https://drive.google.com/thumbnail?id=1BRXVIOQrZN52CmFubFpMGKnpn_5-JzOw&sz=w1200" alt="힐로웨이브 id 제품 이미지"><span class="hw-ph">힐로웨이브 id<sup>®</sup> 제품 이미지<br>(드라이브 폴더 공개 시 표시)</span>
         </div>
         <div>
           <p class="hw-name">힐로웨이브 id<span class="hw-reg">®</span></p>
@@ -396,44 +400,6 @@
       <li>눈밑 꺼짐·눈물고랑을 결절 없이 자연스럽게 개선하고 싶으신 분</li>
       <li>타 인젝터블·EBD 시술 전후 조직 상태 개선·회복이 필요하신 분</li>
     </ul>
-  </section>
-
-  <!-- ===== ⑧ 시술 프로토콜 영상 ===== -->
-  <section class="hw-sec">
-    <div class="hw-center">
-      <span class="hw-eyebrow">Protocol Films</span>
-      <h2 class="hw-h2">시술 프로토콜 영상</h2>
-      <p class="hw-lead">전문 의료진의 시술 프로토콜과 3D 애니메이션으로 힐로웨이브를 확인하세요.</p>
-    </div>
-    <div class="hw-vids">
-      <div>
-        <div class="hw-video"><iframe src="https://www.youtube.com/embed/7FW0kzm6o1c" title="최호성 원장님 프로토콜" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-        <p class="hw-vcap">최호성 원장님 프로토콜</p>
-      </div>
-      <div>
-        <div class="hw-video"><iframe src="https://www.youtube.com/embed/ELA3BqF2DmY" title="정의철 원장님 프로토콜" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-        <p class="hw-vcap">정의철 원장님 프로토콜</p>
-      </div>
-      <div>
-        <div class="hw-video"><iframe src="https://www.youtube.com/embed/X77pVReoiuE" title="힐로웨이브 3D 애니메이션" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-        <p class="hw-vcap">힐로웨이브 3D 애니메이션</p>
-      </div>
-      <div>
-        <div class="hw-video"><iframe src="https://www.youtube.com/embed/CEldG0WL6ig" title="물성 비교 영상" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-        <p class="hw-vcap">물성 비교 영상</p>
-        <p class="hw-vnote">※ 일부공개 영상 (링크 보유자만 시청 가능)</p>
-      </div>
-      <div>
-        <div class="hw-video"><iframe src="https://www.youtube.com/embed/oWT0eyxQJpE" title="힐로웨이브 간략 영상" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-        <p class="hw-vcap">힐로웨이브 간략 소개</p>
-      </div>
-      <div>
-        <div class="hw-imgbox"><!--{{영상: 브랜드필름(가로형) - 유튜브 업로드 후 위 형식처럼 임베드하거나 아임웹 영상위젯 사용}}-->
-          <span class="hw-ph">브랜드필름 (가로형)<br>유튜브 업로드 후 임베드 또는<br>아임웹 영상 위젯으로 삽입</span>
-        </div>
-        <p class="hw-vcap">힐로웨이브 브랜드필름</p>
-      </div>
-    </div>
   </section>
 
   <!-- ===== ⑨ 임상 근거 + Before/After ===== -->
