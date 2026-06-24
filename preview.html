@@ -69,6 +69,7 @@
 .hilo .hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;}
 .hilo .hero-bg iframe{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
   width:100%;height:100%;min-width:177.78vh;min-height:56.25vw;border:0;}
+.hilo .hero-bg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
 .hilo .hero-ov{position:absolute;inset:0;z-index:1;
   background:radial-gradient(120% 120% at 50% 25%,rgba(30,20,90,.4),rgba(12,10,35,.84));}
 .hilo .hero-in{position:relative;z-index:2;width:100%;}
@@ -251,8 +252,14 @@
   <!-- ① 히어로 -->
   <section class="hero">
     <div class="hero-bg">
-      <iframe src="https://www.youtube.com/embed/X77pVReoiuE?autoplay=1&mute=1&loop=1&playlist=X77pVReoiuE&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&disablekb=1"
-        title="HILO WAVE 3D" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      <!-- 배경 영상: 자동재생/무음/반복. poster = 로딩 전 표시 이미지(0624.png).
+           ⚠️ 아래 src는 임시 드라이브 링크 — 25MB↑ 영상은 재생이 안 될 수 있습니다.
+           R2 업로드 후 src를 R2 URL로 교체하면 정상 재생됩니다. (webm도 추가 권장) -->
+      <video autoplay muted loop playsinline preload="auto"
+        poster="https://drive.google.com/thumbnail?id=1Xt4C3ZkWTWKy2GH6Sn6IXBbgXWbLIQ3b&sz=w1600">
+        <!-- <source src="{{R2_VIDEO_URL}}.webm" type="video/webm"> -->
+        <source src="https://drive.google.com/uc?export=download&id=1kCkzwTKoUb3WpaDqvqSDwf20K5FHJ6BI" type="video/mp4">
+      </video>
     </div>
     <div class="hero-ov"></div>
     <div class="hero-in">
