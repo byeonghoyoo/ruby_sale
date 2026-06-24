@@ -47,15 +47,14 @@
 /* 이미지 박스 */
 .hilo .img{position:relative;width:100%;aspect-ratio:4/3;background:linear-gradient(135deg,#ece9fb,#dfe6fb);
   border-radius:var(--r);overflow:hidden;}
-.hilo .img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;
-  transition:transform .6s cubic-bezier(.2,.7,.2,1);will-change:transform;}
-.hilo .img.is-hover img{transform:scale(1.08);}
+.hilo .img img{position:absolute;left:0;top:-10%;width:100%;height:120%;object-fit:cover;z-index:1;
+  transform:translateY(var(--py,0));will-change:transform;}
 .hilo .img .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;
   padding:18px;color:#9b9ec7;font-size:13px;letter-spacing:.02em;z-index:0;}
 .hilo .img img[src=""],.hilo .img img:not([src]){display:none;}
 .hilo .img::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0;transition:opacity .45s;
   background:linear-gradient(180deg,rgba(90,69,214,.05),rgba(20,18,40,.22));}
-.hilo .img.is-hover::after{opacity:1;}
+.hilo .img:hover::after{opacity:1;}
 
 /* 풀폭 밴드 이미지 */
 .hilo .band{width:100%;aspect-ratio:21/9;border-radius:var(--r);margin-top:44px;}
@@ -139,7 +138,8 @@
   font-size:78px;font-weight:900;font-style:normal;color:rgba(255,255,255,.13);z-index:0;}
 .hilo .point .pt-vis .ph{position:relative;z-index:1;max-width:84%;color:rgba(255,255,255,.85);font-size:13px;line-height:1.7;letter-spacing:.01em;}
 .hilo .point .pt-vis .ph b{display:block;font-size:11px;font-weight:800;color:var(--aqua-2);letter-spacing:.14em;margin-bottom:7px;}
-.hilo .point .pt-vis img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2;}
+.hilo .point .pt-vis img{position:absolute;left:0;top:-10%;width:100%;height:120%;object-fit:cover;z-index:2;
+  transform:translateY(var(--py,0));will-change:transform;}
 .hilo .point .pt-vis img[src=""],.hilo .point .pt-vis img:not([src]){display:none;}
 
 /* 시술 정보 */
@@ -207,9 +207,9 @@
 @keyframes hw-bounce{0%,100%{transform:translateY(0);opacity:.65;}50%{transform:translateY(7px);opacity:1;}}
 .hilo .scroll-cue{animation:hw-bounce 2s ease-in-out infinite;}
 /* 효과 원: 스크롤 진입 시 양옆에서 가운데로 모임 */
-.hilo.js-reveal .circles .c{transition:transform 1.05s cubic-bezier(.16,.84,.3,1),opacity .7s ease;}
-.hilo.js-reveal .circles .c1{transform:translateX(-90px);opacity:.4;}
-.hilo.js-reveal .circles .c2{transform:translateX(90px);opacity:.4;}
+.hilo.js-reveal .circles .c{transition:transform 1.15s cubic-bezier(.16,.84,.3,1),opacity .8s ease;}
+.hilo.js-reveal .circles .c1{transform:translateX(-150px);opacity:0;}
+.hilo.js-reveal .circles .c2{transform:translateX(150px);opacity:0;}
 .hilo.js-reveal .circles.in .c1,.hilo.js-reveal .circles.in .c2{transform:translateX(0);opacity:1;}
 .hilo .pill{position:relative;overflow:hidden;}
 .hilo .pill::after{content:"";position:absolute;top:0;left:-70%;width:45%;height:100%;transform:skewX(-20deg);
@@ -491,18 +491,27 @@
     });
   });
 
-  c.querySelectorAll('.img').forEach(function(box){
-    var im = box.querySelector('img');
-    if(!im) return;
-    box.addEventListener('mouseenter', function(){ box.classList.add('is-hover'); });
-    box.addEventListener('mousemove', function(e){
+  /* 스크롤 반응형 패럴럭스 — 이미지가 스크롤에 따라 미세하게 움직임 */
+  var paraEls = c.querySelectorAll('.img img, .pt-vis img');
+  var ticking = false;
+  function updatePara(){
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    paraEls.forEach(function(im){
+      var box = im.parentElement;
       var r = box.getBoundingClientRect();
-      var x = ((e.clientX - r.left) / r.width  - 0.5) * -14;
-      var y = ((e.clientY - r.top)  / r.height - 0.5) * -14;
-      im.style.transform = 'scale(1.08) translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px)';
+      if(r.bottom < -80 || r.top > vh + 80) return;
+      var prog = (r.top + r.height/2) / vh;   /* 0(상단)~1(하단) */
+      var shift = (0.5 - prog) * 12;           /* ±6% */
+      im.style.setProperty('--py', shift.toFixed(2) + '%');
     });
-    box.addEventListener('mouseleave', function(){ box.classList.remove('is-hover'); im.style.transform = ''; });
-  });
+    ticking = false;
+  }
+  function onScroll(){ if(!ticking){ ticking = true; requestAnimationFrame(updatePara); } }
+  if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)){
+    window.addEventListener('scroll', onScroll, {passive:true});
+    window.addEventListener('resize', onScroll);
+    updatePara();
+  }
 
   if('IntersectionObserver' in window){
     c.classList.add('js-reveal');
@@ -520,6 +529,8 @@
           if(tx){ tx.classList.add(rev ? 'rv-l' : 'rv-r'); out.push(tx); }
         } else if(ch.classList.contains('points')){
           Array.prototype.forEach.call(ch.querySelectorAll('.point'), function(p){ out.push(p); });
+        } else if(ch.classList.contains('circles')){
+          /* 원은 별도 수렴 모션으로 처리 (일반 등장효과 제외) */
         } else { out.push(ch); }
       });
     }
@@ -541,6 +552,8 @@
     c.querySelectorAll('.img, .band, .pt-vis').forEach(function(m){
       m.classList.add('reveal-media'); io.observe(m);
     });
+    /* 효과 원: 화면에 들어오면 양옆에서 가운데로 수렴 */
+    c.querySelectorAll('.circles').forEach(function(el){ io.observe(el); });
   }
 })();
 </script>
