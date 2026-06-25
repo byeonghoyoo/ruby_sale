@@ -101,6 +101,20 @@
 .skv .bars .age{font-size:19px;font-weight:700;}
 .skv .bars .en{font-size:12.5px;font-weight:700;letter-spacing:.06em;color:var(--teal);}
 .skv .micro-note{font-size:12px;color:#9bafb2;text-align:center;margin-top:20px;}
+/* 글래스 렌즈 호버(물방울) — 포인터 추적, backdrop-filter 굴절 흉내 (아임웹 호환) */
+.skv .lensfx{position:relative;}
+.skv .glass-lens{position:absolute;left:0;top:0;width:190px;height:190px;margin:-95px 0 0 -95px;border-radius:50%;
+  pointer-events:none;z-index:6;opacity:0;will-change:transform;
+  -webkit-backdrop-filter:blur(7px) saturate(1.35) brightness(1.07);backdrop-filter:blur(7px) saturate(1.35) brightness(1.07);
+  background:radial-gradient(circle at 33% 27%,rgba(255,255,255,.55),rgba(255,255,255,.08) 44%,rgba(255,255,255,0) 62%);
+  border:1px solid rgba(255,255,255,.55);
+  box-shadow:inset 7px 11px 26px rgba(255,255,255,.3),inset -6px -10px 26px rgba(10,90,100,.12),0 18px 42px rgba(10,90,100,.26);
+  transition:opacity .4s var(--ease),width .35s var(--spring),height .35s var(--spring);}
+.skv .glass-lens::after{content:"";position:absolute;inset:-1px;border-radius:50%;pointer-events:none;
+  box-shadow:inset 2px 0 7px rgba(255,40,90,.2),inset -2px 0 7px rgba(0,170,255,.2);}
+.skv .glass-lens::before{content:"";position:absolute;left:22%;top:16%;width:30%;height:22%;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.85),rgba(255,255,255,0) 70%);pointer-events:none;}
+.skv .lensfx.hot .glass-lens{opacity:1;width:210px;height:210px;margin:-105px 0 0 -105px;}
 
 /* 좌우 분할 */
 .skv .split{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
@@ -192,12 +206,13 @@
 .skv .facts .f:nth-last-child(-n+3){border-bottom:none;}
 .skv .facts .f .fxbg{position:absolute;inset:0;z-index:0;overflow:hidden;}
 .skv .facts .f .fxbg video{position:absolute;left:50%;top:50%;min-width:100%;min-height:100%;width:auto;height:auto;
-  transform:translate(-50%,-50%);object-fit:cover;opacity:.5;}
+  transform:translate(-50%,-50%);object-fit:cover;opacity:.92;}
 .skv .facts .f::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:linear-gradient(180deg,rgba(255,255,255,.58),rgba(240,250,251,.8));}
-.skv .facts .f .l{position:relative;z-index:2;font-size:12px;color:var(--faint);margin-bottom:8px;letter-spacing:.03em;}
-.skv .facts .f .v{position:relative;z-index:2;font-size:18px;font-weight:800;
-  background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  background:linear-gradient(110deg,rgba(255,255,255,.72) 0%,rgba(255,255,255,.42) 46%,rgba(240,250,251,.2) 100%);}
+.skv .facts .f .l{position:relative;z-index:2;font-size:12px;color:var(--gray);margin-bottom:8px;letter-spacing:.03em;
+  text-shadow:0 1px 3px rgba(255,255,255,.85);}
+.skv .facts .f .v{position:relative;z-index:2;font-size:18px;font-weight:800;color:var(--teal-dd);
+  text-shadow:0 1px 4px rgba(255,255,255,.9);}
 
 /* ⑩ 주의사항 */
 .skv .care{display:grid;grid-template-columns:1fr 1fr;gap:6px 40px;}
@@ -276,7 +291,7 @@
   </section>
 
   <!-- ② 인트로 — HA 감소 -->
-  <section class="sec center">
+  <section class="sec center lensfx">
     <p class="idx reveal">HYALURONIC ACID</p>
     <h2 class="h2 reveal">나이가 들수록<br><span class="thin">줄어드는 히알루론산</span></h2>
     <p class="lead reveal">히알루론산은 피부 진피층에 가장 많이 존재하는 구성 요소입니다. 나이와 자외선 노출 등으로 콜라겐과 히알루론산이 점차 감소하면서 미세주름과 피부 거칠기가 나타납니다.</p>
@@ -577,6 +592,24 @@
   c.querySelectorAll('.stag').forEach(function(g){
     Array.prototype.forEach.call(g.children, function(ch,i){ ch.style.transitionDelay = (i*0.09).toFixed(2)+'s'; });
   });
+
+  /* 글래스 렌즈(물방울) — 포인터를 부드럽게 따라다님 (backdrop-filter, 아임웹 호환) */
+  var canHover = window.matchMedia && window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+  if(!reduce && canHover){
+    c.querySelectorAll('.lensfx').forEach(function(sec){
+      var lens = document.createElement('span'); lens.className = 'glass-lens';
+      sec.appendChild(lens);
+      var tx=0,ty=0,cx=0,cy=0,active=false,raf=null;
+      function loop(){
+        cx += (tx-cx)*0.16; cy += (ty-cy)*0.16;          /* 보간(damping) */
+        lens.style.transform = 'translate('+cx.toFixed(1)+'px,'+cy.toFixed(1)+'px)';
+        if(active || Math.abs(tx-cx)>0.4 || Math.abs(ty-cy)>0.4){ raf = requestAnimationFrame(loop); } else { raf=null; }
+      }
+      sec.addEventListener('pointerenter', function(e){ var r=sec.getBoundingClientRect(); cx=tx=e.clientX-r.left; cy=ty=e.clientY-r.top; active=true; sec.classList.add('hot'); if(!raf) loop(); });
+      sec.addEventListener('pointermove', function(e){ var r=sec.getBoundingClientRect(); tx=e.clientX-r.left; ty=e.clientY-r.top; if(!raf) loop(); });
+      sec.addEventListener('pointerleave', function(){ active=false; sec.classList.remove('hot'); });
+    });
+  }
 
   /* 시술정보 배경영상 — 섹션이 화면에 보일 때만 재생/정지 (성능 최적화) */
   if(!reduce){
