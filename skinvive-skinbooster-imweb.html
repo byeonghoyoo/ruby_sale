@@ -108,16 +108,23 @@
 .skv .lensfx{position:relative;}
 .skv .glass-lens{position:absolute;left:0;top:0;width:190px;height:190px;margin:-95px 0 0 -95px;border-radius:50%;
   pointer-events:none;z-index:6;opacity:0;will-change:transform;
-  -webkit-backdrop-filter:blur(7px) saturate(1.35) brightness(1.07);backdrop-filter:blur(7px) saturate(1.35) brightness(1.07);
-  background:radial-gradient(circle at 33% 27%,rgba(255,255,255,.55),rgba(255,255,255,.08) 44%,rgba(255,255,255,0) 62%);
-  border:1px solid rgba(255,255,255,.55);
-  box-shadow:inset 7px 11px 26px rgba(255,255,255,.3),inset -6px -10px 26px rgba(10,90,100,.12),0 18px 42px rgba(10,90,100,.26);
+  -webkit-backdrop-filter:blur(1.4px) saturate(1.55) brightness(1.03) contrast(1.05);
+  backdrop-filter:blur(1.4px) saturate(1.55) brightness(1.03) contrast(1.05);
+  background:radial-gradient(circle at 35% 28%,rgba(255,255,255,.3),rgba(255,255,255,.04) 46%,rgba(255,255,255,0) 66%);
+  border:1.5px solid rgba(255,255,255,.7);
+  box-shadow:
+    inset 9px 13px 32px rgba(255,255,255,.5),
+    inset -11px -15px 36px rgba(10,90,100,.2),
+    inset 0 0 0 1px rgba(255,255,255,.3),
+    0 24px 52px rgba(10,90,100,.32);
   transition:opacity .4s var(--ease),width .35s var(--spring),height .35s var(--spring);}
+/* 색수차(가장자리 무지개 굴절) */
 .skv .glass-lens::after{content:"";position:absolute;inset:-1px;border-radius:50%;pointer-events:none;
-  box-shadow:inset 2px 0 7px rgba(255,40,90,.2),inset -2px 0 7px rgba(0,170,255,.2);}
-.skv .glass-lens::before{content:"";position:absolute;left:22%;top:16%;width:30%;height:22%;border-radius:50%;
-  background:radial-gradient(circle,rgba(255,255,255,.85),rgba(255,255,255,0) 70%);pointer-events:none;}
-.skv .lensfx.hot .glass-lens{opacity:1;width:210px;height:210px;margin:-105px 0 0 -105px;}
+  box-shadow:inset 3px 0 9px rgba(255,40,90,.28),inset -3px 0 9px rgba(0,170,255,.28),inset 0 3px 9px rgba(120,255,180,.16);}
+/* 정반사 하이라이트(유리 윗면 광택) */
+.skv .glass-lens::before{content:"";position:absolute;left:20%;top:14%;width:34%;height:26%;border-radius:50%;
+  transform:rotate(-18deg);background:radial-gradient(circle,rgba(255,255,255,.95),rgba(255,255,255,0) 72%);pointer-events:none;}
+.skv .lensfx.hot .glass-lens{opacity:1;width:212px;height:212px;margin:-106px 0 0 -106px;}
 
 /* 좌우 분할 */
 .skv .split{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
@@ -204,18 +211,20 @@
 /* ⑦ 시술정보 facts */
 .skv .facts{display:grid;grid-template-columns:repeat(3,1fr);margin-top:30px;border-radius:var(--r);overflow:hidden;
   border:1px solid var(--line);box-shadow:var(--shadow);background:#fff;}
-.skv .facts .f{position:relative;overflow:hidden;padding:28px 24px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);}
+.skv .facts .f{position:relative;overflow:hidden;min-height:158px;padding:30px 24px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+  border-right:1px solid var(--line);border-bottom:1px solid var(--line);}
 .skv .facts .f:nth-child(3n){border-right:none;}
 .skv .facts .f:nth-last-child(-n+3){border-bottom:none;}
 .skv .facts .f .fxbg{position:absolute;inset:0;z-index:0;overflow:hidden;}
 .skv .facts .f .fxbg video{position:absolute;left:50%;top:50%;min-width:100%;min-height:100%;width:auto;height:auto;
   transform:translate(-50%,-50%);object-fit:cover;opacity:.92;}
 .skv .facts .f::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:linear-gradient(110deg,rgba(255,255,255,.72) 0%,rgba(255,255,255,.42) 46%,rgba(240,250,251,.2) 100%);}
-.skv .facts .f .l{position:relative;z-index:2;font-size:12px;color:var(--gray);margin-bottom:8px;letter-spacing:.03em;
-  text-shadow:0 1px 3px rgba(255,255,255,.85);}
-.skv .facts .f .v{position:relative;z-index:2;font-size:18px;font-weight:800;color:var(--teal-dd);
-  text-shadow:0 1px 4px rgba(255,255,255,.9);}
+  background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(240,250,251,.4));}
+.skv .facts .f .l{position:relative;z-index:2;font-size:14px;font-weight:600;color:var(--gray);margin-bottom:10px;letter-spacing:.02em;
+  text-shadow:0 1px 4px rgba(255,255,255,.95);}
+.skv .facts .f .v{position:relative;z-index:2;font-size:24px;font-weight:900;color:var(--teal-dd);letter-spacing:-0.02em;
+  text-shadow:0 1px 6px rgba(255,255,255,1);}
 
 /* ⑩ 주의사항 */
 .skv .care{display:grid;grid-template-columns:1fr 1fr;gap:6px 40px;}
@@ -418,7 +427,7 @@
   <section class="sec center">
     <p class="idx reveal">AT A GLANCE</p>
     <h2 class="h2 reveal">시술 정보 한눈에</h2>
-    <div class="facts stag" style="text-align:left;">
+    <div class="facts stag">
       <div class="f"><span class="fxbg"><video class="fxv" autoplay muted loop playsinline preload="auto"><source src="https://cdn.jsdelivr.net/gh/byeonghoyoo/ruby_sale@672c34e8ecb3c81c0b1e80b966f05950b8bc7815/assets/skinvive-fx1.mp4" type="video/mp4"></video></span><div class="l">시술 시간</div><div class="v">약 10~20분</div></div>
       <div class="f"><span class="fxbg"><video class="fxv" autoplay muted loop playsinline preload="auto"><source src="https://cdn.jsdelivr.net/gh/byeonghoyoo/ruby_sale@672c34e8ecb3c81c0b1e80b966f05950b8bc7815/assets/skinvive-fx2.mp4" type="video/mp4"></video></span><div class="l">주입 부위</div><div class="v">진피층</div></div>
       <div class="f"><span class="fxbg"><video class="fxv" autoplay muted loop playsinline preload="auto"><source src="https://cdn.jsdelivr.net/gh/byeonghoyoo/ruby_sale@672c34e8ecb3c81c0b1e80b966f05950b8bc7815/assets/skinvive-fx3.mp4" type="video/mp4"></video></span><div class="l">마취</div><div class="v">리도카인 포함</div></div>
