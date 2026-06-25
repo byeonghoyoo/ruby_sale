@@ -187,11 +187,16 @@
 /* ⑦ 시술정보 facts */
 .skv .facts{display:grid;grid-template-columns:repeat(3,1fr);margin-top:30px;border-radius:var(--r);overflow:hidden;
   border:1px solid var(--line);box-shadow:var(--shadow);background:#fff;}
-.skv .facts .f{padding:28px 24px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);}
+.skv .facts .f{position:relative;overflow:hidden;padding:28px 24px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);}
 .skv .facts .f:nth-child(3n){border-right:none;}
 .skv .facts .f:nth-last-child(-n+3){border-bottom:none;}
-.skv .facts .f .l{font-size:12px;color:var(--faint);margin-bottom:8px;letter-spacing:.03em;}
-.skv .facts .f .v{font-size:18px;font-weight:800;
+.skv .facts .f .fxbg{position:absolute;inset:0;z-index:0;overflow:hidden;}
+.skv .facts .f .fxbg video{position:absolute;left:50%;top:50%;min-width:100%;min-height:100%;width:auto;height:auto;
+  transform:translate(-50%,-50%);object-fit:cover;opacity:.5;}
+.skv .facts .f::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,.58),rgba(240,250,251,.8));}
+.skv .facts .f .l{position:relative;z-index:2;font-size:12px;color:var(--faint);margin-bottom:8px;letter-spacing:.03em;}
+.skv .facts .f .v{position:relative;z-index:2;font-size:18px;font-weight:800;
   background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
 
 /* ⑩ 주의사항 */
@@ -396,12 +401,12 @@
     <p class="idx reveal">AT A GLANCE</p>
     <h2 class="h2 reveal">시술 정보 한눈에</h2>
     <div class="facts stag" style="text-align:left;">
-      <div class="f"><div class="l">시술 시간</div><div class="v">약 10~20분</div></div>
-      <div class="f"><div class="l">주입 부위</div><div class="v">진피층</div></div>
-      <div class="f"><div class="l">마취</div><div class="v">리도카인 포함</div></div>
-      <div class="f"><div class="l">유지 기간</div><div class="v">약 6개월</div></div>
-      <div class="f"><div class="l">다운타임</div><div class="v">최소 · 당일 일상</div></div>
-      <div class="f"><div class="l">적용 부위</div><div class="v">뺨 미세주름·거칠기</div></div>
+      <div class="f"><span class="fxbg"><video class="fxv" muted loop playsinline preload="none"><source src="https://cdn.jsdelivr.net/gh/byeonghoyoo/ruby_sale@672c34e8ecb3c81c0b1e80b966f05950b8bc7815/assets/skinvive-fx1.mp4" type="video/mp4"></video></span><div class="l">시술 시간</div><div class="v">약 10~20분</div></div>
+      <div class="f"><span class="fxbg"><video class="fxv" muted loop playsinline preload="none"><source src="https://cdn.jsdelivr.net/gh/byeonghoyoo/ruby_sale@672c34e8ecb3c81c0b1e80b966f05950b8bc7815/assets/skinvive-fx2.mp4" type="video/mp4"></video></span><div class="l">주입 부위</div><div class="v">진피층</div></div>
+      <div class="f"><span class="fxbg"><video class="fxv" muted loop playsinline preload="none"><source src="https://cdn.jsdelivr.net/gh/byeonghoyoo/ruby_sale@672c34e8ecb3c81c0b1e80b966f05950b8bc7815/assets/skinvive-fx3.mp4" type="video/mp4"></video></span><div class="l">마취</div><div class="v">리도카인 포함</div></div>
+      <div class="f"><span class="fxbg"><video class="fxv" muted loop playsinline preload="none"><source src="https://cdn.jsdelivr.net/gh/byeonghoyoo/ruby_sale@672c34e8ecb3c81c0b1e80b966f05950b8bc7815/assets/skinvive-fx4.mp4" type="video/mp4"></video></span><div class="l">유지 기간</div><div class="v">약 6개월</div></div>
+      <div class="f"><span class="fxbg"><video class="fxv" muted loop playsinline preload="none"><source src="https://cdn.jsdelivr.net/gh/byeonghoyoo/ruby_sale@672c34e8ecb3c81c0b1e80b966f05950b8bc7815/assets/skinvive-fx5.mp4" type="video/mp4"></video></span><div class="l">다운타임</div><div class="v">최소 · 당일 일상</div></div>
+      <div class="f"><span class="fxbg"><video class="fxv" muted loop playsinline preload="none"><source src="https://cdn.jsdelivr.net/gh/byeonghoyoo/ruby_sale@672c34e8ecb3c81c0b1e80b966f05950b8bc7815/assets/skinvive-fx6.mp4" type="video/mp4"></video></span><div class="l">적용 부위</div><div class="v">뺨 미세주름·거칠기</div></div>
     </div>
     <p class="micro-note reveal" style="margin-top:18px;">※ 시술 시간·용량·부위는 피부 상태에 따라 의료진 판단으로 조절될 수 있습니다.</p>
   </section>
@@ -572,5 +577,21 @@
   c.querySelectorAll('.stag').forEach(function(g){
     Array.prototype.forEach.call(g.children, function(ch,i){ ch.style.transitionDelay = (i*0.09).toFixed(2)+'s'; });
   });
+
+  /* 시술정보 배경영상 — 섹션이 화면에 보일 때만 재생/정지 (성능 최적화) */
+  if(!reduce){
+    c.querySelectorAll('.facts').forEach(function(sec){
+      var vids = sec.querySelectorAll('.fxv');
+      var vio = new IntersectionObserver(function(es){
+        es.forEach(function(e){
+          for(var i=0;i<vids.length;i++){
+            if(e.isIntersecting){ var p = vids[i].play(); if(p && p.catch){ p.catch(function(){}); } }
+            else { vids[i].pause(); }
+          }
+        });
+      }, {threshold:0.15});
+      vio.observe(sec);
+    });
+  }
 })();
 </script>
