@@ -92,14 +92,14 @@
 @keyframes skv-bounce{0%,100%{transform:translateY(0);opacity:.7;}50%{transform:translateY(7px);opacity:1;}}
 
 /* ② 인트로 — HA 감소 */
-.skv .bars{display:flex;justify-content:center;align-items:flex-end;gap:20px;margin-top:44px;}
-.skv .bars .col{width:148px;display:flex;flex-direction:column;align-items:center;gap:13px;}
-.skv .bars .track{width:100%;height:170px;background:var(--mist);border-radius:16px;display:flex;align-items:flex-end;overflow:hidden;}
-.skv .bars .fill{width:100%;height:0;border-radius:16px;background:linear-gradient(180deg,#3cc6d4,#077e8c);
-  display:flex;align-items:flex-start;justify-content:center;padding-top:16px;color:#fff;font-weight:800;font-size:17px;
+.skv .bars{display:flex;justify-content:center;align-items:flex-end;gap:28px;margin-top:56px;}
+.skv .bars .col{width:200px;display:flex;flex-direction:column;align-items:center;gap:16px;}
+.skv .bars .track{width:100%;height:240px;background:var(--mist);border-radius:20px;display:flex;align-items:flex-end;overflow:hidden;}
+.skv .bars .fill{width:100%;height:0;border-radius:20px;background:linear-gradient(180deg,#3cc6d4,#077e8c);
+  display:flex;align-items:flex-start;justify-content:center;padding-top:22px;color:#fff;font-weight:800;font-size:23px;
   transition:height 1.1s var(--ease);}
-.skv .bars .age{font-size:15px;font-weight:700;}
-.skv .bars .en{font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--teal);}
+.skv .bars .age{font-size:19px;font-weight:700;}
+.skv .bars .en{font-size:12.5px;font-weight:700;letter-spacing:.06em;color:var(--teal);}
 .skv .micro-note{font-size:12px;color:#9bafb2;text-align:center;margin-top:20px;}
 
 /* 좌우 분할 */
@@ -243,7 +243,8 @@
   .skv .facts{grid-template-columns:repeat(2,1fr);}
   .skv .facts .f:nth-child(3n){border-right:1px solid var(--line);}
   .skv .facts .f:nth-child(2n){border-right:none;}
-  .skv .bars .col{width:96px;} .skv .bars .track{height:120px;}
+  .skv .bars{gap:14px;} .skv .bars .col{width:auto;flex:1 1 0;min-width:0;}
+  .skv .bars .track{height:180px;} .skv .bars .fill{font-size:18px;padding-top:16px;} .skv .bars .age{font-size:16px;}
 }
 </style>
 
