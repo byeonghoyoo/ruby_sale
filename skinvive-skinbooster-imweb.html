@@ -71,7 +71,7 @@
 .skv .hero{position:relative;border-radius:var(--r);overflow:hidden;color:#fff;min-height:640px;
   display:flex;align-items:center;text-align:center;background:var(--grad);margin-top:18px;padding:48px 28px;}
 .skv .hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden;}
-.skv .hero-bg img{position:absolute;left:50%;top:50%;width:104%;height:116%;transform:translate(-50%,-50%) translateY(var(--py,0));
+.skv .hero-bg img,.skv .hero-bg video{position:absolute;left:50%;top:50%;width:104%;height:116%;transform:translate(-50%,-50%) translateY(var(--py,0));
   object-fit:cover;will-change:transform;}
 .skv .hero-ov{position:absolute;inset:0;z-index:1;
   background:radial-gradient(120% 120% at 50% 28%,rgba(6,60,70,.45),rgba(4,26,32,.86));}
@@ -158,7 +158,13 @@
 .skv .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px;}
 .skv .stat{padding:38px 20px;text-align:center;border-radius:18px;}
 .skv .stat .big{font-size:46px;font-weight:900;letter-spacing:-0.02em;line-height:1;
+  display:inline-flex;align-items:baseline;justify-content:center;
   background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
+/* 숫자 롤링(오도미터) */
+.skv .stat .big .odo-d{display:inline-block;height:1em;line-height:1;overflow:hidden;}
+.skv .stat .big .odo-d .odo-strip{display:flex;flex-direction:column;will-change:transform;transition:transform 1.6s var(--spring);}
+.skv .stat .big .odo-d .odo-strip span{height:1em;line-height:1;display:flex;align-items:center;justify-content:center;}
+.skv .stat .big .odo-sym{display:inline-block;line-height:1;}
 .skv .stat .accent{width:46px;height:5px;border-radius:999px;background:var(--grad);margin:0 auto 16px;}
 .skv .stat h4{margin:12px 0 6px;font-size:18px;font-weight:800;}
 .skv .stat p{margin:0;font-size:13px;color:var(--gray);line-height:1.6;}
@@ -208,7 +214,7 @@
 
 @media (prefers-reduced-motion:reduce){
   .skv.js .reveal,.skv.js .reveal-media,.skv.js .stag>*{opacity:1!important;transform:none!important;filter:none!important;clip-path:none!important;transition:none!important;}
-  .skv .hero-bg img,.skv .img img{transform:none!important;}
+  .skv .hero-bg img,.skv .hero-bg video,.skv .img img{transform:none!important;}
   .skv .scroll-cue,.skv .pill::after{animation:none!important;}
 }
 
@@ -230,9 +236,14 @@
 <div class="skv">
 
   <!-- ① 히어로 -->
-  <section class="hero" data-px="0.18">
+  <section class="hero" data-px="0.16">
     <div class="hero-bg">
-      <img src="https://drive.google.com/thumbnail?id=1F2wVmD58mwzYGX1aI1TeiZKf5xN4FAcv&sz=w1920" alt="스킨바이브 키비주얼">
+      <!-- 배경 영상: 자동재생/무음/반복. poster = 로딩 전·영상 미재생 시 표시 이미지.
+           ⚠️ 아래 src는 임시(드라이브 426MB) — 반드시 최적화(720p·무음·H.264·<10MB·+faststart) 후 R2 URL로 교체하세요. -->
+      <video autoplay muted loop playsinline preload="metadata"
+        poster="https://drive.google.com/thumbnail?id=1F2wVmD58mwzYGX1aI1TeiZKf5xN4FAcv&sz=w1920">
+        <source src="https://drive.usercontent.google.com/download?id=1my527hkAl-zuEXbcG-F_9hUDOj2EgO84&export=download&confirm=t" type="video/mp4">
+      </video>
     </div>
     <div class="hero-ov"></div>
     <div class="hero-in">
@@ -452,12 +463,6 @@
     </div>
   </section>
 
-  <!-- 푸터 -->
-  <div class="foot">
-    <p>사용목적: 리도카인 염산염 0.3%가 포함된 가교 히알루론산겔을 피내(Intra-dermal)에 주입하여 물리적인 수복을 통해 성인 안면부 뺨(cheek)의 중간(moderate)에서 깊은(severe) 미세주름(fine lines)을 일시적으로 개선하기 위해 사용. 조직수복용 생체재료.</p>
-    <p>SKINVIVE™ by JUVÉDERM® · 쥬비덤® 스킨바이브™ 사용설명서(2024.03.14) · FDA SSED(2023.05.11) · Niforos F, et al. Clin Cosmet Investig Dermatol. 2019. · 개인에 따라 결과가 다를 수 있으며, 부작용이 발생할 수 있습니다.</p>
-    <p>한국애브비(주) · 서울시 강남구 영동대로 421 삼탄빌딩 6층 · KR-SKV-240026</p>
-  </div>
 
 </div>
 
@@ -472,7 +477,7 @@
   /* 스크롤 패럴랙스 + 보간(lerp) — 목표값으로 매 프레임 부드럽게 수렴 */
   var items = [];
   c.querySelectorAll('[data-px]').forEach(function(box){
-    var img = box.classList.contains('hero') ? box.querySelector('.hero-bg img') : box.querySelector('img');
+    var img = box.classList.contains('hero') ? (box.querySelector('.hero-bg video') || box.querySelector('.hero-bg img')) : box.querySelector('img');
     if(img) items.push({ box:box, img:img, cur:0, tgt:0 });
   });
   function computeTargets(){
@@ -501,21 +506,35 @@
   if(!('IntersectionObserver' in window)) return;
   c.classList.add('js');
 
-  /* 카운트업 */
-  function countUp(el){
+  /* 숫자 롤링(오도미터) — 0에서 각 자릿수가 굴러 올라가 안착 (Lottie/JSON 불필요) */
+  function rollNumber(el){
     var target = parseFloat(el.getAttribute('data-count'));
     var dec = parseInt(el.getAttribute('data-dec')||'0',10);
     var suf = el.getAttribute('data-suffix')||'';
-    if(reduce){ el.textContent = target.toFixed(dec)+suf; return; }
-    var start = null, dur = 1300;
-    function step(t){
-      if(start===null) start = t;
-      var p = Math.min((t-start)/dur, 1);
-      var eased = 1 - Math.pow(1-p, 3);            /* ease-out cubic */
-      el.textContent = (target*eased).toFixed(dec) + suf;
-      if(p<1) requestAnimationFrame(step);
+    var str = target.toFixed(dec);
+    el.textContent = '';
+    var di = 0;
+    for(var i=0;i<str.length;i++){
+      var ch = str.charAt(i);
+      if(ch >= '0' && ch <= '9'){
+        var d = parseInt(ch,10);
+        var win = document.createElement('span'); win.className = 'odo-d';
+        var strip = document.createElement('span'); strip.className = 'odo-strip';
+        for(var k=0;k<20;k++){ var s = document.createElement('span'); s.textContent = (k%10); strip.appendChild(s); }
+        win.appendChild(strip); el.appendChild(win);
+        if(reduce){ strip.style.transition = 'none'; strip.style.transform = 'translateY(-'+(10+d)+'em)'; }
+        else{
+          strip.style.transform = 'translateY(0)';
+          strip.style.transitionDelay = (di*0.10).toFixed(2)+'s';
+          (function(st,dig){ requestAnimationFrame(function(){ requestAnimationFrame(function(){
+            st.style.transform = 'translateY(-'+(10+dig)+'em)'; }); }); })(strip,d);
+        }
+        di++;
+      } else {
+        var sym = document.createElement('span'); sym.className = 'odo-sym'; sym.textContent = ch; el.appendChild(sym);
+      }
     }
-    requestAnimationFrame(step);
+    if(suf){ var sf = document.createElement('span'); sf.className = 'odo-sym'; sf.textContent = suf; el.appendChild(sf); }
   }
 
   /* 리빌 관찰 */
@@ -527,7 +546,7 @@
       if(t.hasAttribute('data-bars')){
         t.querySelectorAll('.fill').forEach(function(f){ f.style.height = f.getAttribute('data-h'); });
       }
-      t.querySelectorAll && t.querySelectorAll('[data-count]').forEach(function(n){ countUp(n); });
+      t.querySelectorAll && t.querySelectorAll('[data-count]').forEach(function(n){ rollNumber(n); });
       io.unobserve(t);
     });
   }, {threshold:0.18, rootMargin:'0px 0px -8% 0px'});
