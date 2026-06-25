@@ -134,29 +134,53 @@
 .skv .st h3{font-size:22px;font-weight:900;margin:0 0 9px;letter-spacing:-0.02em;color:#fff;}
 .skv .st p{margin:0;font-size:14.5px;color:rgba(255,255,255,.8);line-height:1.78;}
 
-/* ⑤ 작용원리 — 스티키 다이어그램 */
-.skv .stickwrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;}
-.skv .stickwrap .diag-col{position:sticky;top:84px;}
-.skv .diag{border-radius:20px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);}
-.skv .diag img{display:block;width:100%;height:auto;}
-.skv .band{position:relative;display:flex;align-items:center;gap:14px;padding:0 24px;overflow:hidden;}
-.skv .band .bg{position:absolute;inset:0;z-index:0;}
-.skv .band .bg img{width:100%;height:100%;object-fit:cover;}
-.skv .band.b1 .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(239,247,248,.94),rgba(239,247,248,.5) 52%,rgba(239,247,248,.12));}
-.skv .band .bl{position:relative;z-index:1;flex:1;}
-.skv .band .bl .n{font-size:14px;font-weight:800;}
-.skv .band .bl .e{font-size:10.5px;font-weight:700;letter-spacing:.08em;opacity:.72;}
-.skv .band .drops{position:relative;z-index:1;display:flex;gap:8px;}
-.skv .band .drops i{width:15px;height:15px;border-radius:50%;background:rgba(255,255,255,.94);display:block;}
-.skv .band.b1{height:74px;background:#eff7f8;color:var(--gray);}
-.skv .band.b2{height:232px;background:linear-gradient(100deg,#0aaabd,#077e8c);color:#fff;}
-.skv .band.b3{height:110px;background:#cde9ed;color:var(--teal-dd);}
-.skv .band.b4{height:120px;background:var(--warm);color:var(--gray);}
-.skv .layers .lay{padding:30px 0;border-bottom:1px solid var(--line);}
-.skv .layers .lay:last-child{border-bottom:none;}
-.skv .layers .lay .t{font-size:19px;font-weight:800;margin:0 0 7px;color:var(--ink);}
-.skv .layers .lay .t em{font-style:normal;color:var(--teal-d);}
-.skv .layers .lay p{margin:0;font-size:14.5px;color:var(--gray);line-height:1.8;}
+/* ⑤ 피부 조건 — 모션 개념도 (결·광·탄력) */
+.skv .sq-stage{position:relative;width:100%;max-width:540px;margin:54px auto 8px;aspect-ratio:1/.86;}
+/* 벤 다이어그램 — 떠다니는 3개의 블롭 */
+.skv .sq-blob{position:absolute;width:62%;aspect-ratio:1;will-change:transform;}
+.skv .sq-blob.b1{left:19%;top:0;animation:sqFloat 7s var(--ease) infinite;}
+.skv .sq-blob.b2{left:1%;bottom:0;animation:sqFloat 8.4s var(--ease) .6s infinite;}
+.skv .sq-blob.b3{right:1%;bottom:0;animation:sqFloat 7.8s var(--ease) 1.1s infinite;}
+.skv .sq-blob i{display:block;width:100%;height:100%;border-radius:50%;mix-blend-mode:multiply;
+  transform:scale(.34);opacity:0;transition:transform 1.15s var(--spring),opacity .9s var(--ease);}
+.skv .sq-blob.b1 i{background:radial-gradient(circle at 50% 44%,rgba(95,211,222,.62),rgba(95,211,222,.1) 72%);}
+.skv .sq-blob.b2 i{background:radial-gradient(circle at 50% 50%,rgba(10,162,181,.5),rgba(10,162,181,.08) 72%);}
+.skv .sq-blob.b3 i{background:radial-gradient(circle at 50% 50%,rgba(125,224,232,.6),rgba(125,224,232,.1) 72%);}
+.skv.js .sq-stage.in .sq-blob i{transform:scale(1);opacity:1;}
+.skv.js .sq-stage.in .sq-blob.b2 i{transition-delay:.12s;}
+.skv.js .sq-stage.in .sq-blob.b3 i{transition-delay:.24s;}
+@keyframes sqFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-3.4%);}}
+/* 코너 라벨 */
+.skv .sq-tag{position:absolute;font-size:15px;font-weight:800;color:var(--teal-d);z-index:4;
+  opacity:0;transition:opacity .7s ease,transform .8s var(--spring);}
+.skv .sq-tag.t1{left:50%;top:11%;transform:translateX(-50%) translateY(8px);}
+.skv .sq-tag.t2{left:15%;bottom:19%;transform:translateY(8px);}
+.skv .sq-tag.t3{right:15%;bottom:19%;transform:translateY(8px);}
+.skv.js .sq-stage.in .sq-tag{opacity:1;transition-delay:.5s;}
+.skv.js .sq-stage.in .sq-tag.t1{transform:translateX(-50%);}
+.skv.js .sq-stage.in .sq-tag.t2{transform:none;transition-delay:.6s;}
+.skv.js .sq-stage.in .sq-tag.t3{transform:none;transition-delay:.7s;}
+/* 중심 코어 */
+.skv .sq-core{position:absolute;left:50%;top:53%;width:126px;height:126px;border-radius:50%;z-index:3;
+  background:var(--grad);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  box-shadow:0 18px 40px rgba(7,126,140,.42);opacity:0;transform:translate(-50%,-50%) scale(.6);
+  transition:transform 1s var(--spring) .35s,opacity .8s ease .35s;}
+.skv .sq-core b{font-size:20px;font-weight:900;line-height:1.18;letter-spacing:-0.02em;}
+.skv .sq-core::after{content:"";position:absolute;inset:-9px;border-radius:50%;
+  border:2px solid rgba(10,162,181,.4);animation:sqPulse 2.8s ease-out infinite;}
+.skv.js .sq-stage.in .sq-core{opacity:1;transform:translate(-50%,-50%) scale(1);}
+@keyframes sqPulse{0%{transform:scale(.85);opacity:.75;}100%{transform:scale(1.4);opacity:0;}}
+/* 하단 카드 3종 */
+.skv .sq-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:34px;}
+.skv .sqc{background:linear-gradient(180deg,#fff,#f6fcfd);border:1px solid var(--line);border-radius:18px;
+  padding:32px 26px;box-shadow:var(--shadow);text-align:center;transition:transform .5s var(--spring),box-shadow .5s var(--ease);}
+.skv .sqc:hover{transform:translateY(-6px);box-shadow:0 22px 44px rgba(10,90,100,.18);}
+.skv .sqc-ico{display:inline-flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:15px;
+  background:var(--mist);color:var(--teal-d);font-weight:900;font-size:17px;margin-bottom:16px;letter-spacing:-0.02em;}
+.skv .sqc h4{font-size:18px;font-weight:800;margin:0 0 8px;letter-spacing:-0.02em;}
+.skv .sqc p{margin:0 0 16px;font-size:14px;color:var(--gray);line-height:1.75;min-height:42px;}
+.skv .sqc-chip{display:inline-block;font-size:12.5px;font-weight:700;color:var(--teal-d);
+  background:var(--mist);border:1px solid var(--line);border-radius:999px;padding:6px 14px;}
 
 /* ⑥ 임상 데이터 (카운트업) */
 .skv .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px;}
@@ -217,16 +241,17 @@
 
 @media (prefers-reduced-motion:reduce){
   /* 연속 모션(켄번스·스크롤큐·shine)만 비활성. 등장·롤링 등 디스크리트 모션은 유지 */
-  .skv .scroll-cue,.skv .pill::after,.skv .hero-bg{animation:none!important;}
+  .skv .scroll-cue,.skv .pill::after,.skv .hero-bg,.skv .sq-blob,.skv .sq-core::after{animation:none!important;}
 }
 
 /* 반응형 */
 @media (max-width:900px){
   .skv .sec{padding:64px 0;} .skv .soft,.skv .dark{padding:52px 22px;}
   .skv .h2{font-size:28px;} .skv .hero{min-height:540px;} .skv .hero h1{font-size:38px;}
-  .skv .split,.skv .stickwrap,.skv .grid4,.skv .stats,.skv .care{grid-template-columns:1fr;gap:26px;}
+  .skv .split,.skv .grid4,.skv .stats,.skv .care,.skv .sq-cards{grid-template-columns:1fr;gap:26px;}
   .skv .split.rev .s-txt,.skv .split.rev .s-img{order:initial;}
-  .skv .stickwrap .diag-col{position:static;}
+  .skv .sq-stage{max-width:380px;}
+  .skv .sqc p{min-height:0;}
   .skv .s-img .img{aspect-ratio:4/3;}
   .skv .facts{grid-template-columns:repeat(2,1fr);}
   .skv .facts .f:nth-child(3n){border-right:1px solid var(--line);}
@@ -309,20 +334,40 @@
     </div>
   </section>
 
-  <!-- ⑤ 작용원리 — 스티키 다이어그램 -->
-  <section class="sec">
-    <p class="idx reveal">HOW IT WORKS</p>
-    <h2 class="h2 reveal">피부 속 진피층에 직접 채웁니다</h2>
-    <div class="stickwrap" style="margin-top:36px;">
-      <div class="diag-col">
-        <div class="diag reveal-media">
-          <img src="https://drive.google.com/thumbnail?id=1cmUIBapOaMdyhg8jyB_S3QnVBhFVXH9c&sz=w1280" alt="피부 단면 — 스킨바이브 진피 주입 원리">
-        </div>
+  <!-- ⑤ 피부 조건 — 모션 개념도 (결·광·탄력) -->
+  <section class="sec center">
+    <p class="idx reveal">SKIN ELEMENTS</p>
+    <h2 class="h2 reveal">좋은 피부는 <span class="thin">세 가지 조건</span>으로 완성됩니다</h2>
+    <p class="lead reveal">매끄러운 결, 투명한 광, 단단한 탄력 — 스킨바이브는 좋은 피부를 이루는 세 가지 조건에 함께 작용합니다.</p>
+
+    <div class="sq-stage" aria-hidden="true">
+      <span class="sq-blob b1"><i></i></span>
+      <span class="sq-blob b2"><i></i></span>
+      <span class="sq-blob b3"><i></i></span>
+      <span class="sq-tag t1">결</span>
+      <span class="sq-tag t2">광</span>
+      <span class="sq-tag t3">탄력</span>
+      <span class="sq-core"><b>좋은</b><b>피부</b></span>
+    </div>
+
+    <div class="sq-cards stag">
+      <div class="sqc">
+        <span class="sqc-ico">결</span>
+        <h4>매끄러운 결</h4>
+        <p>손끝에 닿는 부드럽고 균일한 피부 표면</p>
+        <span class="sqc-chip">잔주름 · 피부결 · 수분감</span>
       </div>
-      <div class="layers">
-        <div class="lay reveal"><p class="t">표면이 아닌 <em>진피층에 직접</em></p><p>표면에 바르거나 흡수시키는 방식이 아닌, 진피층에 직접 주입(Intra-dermal)하는 방식입니다.</p></div>
-        <div class="lay reveal"><p class="t"><em>속부터</em> 채우는 수분 저장고</p><p>히알루론산은 피부에 직접 주입했을 때 더 효과적으로, 진피 속에서 수분을 끌어당겨 매끄럽고 촉촉한 피부결을 만듭니다.</p></div>
-        <div class="lay reveal"><p class="t">콜라겐·엘라스틴 <em>환경 개선</em></p><p>진피 기질 환경을 개선해 미세주름과 거칠기를 일시적으로 개선합니다.</p></div>
+      <div class="sqc">
+        <span class="sqc-ico">광</span>
+        <h4>투명한 광</h4>
+        <p>빛을 머금은 듯 맑고 환하게 비치는 피부 톤</p>
+        <span class="sqc-chip">톤 · 광채 · 물광</span>
+      </div>
+      <div class="sqc">
+        <span class="sqc-ico">탄력</span>
+        <h4>단단한 탄력</h4>
+        <p>누르고 당겨도 탄탄하게 돌아오는 피부의 힘</p>
+        <span class="sqc-chip">탄력 · 유연성 · 견고함</span>
       </div>
     </div>
   </section>
@@ -542,7 +587,7 @@
     });
   }, {threshold:0.18, rootMargin:'0px 0px -8% 0px'});
 
-  c.querySelectorAll('.reveal, .reveal-media, .stag, [data-bars]').forEach(function(el){ io.observe(el); });
+  c.querySelectorAll('.reveal, .reveal-media, .stag, .sq-stage, [data-bars]').forEach(function(el){ io.observe(el); });
   /* 스태거 자식 지연 */
   c.querySelectorAll('.stag').forEach(function(g){
     Array.prototype.forEach.call(g.children, function(ch,i){ ch.style.transitionDelay = (i*0.09).toFixed(2)+'s'; });
