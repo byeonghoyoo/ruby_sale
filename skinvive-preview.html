@@ -113,53 +113,40 @@
 .skv .st h3{font-size:22px;font-weight:900;margin:0 0 9px;letter-spacing:-0.02em;color:#fff;}
 .skv .st p{margin:0;font-size:14.5px;color:rgba(255,255,255,.8);line-height:1.78;}
 
-/* ⑤ 피부 조건 — 모션 개념도 (결·광·탄력) */
-.skv .sq-stage{position:relative;width:100%;max-width:540px;margin:54px auto 8px;aspect-ratio:1/.86;}
-/* 벤 다이어그램 — 떠다니는 3개의 블롭 */
-.skv .sq-blob{position:absolute;width:62%;aspect-ratio:1;will-change:transform;}
-.skv .sq-blob.b1{left:19%;top:0;animation:sqFloat 7s var(--ease) infinite;}
-.skv .sq-blob.b2{left:1%;bottom:0;animation:sqFloat 8.4s var(--ease) .6s infinite;}
-.skv .sq-blob.b3{right:1%;bottom:0;animation:sqFloat 7.8s var(--ease) 1.1s infinite;}
-.skv .sq-blob i{display:block;width:100%;height:100%;border-radius:50%;mix-blend-mode:multiply;
-  transform:scale(.34);opacity:0;transition:transform 1.15s var(--spring),opacity .9s var(--ease);}
-.skv .sq-blob.b1 i{background:radial-gradient(circle at 50% 44%,rgba(95,211,222,.62),rgba(95,211,222,.1) 72%);}
-.skv .sq-blob.b2 i{background:radial-gradient(circle at 50% 50%,rgba(10,162,181,.5),rgba(10,162,181,.08) 72%);}
-.skv .sq-blob.b3 i{background:radial-gradient(circle at 50% 50%,rgba(125,224,232,.6),rgba(125,224,232,.1) 72%);}
-.skv.js .sq-stage.in .sq-blob i{transform:scale(1);opacity:1;}
-.skv.js .sq-stage.in .sq-blob.b2 i{transition-delay:.12s;}
-.skv.js .sq-stage.in .sq-blob.b3 i{transition-delay:.24s;}
-@keyframes sqFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-3.4%);}}
-/* 코너 라벨 */
-.skv .sq-tag{position:absolute;font-size:15px;font-weight:800;color:var(--teal-d);z-index:4;
-  opacity:0;transition:opacity .7s ease,transform .8s var(--spring);}
-.skv .sq-tag.t1{left:50%;top:11%;transform:translateX(-50%) translateY(8px);}
-.skv .sq-tag.t2{left:15%;bottom:19%;transform:translateY(8px);}
-.skv .sq-tag.t3{right:15%;bottom:19%;transform:translateY(8px);}
-.skv.js .sq-stage.in .sq-tag{opacity:1;transition-delay:.5s;}
-.skv.js .sq-stage.in .sq-tag.t1{transform:translateX(-50%);}
-.skv.js .sq-stage.in .sq-tag.t2{transform:none;transition-delay:.6s;}
-.skv.js .sq-stage.in .sq-tag.t3{transform:none;transition-delay:.7s;}
-/* 중심 코어 */
-.skv .sq-core{position:absolute;left:50%;top:53%;width:126px;height:126px;border-radius:50%;z-index:3;
-  background:var(--grad);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  box-shadow:0 18px 40px rgba(7,126,140,.42);opacity:0;transform:translate(-50%,-50%) scale(.6);
-  transition:transform 1s var(--spring) .35s,opacity .8s ease .35s;}
-.skv .sq-core b{font-size:20px;font-weight:900;line-height:1.18;letter-spacing:-0.02em;}
-.skv .sq-core::after{content:"";position:absolute;inset:-9px;border-radius:50%;
-  border:2px solid rgba(10,162,181,.4);animation:sqPulse 2.8s ease-out infinite;}
-.skv.js .sq-stage.in .sq-core{opacity:1;transform:translate(-50%,-50%) scale(1);}
-@keyframes sqPulse{0%{transform:scale(.85);opacity:.75;}100%{transform:scale(1.4);opacity:0;}}
-/* 하단 카드 3종 */
-.skv .sq-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:34px;}
-.skv .sqc{background:linear-gradient(180deg,#fff,#f6fcfd);border:1px solid var(--line);border-radius:18px;
-  padding:32px 26px;box-shadow:var(--shadow);text-align:center;transition:transform .5s var(--spring),box-shadow .5s var(--ease);}
-.skv .sqc:hover{transform:translateY(-6px);box-shadow:0 22px 44px rgba(10,90,100,.18);}
-.skv .sqc-ico{display:inline-flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:15px;
-  background:var(--mist);color:var(--teal-d);font-weight:900;font-size:17px;margin-bottom:16px;letter-spacing:-0.02em;}
-.skv .sqc h4{font-size:18px;font-weight:800;margin:0 0 8px;letter-spacing:-0.02em;}
-.skv .sqc p{margin:0 0 16px;font-size:14px;color:var(--gray);line-height:1.75;min-height:42px;}
-.skv .sqc-chip{display:inline-block;font-size:12.5px;font-weight:700;color:var(--teal-d);
-  background:var(--mist);border:1px solid var(--line);border-radius:999px;padding:6px 14px;}
+/* ⑤ 스킨바이브 효과 — 게이지 모션 + 제품 누끼컷 */
+.skv .fx{position:relative;background:linear-gradient(135deg,#7fd4dd,#56c6d2);border-radius:var(--r);
+  padding:72px 64px 60px;overflow:hidden;}
+.skv .fx-head{position:relative;z-index:2;max-width:62%;}
+.skv .fx-title{font-size:46px;font-weight:900;color:#fff;letter-spacing:-0.035em;margin:0;text-shadow:0 2px 22px rgba(0,60,70,.18);}
+.skv .fx-div{display:block;width:34px;height:2px;background:rgba(255,255,255,.9);margin:22px 0 15px;border-radius:2px;}
+.skv .fx-sub{font-size:17px;color:rgba(255,255,255,.94);margin:0;font-weight:600;}
+/* 제품 누끼컷 */
+.skv .fx-cut{position:absolute;top:-4px;right:54px;width:270px;height:auto;z-index:3;
+  filter:drop-shadow(0 22px 42px rgba(0,50,60,.3));pointer-events:none;
+  animation:fxBob 5.5s ease-in-out infinite;}
+@keyframes fxBob{0%,100%{transform:translateY(0);}50%{transform:translateY(-9px);}}
+/* 게이지 카드 */
+.skv .fx-card{position:relative;z-index:2;background:#fff;border-radius:24px;
+  box-shadow:0 26px 60px rgba(0,60,70,.18);padding:46px 54px;margin-top:46px;}
+.skv .g{margin:0 0 32px;}
+.skv .g:last-child{margin-bottom:0;}
+.skv .g-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:13px;}
+.skv .g-name{font-size:18px;font-weight:800;color:var(--ink);letter-spacing:-0.02em;}
+.skv .g-val{font-size:21px;font-weight:900;color:var(--teal-d);letter-spacing:-0.02em;}
+.skv .g-val i{font-style:normal;font-size:14px;font-weight:800;margin-left:1px;}
+.skv .g-track{position:relative;height:14px;border-radius:999px;background:#e9eef0;}
+.skv .g-fill{position:absolute;left:0;top:0;height:100%;width:0;border-radius:999px;
+  background:linear-gradient(90deg,#3cc6d4,#077e8c);transition:width 1.5s var(--spring);}
+.skv .g-knob{position:absolute;top:50%;left:0;width:26px;height:26px;border-radius:50%;background:#fff;
+  border:1px solid #e3eaec;box-shadow:0 4px 12px rgba(0,60,70,.22);transform:translate(-50%,-50%);
+  transition:left 1.5s var(--spring);}
+.skv .g-scale{display:flex;justify-content:space-between;margin-top:9px;font-size:12.5px;color:var(--faint);}
+.skv.js .gauges .g-fill{width:0;}
+.skv.js .gauges .g-knob{left:0;}
+.skv.js .gauges.in .g-fill{width:var(--v);}
+.skv.js .gauges.in .g-knob{left:var(--v);}
+.skv.js .gauges.in .g:nth-child(2) .g-fill,.skv.js .gauges.in .g:nth-child(2) .g-knob{transition-delay:.14s;}
+.skv.js .gauges.in .g:nth-child(3) .g-fill,.skv.js .gauges.in .g:nth-child(3) .g-knob{transition-delay:.28s;}
 
 /* ⑥ 임상 데이터 (카운트업) */
 .skv .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px;}
@@ -220,17 +207,17 @@
 
 @media (prefers-reduced-motion:reduce){
   /* 연속 모션(켄번스·스크롤큐·shine)만 비활성. 등장·롤링 등 디스크리트 모션은 유지 */
-  .skv .scroll-cue,.skv .pill::after,.skv .hero-bg,.skv .sq-blob,.skv .sq-core::after{animation:none!important;}
+  .skv .scroll-cue,.skv .pill::after,.skv .hero-bg,.skv .fx-cut{animation:none!important;}
 }
 
 /* 반응형 */
 @media (max-width:900px){
   .skv .sec{padding:64px 0;} .skv .soft,.skv .dark{padding:52px 22px;}
   .skv .h2{font-size:28px;} .skv .hero{min-height:540px;} .skv .hero h1{font-size:38px;}
-  .skv .split,.skv .grid4,.skv .stats,.skv .care,.skv .sq-cards{grid-template-columns:1fr;gap:26px;}
+  .skv .split,.skv .grid4,.skv .stats,.skv .care{grid-template-columns:1fr;gap:26px;}
   .skv .split.rev .s-txt,.skv .split.rev .s-img{order:initial;}
-  .skv .sq-stage{max-width:380px;}
-  .skv .sqc p{min-height:0;}
+  .skv .fx{padding:48px 26px 40px;} .skv .fx-head{max-width:64%;} .skv .fx-title{font-size:32px;}
+  .skv .fx-cut{width:140px;right:14px;top:8px;} .skv .fx-card{padding:34px 26px;margin-top:34px;}
   .skv .s-img .img{aspect-ratio:4/3;}
   .skv .facts{grid-template-columns:repeat(2,1fr);}
   .skv .facts .f:nth-child(3n){border-right:1px solid var(--line);}
@@ -313,42 +300,34 @@
     </div>
   </section>
 
-  <!-- ⑤ 피부 조건 — 모션 개념도 (결·광·탄력) -->
-  <section class="sec center">
-    <p class="idx reveal">SKIN ELEMENTS</p>
-    <h2 class="h2 reveal">좋은 피부는 <span class="thin">세 가지 조건</span>으로 완성됩니다</h2>
-    <p class="lead reveal">매끄러운 결, 투명한 광, 단단한 탄력 — 스킨바이브는 좋은 피부를 이루는 세 가지 조건에 함께 작용합니다.</p>
-
-    <div class="sq-stage" aria-hidden="true">
-      <span class="sq-blob b1"><i></i></span>
-      <span class="sq-blob b2"><i></i></span>
-      <span class="sq-blob b3"><i></i></span>
-      <span class="sq-tag t1">결</span>
-      <span class="sq-tag t2">광</span>
-      <span class="sq-tag t3">탄력</span>
-      <span class="sq-core"><b>좋은</b><b>피부</b></span>
-    </div>
-
-    <div class="sq-cards stag">
-      <div class="sqc">
-        <span class="sqc-ico">결</span>
-        <h4>매끄러운 결</h4>
-        <p>손끝에 닿는 부드럽고 균일한 피부 표면</p>
-        <span class="sqc-chip">잔주름 · 피부결 · 수분감</span>
+  <!-- ⑤ 스킨바이브 효과 — 게이지 모션 + 제품 누끼컷 -->
+  <section class="sec">
+    <div class="fx reveal-media">
+      <div class="fx-head">
+        <h2 class="fx-title">스킨바이브 효과</h2>
+        <span class="fx-div"></span>
+        <p class="fx-sub">내 얼굴의 모든 순간을 아름답게</p>
       </div>
-      <div class="sqc">
-        <span class="sqc-ico">광</span>
-        <h4>투명한 광</h4>
-        <p>빛을 머금은 듯 맑고 환하게 비치는 피부 톤</p>
-        <span class="sqc-chip">톤 · 광채 · 물광</span>
-      </div>
-      <div class="sqc">
-        <span class="sqc-ico">탄력</span>
-        <h4>단단한 탄력</h4>
-        <p>누르고 당겨도 탄탄하게 돌아오는 피부의 힘</p>
-        <span class="sqc-chip">탄력 · 유연성 · 견고함</span>
+      <img class="fx-cut" src="https://drive.google.com/thumbnail?id=1IPgr3e5xLuao8Xmf-8DR_0s6biiToe6m&sz=w1280" alt="스킨바이브 제품">
+      <div class="fx-card gauges">
+        <div class="g">
+          <div class="g-top"><span class="g-name">주름 개선</span><span class="g-val">88<i>%</i></span></div>
+          <div class="g-track" style="--v:88%;"><span class="g-fill"></span><span class="g-knob"></span></div>
+          <div class="g-scale"><span>0</span><span>50</span><span>100</span></div>
+        </div>
+        <div class="g">
+          <div class="g-top"><span class="g-name">콜라겐 생성</span><span class="g-val">80<i>%</i></span></div>
+          <div class="g-track" style="--v:80%;"><span class="g-fill"></span><span class="g-knob"></span></div>
+          <div class="g-scale"><span>0</span><span>50</span><span>100</span></div>
+        </div>
+        <div class="g">
+          <div class="g-top"><span class="g-name">수분도 증가</span><span class="g-val">84<i>%</i></span></div>
+          <div class="g-track" style="--v:84%;"><span class="g-fill"></span><span class="g-knob"></span></div>
+          <div class="g-scale"><span>0</span><span>50</span><span>100</span></div>
+        </div>
       </div>
     </div>
+    <p class="micro-note reveal" style="text-align:center;">※ 이미지는 이해를 돕기 위한 것으로 실제 수치와 다를 수 있습니다.</p>
   </section>
 
   <!-- ⑥ 임상 데이터 -->
@@ -566,7 +545,7 @@
     });
   }, {threshold:0.18, rootMargin:'0px 0px -8% 0px'});
 
-  c.querySelectorAll('.reveal, .reveal-media, .stag, .sq-stage, [data-bars]').forEach(function(el){ io.observe(el); });
+  c.querySelectorAll('.reveal, .reveal-media, .stag, .gauges, [data-bars]').forEach(function(el){ io.observe(el); });
   /* 스태거 자식 지연 */
   c.querySelectorAll('.stag').forEach(function(g){
     Array.prototype.forEach.call(g.children, function(ch,i){ ch.style.transitionDelay = (i*0.09).toFixed(2)+'s'; });
