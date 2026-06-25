@@ -70,7 +70,9 @@
 /* ① 히어로 */
 .skv .hero{position:relative;border-radius:var(--r);overflow:hidden;color:#fff;min-height:640px;
   display:flex;align-items:center;text-align:center;background:var(--grad);margin-top:18px;padding:48px 28px;}
-.skv .hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden;}
+.skv .hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden;transform-origin:center;
+  animation:skv-kenburns 16s ease-in-out infinite alternate;}
+@keyframes skv-kenburns{from{transform:scale(1);}to{transform:scale(1.1);}}
 .skv .hero-bg img,.skv .hero-bg video{position:absolute;left:50%;top:50%;width:104%;height:116%;transform:translate(-50%,-50%) translateY(var(--py,0));
   object-fit:cover;will-change:transform;}
 .skv .hero-ov{position:absolute;inset:0;z-index:1;
@@ -214,7 +216,7 @@
 @media (prefers-reduced-motion:reduce){
   .skv.js .reveal,.skv.js .reveal-media,.skv.js .stag>*{opacity:1!important;transform:none!important;filter:none!important;clip-path:none!important;transition:none!important;}
   .skv .hero-bg img,.skv .hero-bg video,.skv .img img{transform:none!important;}
-  .skv .scroll-cue,.skv .pill::after{animation:none!important;}
+  .skv .scroll-cue,.skv .pill::after,.skv .hero-bg{animation:none!important;}
 }
 
 /* 반응형 */
