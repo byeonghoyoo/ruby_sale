@@ -66,6 +66,9 @@
 .skv .img::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0;transition:opacity .45s;
   background:linear-gradient(180deg,rgba(10,162,181,.05),rgba(6,42,48,.22));}
 .skv .img:hover::after{opacity:1;}
+/* 이미지 전체보기(박스에 맞춰 뒤로 빼기) — 클로즈업 방지 */
+.skv .img.fit{background:linear-gradient(135deg,#dff1f3,#eef8f9);}
+.skv .img.fit img{position:absolute;inset:0;width:100%;height:100%;top:0;object-fit:contain;transform:none;}
 
 /* ① 히어로 */
 .skv .hero{position:relative;border-radius:var(--r);overflow:hidden;color:#fff;min-height:640px;
@@ -416,12 +419,12 @@
     <p class="idx reveal">AT A GLANCE</p>
     <h2 class="h2 reveal">시술 정보 한눈에</h2>
     <div class="facts stag" style="text-align:left;">
-      <div class="f"><span class="fxbg"><video class="fxv" muted loop playsinline preload="none"><source src="https://cdn.jsdelivr.net/gh/byeonghoyoo/ruby_sale@672c34e8ecb3c81c0b1e80b966f05950b8bc7815/assets/skinvive-fx1.mp4" type="video/mp4"></video></span><div class="l">시술 시간</div><div class="v">약 10~20분</div></div>
-      <div class="f"><span class="fxbg"><video class="fxv" muted loop playsinline preload="none"><source src="https://cdn.jsdelivr.net/gh/byeonghoyoo/ruby_sale@672c34e8ecb3c81c0b1e80b966f05950b8bc7815/assets/skinvive-fx2.mp4" type="video/mp4"></video></span><div class="l">주입 부위</div><div class="v">진피층</div></div>
-      <div class="f"><span class="fxbg"><video class="fxv" muted loop playsinline preload="none"><source src="https://cdn.jsdelivr.net/gh/byeonghoyoo/ruby_sale@672c34e8ecb3c81c0b1e80b966f05950b8bc7815/assets/skinvive-fx3.mp4" type="video/mp4"></video></span><div class="l">마취</div><div class="v">리도카인 포함</div></div>
-      <div class="f"><span class="fxbg"><video class="fxv" muted loop playsinline preload="none"><source src="https://cdn.jsdelivr.net/gh/byeonghoyoo/ruby_sale@672c34e8ecb3c81c0b1e80b966f05950b8bc7815/assets/skinvive-fx4.mp4" type="video/mp4"></video></span><div class="l">유지 기간</div><div class="v">약 6개월</div></div>
-      <div class="f"><span class="fxbg"><video class="fxv" muted loop playsinline preload="none"><source src="https://cdn.jsdelivr.net/gh/byeonghoyoo/ruby_sale@672c34e8ecb3c81c0b1e80b966f05950b8bc7815/assets/skinvive-fx5.mp4" type="video/mp4"></video></span><div class="l">다운타임</div><div class="v">최소 · 당일 일상</div></div>
-      <div class="f"><span class="fxbg"><video class="fxv" muted loop playsinline preload="none"><source src="https://cdn.jsdelivr.net/gh/byeonghoyoo/ruby_sale@672c34e8ecb3c81c0b1e80b966f05950b8bc7815/assets/skinvive-fx6.mp4" type="video/mp4"></video></span><div class="l">적용 부위</div><div class="v">뺨 미세주름·거칠기</div></div>
+      <div class="f"><span class="fxbg"><video class="fxv" autoplay muted loop playsinline preload="auto"><source src="https://cdn.jsdelivr.net/gh/byeonghoyoo/ruby_sale@672c34e8ecb3c81c0b1e80b966f05950b8bc7815/assets/skinvive-fx1.mp4" type="video/mp4"></video></span><div class="l">시술 시간</div><div class="v">약 10~20분</div></div>
+      <div class="f"><span class="fxbg"><video class="fxv" autoplay muted loop playsinline preload="auto"><source src="https://cdn.jsdelivr.net/gh/byeonghoyoo/ruby_sale@672c34e8ecb3c81c0b1e80b966f05950b8bc7815/assets/skinvive-fx2.mp4" type="video/mp4"></video></span><div class="l">주입 부위</div><div class="v">진피층</div></div>
+      <div class="f"><span class="fxbg"><video class="fxv" autoplay muted loop playsinline preload="auto"><source src="https://cdn.jsdelivr.net/gh/byeonghoyoo/ruby_sale@672c34e8ecb3c81c0b1e80b966f05950b8bc7815/assets/skinvive-fx3.mp4" type="video/mp4"></video></span><div class="l">마취</div><div class="v">리도카인 포함</div></div>
+      <div class="f"><span class="fxbg"><video class="fxv" autoplay muted loop playsinline preload="auto"><source src="https://cdn.jsdelivr.net/gh/byeonghoyoo/ruby_sale@672c34e8ecb3c81c0b1e80b966f05950b8bc7815/assets/skinvive-fx4.mp4" type="video/mp4"></video></span><div class="l">유지 기간</div><div class="v">약 6개월</div></div>
+      <div class="f"><span class="fxbg"><video class="fxv" autoplay muted loop playsinline preload="auto"><source src="https://cdn.jsdelivr.net/gh/byeonghoyoo/ruby_sale@672c34e8ecb3c81c0b1e80b966f05950b8bc7815/assets/skinvive-fx5.mp4" type="video/mp4"></video></span><div class="l">다운타임</div><div class="v">최소 · 당일 일상</div></div>
+      <div class="f"><span class="fxbg"><video class="fxv" autoplay muted loop playsinline preload="auto"><source src="https://cdn.jsdelivr.net/gh/byeonghoyoo/ruby_sale@672c34e8ecb3c81c0b1e80b966f05950b8bc7815/assets/skinvive-fx6.mp4" type="video/mp4"></video></span><div class="l">적용 부위</div><div class="v">뺨 미세주름·거칠기</div></div>
     </div>
     <p class="micro-note reveal" style="margin-top:18px;">※ 시술 시간·용량·부위는 피부 상태에 따라 의료진 판단으로 조절될 수 있습니다.</p>
   </section>
@@ -464,8 +467,8 @@
         </div>
       </div>
       <div class="s-img">
-        <div class="img reveal-media" data-px="0.12">
-          <img src="https://drive.google.com/thumbnail?id=1McFvUyFmzwarATXxLzrQ40Oq7atv2o1w&sz=w1280" alt="스킨바이브 모델컷">
+        <div class="img fit reveal-media">
+          <img src="https://drive.google.com/thumbnail?id=1McFvUyFmzwarATXxLzrQ40Oq7atv2o1w&sz=w1600" alt="스킨바이브 모델컷">
           <span class="ph"><b>IMAGE</b><span>스킨바이브 키비주얼_모델컷</span></span>
         </div>
       </div>
@@ -595,7 +598,7 @@
 
   /* 글래스 렌즈(물방울) — 포인터를 부드럽게 따라다님 (backdrop-filter, 아임웹 호환) */
   var canHover = window.matchMedia && window.matchMedia('(hover:hover) and (pointer:fine)').matches;
-  if(!reduce && canHover){
+  if(canHover){
     c.querySelectorAll('.lensfx').forEach(function(sec){
       var lens = document.createElement('span'); lens.className = 'glass-lens';
       sec.appendChild(lens);
@@ -605,26 +608,31 @@
         lens.style.transform = 'translate('+cx.toFixed(1)+'px,'+cy.toFixed(1)+'px)';
         if(active || Math.abs(tx-cx)>0.4 || Math.abs(ty-cy)>0.4){ raf = requestAnimationFrame(loop); } else { raf=null; }
       }
-      sec.addEventListener('pointerenter', function(e){ var r=sec.getBoundingClientRect(); cx=tx=e.clientX-r.left; cy=ty=e.clientY-r.top; active=true; sec.classList.add('hot'); if(!raf) loop(); });
-      sec.addEventListener('pointermove', function(e){ var r=sec.getBoundingClientRect(); tx=e.clientX-r.left; ty=e.clientY-r.top; if(!raf) loop(); });
+      function show(e){
+        var r = sec.getBoundingClientRect();
+        tx = e.clientX - r.left; ty = e.clientY - r.top;
+        if(!active){ cx = tx; cy = ty; }              /* 첫 진입 시 순간이동 방지 */
+        active = true; sec.classList.add('hot');
+        if(!raf) loop();
+      }
+      sec.addEventListener('pointerenter', show);
+      sec.addEventListener('pointermove', show);
       sec.addEventListener('pointerleave', function(){ active=false; sec.classList.remove('hot'); });
     });
   }
 
-  /* 시술정보 배경영상 — 섹션이 화면에 보일 때만 재생/정지 (성능 최적화) */
-  if(!reduce){
-    c.querySelectorAll('.facts').forEach(function(sec){
-      var vids = sec.querySelectorAll('.fxv');
-      var vio = new IntersectionObserver(function(es){
-        es.forEach(function(e){
-          for(var i=0;i<vids.length;i++){
-            if(e.isIntersecting){ var p = vids[i].play(); if(p && p.catch){ p.catch(function(){}); } }
-            else { vids[i].pause(); }
-          }
-        });
-      }, {threshold:0.15});
-      vio.observe(sec);
-    });
-  }
+  /* 시술정보 배경영상 — autoplay로 항상 재생, 화면 밖이면 일시정지(성능) */
+  c.querySelectorAll('.facts').forEach(function(sec){
+    var vids = sec.querySelectorAll('.fxv');
+    var vio = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        for(var i=0;i<vids.length;i++){
+          if(e.isIntersecting){ var p = vids[i].play(); if(p && p.catch){ p.catch(function(){}); } }
+          else { vids[i].pause(); }
+        }
+      });
+    }, {threshold:0.05});
+    vio.observe(sec);
+  });
 })();
 </script>
