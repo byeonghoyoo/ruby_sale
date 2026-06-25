@@ -239,11 +239,11 @@
   <!-- ① 히어로 -->
   <section class="hero" data-px="0.16">
     <div class="hero-bg">
-      <!-- 배경 영상: 자동재생/무음/반복. poster = 로딩 전·영상 미재생 시 표시 이미지.
-           ⚠️ 아래 src는 임시(드라이브 426MB) — 반드시 최적화(720p·무음·H.264·<10MB·+faststart) 후 R2 URL로 교체하세요. -->
-      <video autoplay muted loop playsinline preload="metadata"
+      <!-- 배경 영상: 브랜드 영상(173MB)을 720p·무음·5.3MB로 압축 → CDN(jsDelivr) 호스팅, 자동재생.
+           최종은 R2로 옮긴 뒤 아래 src만 R2 URL로 교체 권장. -->
+      <video autoplay muted loop playsinline preload="auto"
         poster="https://drive.google.com/thumbnail?id=1F2wVmD58mwzYGX1aI1TeiZKf5xN4FAcv&sz=w1920">
-        <source src="https://drive.usercontent.google.com/download?id=1my527hkAl-zuEXbcG-F_9hUDOj2EgO84&export=download&confirm=t" type="video/mp4">
+        <source src="https://cdn.jsdelivr.net/gh/byeonghoyoo/ruby_sale@f762285c825843cc9c33f2d82590349d099340a0/assets/skinvive-hero.mp4" type="video/mp4">
       </video>
     </div>
     <div class="hero-ov"></div>
