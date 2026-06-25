@@ -141,6 +141,7 @@
 .skv .band{position:relative;display:flex;align-items:center;gap:14px;padding:0 24px;overflow:hidden;}
 .skv .band .bg{position:absolute;inset:0;z-index:0;}
 .skv .band .bg img{width:100%;height:100%;object-fit:cover;}
+.skv .band.b1 .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(239,247,248,.94),rgba(239,247,248,.5) 52%,rgba(239,247,248,.12));}
 .skv .band .bl{position:relative;z-index:1;flex:1;}
 .skv .band .bl .n{font-size:14px;font-weight:800;}
 .skv .band .bl .e{font-size:10.5px;font-weight:700;letter-spacing:.08em;opacity:.72;}
@@ -315,7 +316,7 @@
       <div class="diag-col">
         <div class="diag reveal-media">
           <!-- 각 밴드 배경 이미지는 선택. 넣을 경우 .bg 안 <img src="R2..."> 추가 -->
-          <div class="band b1"><div class="bl"><div class="n">표피 — 보호 각질 장벽층</div><div class="e">EPIDERMIS · PROTECTIVE BARRIER</div></div></div>
+          <div class="band b1"><div class="bg"><img src="https://drive.google.com/thumbnail?id=1cmUIBapOaMdyhg8jyB_S3QnVBhFVXH9c&sz=w1600" alt="피부표면"></div><div class="bl"><div class="n">표피 — 보호 각질 장벽층</div><div class="e">EPIDERMIS · PROTECTIVE BARRIER</div></div></div>
           <div class="band b2"><div class="bl"><div class="n">진피 — HA 주입층 · 콜라겐·엘라스틴 기질</div><div class="e">DERMIS · INJECTION ZONE & COLLAGEN MATRIX</div></div><div class="drops"><i></i><i></i><i></i><i></i></div></div>
           <div class="band b4"><div class="bl"><div class="n">피하지방 — 지방세포 지지 기반층</div><div class="e">SUBCUTANEOUS FAT · ADIPOSE TISSUE</div></div></div>
         </div>
