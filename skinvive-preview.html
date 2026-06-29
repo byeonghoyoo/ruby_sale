@@ -1,0 +1,624 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SKINVIVE 미리보기</title></head><body style="margin:0">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+<style>
+/* ===================== SKINVIVE v1 (scoped .skv) ===================== */
+.skv{
+  --ink:#0e2a30; --gray:#4c5a5e; --faint:#8aa0a3;
+  --teal:#0aa2b5; --teal-d:#077e8c; --teal-dd:#06616d; --aqua:#5fd3de; --aqua-2:#7fe0e8;
+  --mist:#eef8f9; --soft:#f3fbfc; --line:#e3f0f2; --warm:#f4ede2; --white:#fff;
+  --r:22px; --ease:cubic-bezier(.16,.84,.3,1); --spring:cubic-bezier(.34,1.45,.55,1);
+  --grad:linear-gradient(135deg,#0e8a99 0%,#0aa2b5 55%,#3cc6d4 100%);
+  --grad-dark:linear-gradient(150deg,#062a30 0%,#0a5560 58%,#0e8a99 100%);
+  --shadow:0 14px 34px rgba(10,90,100,.13);
+  font-family:'Pretendard','Noto Sans KR',-apple-system,BlinkMacSystemFont,sans-serif;
+  color:var(--ink); line-height:1.75; letter-spacing:-0.012em; -webkit-font-smoothing:antialiased;
+  max-width:1180px; margin:0 auto; padding:0 22px; box-sizing:border-box; overflow-x:clip;
+}
+.skv *{box-sizing:border-box;}
+.skv img{max-width:100%;display:block;}
+
+/* 공통 */
+.skv .sec{padding:104px 0;}
+.skv .soft{background:var(--mist);border-radius:var(--r);padding:88px 56px;margin:10px 0;}
+.skv .dark{background:var(--grad-dark);color:#fff;border-radius:var(--r);padding:92px 56px;margin:10px 0;}
+.skv .dark .h2{color:#fff;} .skv .dark .lead{color:rgba(255,255,255,.74);}
+.skv .idx{font-size:12.5px;font-weight:800;letter-spacing:.26em;color:var(--teal);margin:0 0 15px;}
+.skv .dark .idx{color:var(--aqua-2);}
+.skv .h2{font-size:38px;font-weight:800;line-height:1.26;margin:0 0 16px;letter-spacing:-0.025em;}
+.skv .h2 .thin{font-weight:300;color:var(--gray);}
+.skv .lead{font-size:17px;color:var(--gray);margin:0;max-width:680px;line-height:1.9;}
+.skv .center{text-align:center;}
+.skv .center .lead{margin-left:auto;margin-right:auto;}
+.skv .card{background:linear-gradient(180deg,#fff,#f6fcfd);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);}
+
+/* 이미지 박스 */
+.skv .img{position:relative;width:100%;aspect-ratio:4/3;background:linear-gradient(135deg,#dff1f3,#eef8f9);
+  border-radius:var(--r);overflow:hidden;}
+.skv .img img{position:absolute;left:0;top:-4%;width:100%;height:108%;object-fit:cover;z-index:1;
+  transform:translateY(var(--py,0));will-change:transform;}
+.skv .img .ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:20px;color:#5e8a90;z-index:0;}
+.skv .img .ph b{font-size:11px;font-weight:800;letter-spacing:.14em;color:var(--teal-d);margin-bottom:7px;}
+.skv .img .ph span{font-size:13px;color:#5e8a90;line-height:1.6;}
+.skv .img img[src=""],.skv .img img:not([src]){opacity:0;}
+.skv .img::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0;transition:opacity .45s;
+  background:linear-gradient(180deg,rgba(10,162,181,.05),rgba(6,42,48,.22));}
+.skv .img:hover::after{opacity:1;}
+/* 이미지 전체보기(박스에 맞춰 뒤로 빼기) — 클로즈업 방지 */
+.skv .img.fit{background:linear-gradient(135deg,#dff1f3,#eef8f9);}
+.skv .img.fit img{position:absolute;inset:0;width:100%;height:100%;top:0;object-fit:contain;transform:none;}
+
+/* ① 히어로 */
+.skv .hero{position:relative;border-radius:var(--r);overflow:hidden;color:#fff;min-height:640px;
+  display:flex;align-items:center;text-align:center;background:var(--grad);margin-top:18px;padding:48px 28px;}
+.skv .hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden;transform-origin:center;
+  animation:skv-kenburns 16s ease-in-out infinite alternate;}
+@keyframes skv-kenburns{from{transform:scale(1);}to{transform:scale(1.1);}}
+.skv .hero-bg img,.skv .hero-bg video{position:absolute;left:0;top:-10%;width:100%;height:120%;object-fit:cover;
+  transform:translateY(var(--py,0));will-change:transform;}
+.skv .hero-ov{position:absolute;inset:0;z-index:1;
+  background:radial-gradient(120% 120% at 50% 28%,rgba(6,60,70,.45),rgba(4,26,32,.86));}
+.skv .hero-in{position:relative;z-index:2;width:100%;}
+.skv .pill{display:inline-block;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);
+  backdrop-filter:blur(6px);font-size:12px;font-weight:700;letter-spacing:.07em;padding:9px 20px;border-radius:999px;margin-bottom:24px;
+  position:relative;overflow:hidden;}
+.skv .pill::after{content:"";position:absolute;top:0;left:-70%;width:45%;height:100%;transform:skewX(-20deg);
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.55),transparent);animation:skv-shine 3.6s ease-in-out infinite;}
+@keyframes skv-shine{0%{left:-70%;}55%,100%{left:140%;}}
+.skv .hero h1{font-size:54px;font-weight:900;line-height:1.14;margin:0 0 14px;letter-spacing:-.035em;text-shadow:0 2px 40px rgba(0,0,0,.4);}
+.skv .hero .brand{font-size:20px;font-weight:800;letter-spacing:.34em;color:var(--aqua-2);margin:0 0 18px;}
+.skv .hero p{font-size:17px;opacity:.95;max-width:600px;margin:0 auto;line-height:1.85;text-shadow:0 1px 18px rgba(0,0,0,.45);}
+.skv .scroll-cue{margin-top:40px;font-size:11px;letter-spacing:.34em;opacity:.75;animation:skv-bounce 2s ease-in-out infinite;}
+.skv .scroll-cue::after{content:"";display:block;width:1px;height:34px;margin:12px auto 0;background:linear-gradient(rgba(255,255,255,.85),transparent);}
+@keyframes skv-bounce{0%,100%{transform:translateY(0);opacity:.7;}50%{transform:translateY(7px);opacity:1;}}
+
+/* ② 인트로 — HA 감소 */
+.skv .bars{display:flex;justify-content:center;align-items:flex-end;gap:28px;margin-top:56px;}
+.skv .bars .col{width:200px;display:flex;flex-direction:column;align-items:center;gap:16px;}
+.skv .bars .track{width:100%;height:240px;background:var(--mist);border-radius:20px;display:flex;align-items:flex-end;overflow:hidden;}
+.skv .bars .fill{width:100%;height:0;border-radius:20px;background:linear-gradient(180deg,#3cc6d4,#077e8c);
+  display:flex;align-items:flex-start;justify-content:center;padding-top:22px;color:#fff;font-weight:800;font-size:23px;
+  transition:height 1.1s var(--ease);}
+.skv .bars .age{font-size:19px;font-weight:700;}
+.skv .bars .en{font-size:12.5px;font-weight:700;letter-spacing:.06em;color:var(--teal);}
+.skv .micro-note{font-size:12px;color:#9bafb2;text-align:center;margin-top:20px;}
+/* 글래스 렌즈 호버(물방울) — 포인터 추적, backdrop-filter 굴절 흉내 (아임웹 호환) */
+.skv .lensfx{position:relative;}
+.skv .glass-lens{position:absolute;left:0;top:0;width:190px;height:190px;margin:-95px 0 0 -95px;border-radius:50%;
+  pointer-events:none;z-index:6;opacity:0;will-change:transform;
+  -webkit-backdrop-filter:blur(1.4px) saturate(1.55) brightness(1.03) contrast(1.05);
+  backdrop-filter:blur(1.4px) saturate(1.55) brightness(1.03) contrast(1.05);
+  background:radial-gradient(circle at 35% 28%,rgba(255,255,255,.3),rgba(255,255,255,.04) 46%,rgba(255,255,255,0) 66%);
+  border:1.5px solid rgba(255,255,255,.7);
+  box-shadow:
+    inset 9px 13px 32px rgba(255,255,255,.5),
+    inset -11px -15px 36px rgba(10,90,100,.2),
+    inset 0 0 0 1px rgba(255,255,255,.3),
+    0 24px 52px rgba(10,90,100,.32);
+  transition:opacity .4s var(--ease),width .35s var(--spring),height .35s var(--spring);}
+/* 색수차(가장자리 무지개 굴절) */
+.skv .glass-lens::after{content:"";position:absolute;inset:-1px;border-radius:50%;pointer-events:none;
+  box-shadow:inset 3px 0 9px rgba(255,40,90,.28),inset -3px 0 9px rgba(0,170,255,.28),inset 0 3px 9px rgba(120,255,180,.16);}
+/* 정반사 하이라이트(유리 윗면 광택) */
+.skv .glass-lens::before{content:"";position:absolute;left:20%;top:14%;width:34%;height:26%;border-radius:50%;
+  transform:rotate(-18deg);background:radial-gradient(circle,rgba(255,255,255,.95),rgba(255,255,255,0) 72%);pointer-events:none;}
+.skv .lensfx.hot .glass-lens{opacity:1;width:212px;height:212px;margin:-106px 0 0 -106px;}
+
+/* 좌우 분할 */
+.skv .split{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+.skv .split.rev .s-txt{order:2;} .skv .split.rev .s-img{order:1;}
+.skv .s-img .img{aspect-ratio:4/5;}
+.skv .chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px;}
+.skv .chips .chip{font-size:13px;font-weight:700;color:var(--teal-dd);background:#fff;border:1px solid rgba(10,162,181,.4);
+  padding:9px 15px;border-radius:999px;transition:background .25s,color .25s;}
+.skv .chips .chip:hover{background:var(--teal);color:#fff;border-color:var(--teal);}
+.skv .pname{font-size:32px;font-weight:900;letter-spacing:-0.025em;margin:0 0 10px;}
+.skv .ptag{display:inline-block;font-size:12px;font-weight:800;color:#fff;background:var(--grad);
+  padding:7px 15px;border-radius:999px;margin-bottom:22px;letter-spacing:.01em;}
+
+/* 스펙/추천 카드 리스트 */
+.skv .spec{list-style:none;padding:0;margin:0;}
+.skv .spec li{display:flex;justify-content:space-between;gap:18px;padding:15px 0;border-bottom:1px solid var(--line);font-size:15px;}
+.skv .spec li:last-child{border-bottom:none;}
+.skv .spec li b{font-weight:700;} .skv .spec li span{color:var(--gray);text-align:right;}
+.skv .reco{list-style:none;padding:0;margin:0;}
+.skv .reco li{display:flex;gap:13px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);font-size:15.5px;font-weight:600;transition:transform .22s,color .22s;}
+.skv .reco li:last-child{border-bottom:none;}
+.skv .reco li:hover{transform:translateX(7px);color:var(--teal-dd);}
+.skv .reco li::before{content:"";flex:0 0 auto;width:8px;height:8px;border-radius:50%;background:var(--teal);}
+
+/* ④ 4대 강점 (다크) */
+.skv .grid4{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:34px;}
+.skv .st{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:18px;padding:28px;
+  transition:transform .42s var(--spring),background .32s,box-shadow .32s;}
+.skv .st:hover{transform:translateY(-6px);background:rgba(255,255,255,.13);box-shadow:0 18px 40px rgba(0,0,0,.28);}
+.skv .st .no{font-size:11px;font-weight:800;letter-spacing:.16em;color:var(--aqua-2);margin-bottom:10px;}
+.skv .st h3{font-size:22px;font-weight:900;margin:0 0 9px;letter-spacing:-0.02em;color:#fff;}
+.skv .st p{margin:0;font-size:14.5px;color:rgba(255,255,255,.8);line-height:1.78;}
+
+/* ⑤ 스킨바이브 효과 — 게이지 모션 + 제품 누끼컷 */
+.skv .fx{position:relative;background:linear-gradient(135deg,#7fd4dd,#56c6d2);border-radius:var(--r);
+  padding:72px 64px 60px;overflow:hidden;}
+.skv .fx-head{position:relative;z-index:2;max-width:62%;}
+.skv .fx-title{font-size:46px;font-weight:900;color:#fff;letter-spacing:-0.035em;margin:0;text-shadow:0 2px 22px rgba(0,60,70,.18);}
+.skv .fx-div{display:block;width:34px;height:2px;background:rgba(255,255,255,.9);margin:22px 0 15px;border-radius:2px;}
+.skv .fx-sub{font-size:17px;color:rgba(255,255,255,.94);margin:0;font-weight:600;}
+/* 제품 누끼컷 */
+.skv .fx-cut{position:absolute;top:-4px;right:54px;width:270px;height:auto;z-index:3;
+  filter:drop-shadow(0 22px 42px rgba(0,50,60,.3));pointer-events:none;
+  animation:fxBob 5.5s ease-in-out infinite;}
+@keyframes fxBob{0%,100%{transform:translateY(0);}50%{transform:translateY(-9px);}}
+/* 게이지 카드 */
+.skv .fx-card{position:relative;z-index:2;background:#fff;border-radius:24px;
+  box-shadow:0 26px 60px rgba(0,60,70,.18);padding:46px 54px;margin-top:46px;}
+.skv .g{margin:0 0 32px;}
+.skv .g:last-child{margin-bottom:0;}
+.skv .g-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:13px;}
+.skv .g-name{font-size:18px;font-weight:800;color:var(--ink);letter-spacing:-0.02em;}
+.skv .g-val{font-size:21px;font-weight:900;color:var(--teal-d);letter-spacing:-0.02em;}
+.skv .g-val i{font-style:normal;font-size:14px;font-weight:800;margin-left:1px;}
+.skv .g-track{position:relative;height:14px;border-radius:999px;background:#e9eef0;}
+.skv .g-fill{position:absolute;left:0;top:0;height:100%;width:0;border-radius:999px;
+  background:linear-gradient(90deg,#3cc6d4,#077e8c);transition:width 1.5s var(--spring);}
+.skv .g-knob{position:absolute;top:50%;left:0;width:26px;height:26px;border-radius:50%;background:#fff;
+  border:1px solid #e3eaec;box-shadow:0 4px 12px rgba(0,60,70,.22);transform:translate(-50%,-50%);
+  transition:left 1.5s var(--spring);}
+.skv .g-scale{display:flex;justify-content:space-between;margin-top:9px;font-size:12.5px;color:var(--faint);}
+.skv.js .gauges .g-fill{width:0;}
+.skv.js .gauges .g-knob{left:0;}
+.skv.js .gauges.in .g-fill{width:var(--v);}
+.skv.js .gauges.in .g-knob{left:var(--v);}
+.skv.js .gauges.in .g:nth-child(2) .g-fill,.skv.js .gauges.in .g:nth-child(2) .g-knob{transition-delay:.14s;}
+.skv.js .gauges.in .g:nth-child(3) .g-fill,.skv.js .gauges.in .g:nth-child(3) .g-knob{transition-delay:.28s;}
+
+/* ⑥ 임상 데이터 (카운트업) */
+.skv .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px;}
+.skv .stat{padding:38px 20px;text-align:center;border-radius:18px;}
+.skv .stat .big{font-size:46px;font-weight:900;letter-spacing:-0.02em;line-height:1;
+  display:inline-flex;align-items:baseline;justify-content:center;color:var(--teal-d);}
+/* 숫자 롤링(오도미터) */
+.skv .stat .big .odo-d{display:inline-block;height:1em;line-height:1;overflow:hidden;}
+.skv .stat .big .odo-d .odo-strip{display:flex;flex-direction:column;will-change:transform;transition:transform 1.6s var(--spring);}
+.skv .stat .big .odo-d .odo-strip span{height:1em;line-height:1;display:flex;align-items:center;justify-content:center;}
+.skv .stat .big .odo-sym{display:inline-block;line-height:1;}
+.skv .stat .accent{width:46px;height:5px;border-radius:999px;background:var(--grad);margin:0 auto 16px;}
+.skv .stat h4{margin:12px 0 6px;font-size:18px;font-weight:800;}
+.skv .stat p{margin:0;font-size:13px;color:var(--gray);line-height:1.6;}
+.skv .ref{font-size:11.5px;color:#9bafb2;text-align:center;margin-top:22px;line-height:1.7;}
+
+/* ⑦ 시술정보 facts */
+.skv .facts{display:grid;grid-template-columns:repeat(3,1fr);margin-top:30px;border-radius:var(--r);overflow:hidden;
+  border:1px solid var(--line);box-shadow:var(--shadow);background:#fff;}
+.skv .facts .f{position:relative;overflow:hidden;min-height:158px;padding:30px 24px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+  border-right:1px solid var(--line);border-bottom:1px solid var(--line);}
+.skv .facts .f:nth-child(3n){border-right:none;}
+.skv .facts .f:nth-last-child(-n+3){border-bottom:none;}
+.skv .facts .f .fxbg{position:absolute;inset:0;z-index:0;overflow:hidden;}
+.skv .facts .f .fxbg video{position:absolute;left:50%;top:50%;min-width:100%;min-height:100%;width:auto;height:auto;
+  transform:translate(-50%,-50%);object-fit:cover;opacity:.92;}
+.skv .facts .f::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(240,250,251,.4));}
+.skv .facts .f .l{position:relative;z-index:2;font-size:14px;font-weight:600;color:var(--gray);margin-bottom:10px;letter-spacing:.02em;
+  text-shadow:0 1px 4px rgba(255,255,255,.95);}
+.skv .facts .f .v{position:relative;z-index:2;font-size:24px;font-weight:900;color:var(--teal-dd);letter-spacing:-0.02em;
+  text-shadow:0 1px 6px rgba(255,255,255,1);}
+
+/* ⑩ 주의사항 */
+.skv .care{display:grid;grid-template-columns:1fr 1fr;gap:6px 40px;}
+.skv .care li{list-style:none;display:flex;gap:12px;align-items:flex-start;font-size:15px;color:#374b4f;padding:13px 0;border-bottom:1px solid var(--line);}
+.skv .care li::before{content:"·";color:var(--teal);font-weight:900;font-size:24px;line-height:1;}
+
+/* ⑫ FAQ */
+.skv .faq details{border-bottom:1px solid var(--line);}
+.skv .faq details:last-child{border-bottom:none;}
+.skv .faq summary{list-style:none;cursor:pointer;position:relative;padding:24px 44px 24px 4px;font-weight:700;font-size:16.5px;transition:color .2s;}
+.skv .faq summary::-webkit-details-marker{display:none;}
+.skv .faq summary:hover{color:var(--teal);}
+.skv .faq summary::after{content:"+";position:absolute;right:6px;top:50%;transform:translateY(-50%);font-size:23px;color:var(--teal);font-weight:300;}
+.skv .faq details[open] summary::after{content:"\2212";}
+.skv .faq .a{padding:0 4px 24px;color:var(--gray);font-size:15px;line-height:1.85;}
+
+/* 푸터 */
+.skv .foot{font-size:11.5px;color:#9bafb2;line-height:1.8;padding:34px 0 56px;border-top:1px solid var(--line);margin-top:30px;}
+.skv .foot p{margin:0 0 7px;}
+
+/* ===== 모션: 스크롤 리빌 (ease-out) ===== */
+.skv.js .reveal{opacity:0;transform:translateY(44px);filter:blur(4px);
+  transition:opacity .9s var(--ease),transform 1.05s var(--spring),filter .9s ease;}
+.skv.js .reveal.in{opacity:1;transform:none;filter:none;}
+.skv.js .reveal.rv-l{transform:translateX(-54px) translateY(14px);}
+.skv.js .reveal.rv-r{transform:translateX(54px) translateY(14px);}
+.skv.js .reveal.rv-l.in,.skv.js .reveal.rv-r.in{transform:none;}
+.skv.js .reveal-media{clip-path:inset(12% 14% 12% 14% round 22px);opacity:0;transform:translateY(30px) scale(.985);
+  transition:clip-path 1.1s var(--ease),opacity .9s ease,transform 1.05s var(--ease);}
+.skv.js .reveal-media.in{clip-path:inset(0 0 0 0 round 22px);opacity:1;transform:none;}
+.skv.js .stag>*{opacity:0;transform:translateY(30px);transition:opacity .7s var(--ease),transform .85s var(--spring);}
+.skv.js .stag.in>*{opacity:1;transform:none;}
+
+@media (prefers-reduced-motion:reduce){
+  /* 연속 모션(켄번스·스크롤큐·shine)만 비활성. 등장·롤링 등 디스크리트 모션은 유지 */
+  .skv .scroll-cue,.skv .pill::after,.skv .hero-bg,.skv .fx-cut{animation:none!important;}
+}
+
+/* 반응형 */
+@media (max-width:900px){
+  .skv .sec{padding:64px 0;} .skv .soft,.skv .dark{padding:52px 22px;}
+  .skv .h2{font-size:28px;} .skv .hero{min-height:540px;} .skv .hero h1{font-size:38px;}
+  .skv .split,.skv .grid4,.skv .stats,.skv .care{grid-template-columns:1fr;gap:26px;}
+  .skv .split.rev .s-txt,.skv .split.rev .s-img{order:initial;}
+  .skv .fx{padding:48px 26px 40px;} .skv .fx-head{max-width:64%;} .skv .fx-title{font-size:32px;}
+  .skv .fx-cut{width:140px;right:14px;top:8px;} .skv .fx-card{padding:34px 26px;margin-top:34px;}
+  .skv .s-img .img{aspect-ratio:4/3;}
+  .skv .facts{grid-template-columns:repeat(2,1fr);}
+  .skv .facts .f:nth-child(3n){border-right:1px solid var(--line);}
+  .skv .facts .f:nth-child(2n){border-right:none;}
+  .skv .bars{gap:14px;} .skv .bars .col{width:auto;flex:1 1 0;min-width:0;}
+  .skv .bars .track{height:180px;} .skv .bars .fill{font-size:18px;padding-top:16px;} .skv .bars .age{font-size:16px;}
+}
+</style>
+
+<div class="skv">
+
+  <!-- ① 히어로 -->
+  <section class="hero" data-px="0.16">
+    <div class="hero-bg">
+      <!-- 배경 영상: 브랜드 영상(173MB)을 720p·무음·5.3MB로 압축 → CDN(jsDelivr) 호스팅, 자동재생.
+           최종은 R2로 옮긴 뒤 아래 src만 R2 URL로 교체 권장. -->
+      <video autoplay muted loop playsinline preload="auto"
+        poster="https://drive.google.com/thumbnail?id=1F2wVmD58mwzYGX1aI1TeiZKf5xN4FAcv&sz=w1920">
+        <source src="https://cdn.jsdelivr.net/gh/byeonghoyoo/ruby_sale@f762285c825843cc9c33f2d82590349d099340a0/assets/skinvive-hero.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="hero-ov"></div>
+    <div class="hero-in">
+      <span class="pill">SKINVIVE by JUVÉDERM</span>
+      <h1>피부에 직접 주입하는 히알루론산</h1>
+      <p class="brand">S K I N V I V E</p>
+      <p>이제는 직접 피부 속에 채워 넣으세요. 뺨의 미세주름까지 일시적으로 개선하는 히알루론산.</p>
+      <div class="scroll-cue">SCROLL</div>
+    </div>
+  </section>
+
+  <!-- ② 인트로 — HA 감소 -->
+  <section class="sec center lensfx">
+    <p class="idx reveal">HYALURONIC ACID</p>
+    <h2 class="h2 reveal">나이가 들수록<br><span class="thin">줄어드는 히알루론산</span></h2>
+    <p class="lead reveal">히알루론산은 피부 진피층에 가장 많이 존재하는 구성 요소입니다. 나이와 자외선 노출 등으로 콜라겐과 히알루론산이 점차 감소하면서 미세주름과 피부 거칠기가 나타납니다.</p>
+    <div class="bars stag" data-bars>
+      <div class="col"><div class="track"><div class="fill" data-h="100%">100%</div></div><div class="age">30대</div><div class="en">30s</div></div>
+      <div class="col"><div class="track"><div class="fill" data-h="72%">72%</div></div><div class="age">40대</div><div class="en">40s</div></div>
+      <div class="col"><div class="track"><div class="fill" data-h="40%">40%</div></div><div class="age">50대</div><div class="en">50s</div></div>
+    </div>
+    <p class="micro-note reveal">※ 이미지는 이해를 돕기 위한 것으로 실제 수치와 다를 수 있습니다.</p>
+  </section>
+
+  <!-- ③ 스킨바이브란? -->
+  <section class="sec">
+    <div class="soft">
+      <div class="split">
+        <div class="s-img">
+          <div class="img fit reveal-media">
+            <img src="https://drive.google.com/thumbnail?id=1hr_lXCBseUk7z3qhccqL_wLDydP0p1_a&sz=w1280" alt="스킨바이브 제품 키비주얼">
+          </div>
+        </div>
+        <div class="s-txt">
+          <p class="idx reveal rv-r">WHAT IS SKINVIVE</p>
+          <h2 class="h2 reveal rv-r">스킨바이브란?</h2>
+          <p class="lead reveal rv-r">진피층에 직접 주입하여 성인 안면부 뺨의 미세주름과 피부 거칠기를 일시적으로 개선하는 히알루론산 제제입니다. 리도카인이 포함된 지속형 히알루론산겔이 피부 속을 물리적으로 채워, 매끄럽고 촉촉한 피부결을 만듭니다.</p>
+          <div class="chips stag">
+            <span class="chip">진피층 직접 주입</span>
+            <span class="chip">미세주름·거칠기 개선</span>
+            <span class="chip">지속형 히알루론산 + 리도카인 포함</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ④ 4대 강점 -->
+  <section class="sec">
+    <div class="dark center">
+      <p class="idx reveal">WHY SKINVIVE</p>
+      <h2 class="h2 reveal">스킨바이브를 선택하는 이유</h2>
+      <p class="lead reveal">하나의 시술로 효과·지속력·편안함을 모두. 임상으로 확인된 네 가지 강점.</p>
+      <div class="grid4 stag" style="text-align:left;">
+        <div class="st"><div class="no">POINT 01</div><h3>6개월 지속</h3><p>1회 시술로 효과를 6개월간 유지 (Long-lasting). 반복 시술 시 만족도가 더해집니다.</p></div>
+        <div class="st"><div class="no">POINT 02</div><h3>FDA 승인 HA 제제</h3><p>미세주름·피부 거칠기 개선으로 FDA 승인을 받은 히알루론산 필러.</p></div>
+        <div class="st"><div class="no">POINT 03</div><h3>적은 통증</h3><p>리도카인이 포함되어 시술 중 느껴지는 통증이 적고, 편안하게 시술받으실 수 있습니다.</p></div>
+        <div class="st"><div class="no">POINT 04</div><h3>다운타임 최소</h3><p>퇴근 후 시술해도 다음날 일상생활 OK. 바쁜 일정에도 부담 없이.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑤ 스킨바이브 효과 — 게이지 모션 + 제품 누끼컷 -->
+  <section class="sec">
+    <div class="fx reveal-media">
+      <div class="fx-head">
+        <h2 class="fx-title">스킨바이브 효과</h2>
+        <span class="fx-div"></span>
+        <p class="fx-sub">내 얼굴의 모든 순간을 아름답게</p>
+      </div>
+      <img class="fx-cut" src="https://drive.google.com/thumbnail?id=1IPgr3e5xLuao8Xmf-8DR_0s6biiToe6m&sz=w1280" alt="스킨바이브 제품">
+      <div class="fx-card gauges">
+        <div class="g">
+          <div class="g-top"><span class="g-name">주름 개선</span><span class="g-val">88<i>%</i></span></div>
+          <div class="g-track" style="--v:88%;"><span class="g-fill"></span><span class="g-knob"></span></div>
+          <div class="g-scale"><span>0</span><span>50</span><span>100</span></div>
+        </div>
+        <div class="g">
+          <div class="g-top"><span class="g-name">콜라겐 생성</span><span class="g-val">80<i>%</i></span></div>
+          <div class="g-track" style="--v:80%;"><span class="g-fill"></span><span class="g-knob"></span></div>
+          <div class="g-scale"><span>0</span><span>50</span><span>100</span></div>
+        </div>
+        <div class="g">
+          <div class="g-top"><span class="g-name">수분도 증가</span><span class="g-val">84<i>%</i></span></div>
+          <div class="g-track" style="--v:84%;"><span class="g-fill"></span><span class="g-knob"></span></div>
+          <div class="g-scale"><span>0</span><span>50</span><span>100</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="micro-note reveal" style="text-align:center;">※ 이미지는 이해를 돕기 위한 것으로 실제 수치와 다를 수 있습니다.</p>
+  </section>
+
+  <!-- ⑥ 임상 데이터 -->
+  <section class="sec">
+    <div class="soft center">
+      <p class="idx reveal">CLINICAL DATA</p>
+      <h2 class="h2 reveal">임상으로 확인된 결과</h2>
+      <p class="lead reveal">성인 131명 대상 전향적 임상연구에서 확인된 스킨바이브의 유효성.</p>
+      <div class="stats stag">
+        <div class="stat card"><div class="accent"></div><div class="big" data-count="96.2" data-dec="1" data-suffix="%">0%</div><h4>ASRS 반응률</h4><p>피부 거칠기 척도(ASRS) 1점 이상 개선<br>(시술 1개월 후)</p></div>
+        <div class="stat card"><div class="accent"></div><div class="big" data-count="89.4" data-dec="1" data-suffix="%">0%</div><h4>AFLS 반응률</h4><p>잔주름 척도(AFLS) 1점 이상 개선<br>(시술 1개월 후)</p></div>
+        <div class="stat card"><div class="accent"></div><div class="big" data-count="6" data-dec="0" data-suffix="개월">0개월</div><h4>효과 지속</h4><p>1회 시술로 효과를<br>6개월간 유지 (Long-lasting)</p></div>
+      </div>
+      <p class="ref reveal">개인에 따라 결과가 다를 수 있습니다.</p>
+    </div>
+  </section>
+
+  <!-- ⑦ 제품 스펙 -->
+  <section class="sec">
+    <div class="split">
+      <div class="s-img">
+        <div class="img reveal-media" data-px="0.12">
+          <img src="https://drive.google.com/thumbnail?id=1CCO3T9hVflOlRF0fahaMjTVIUzQq5iCE&sz=w1280" alt="스킨바이브 패키지">
+          <span class="ph"><b>IMAGE</b><span>스킨바이브_패키지</span></span>
+        </div>
+      </div>
+      <div class="s-txt">
+        <p class="idx reveal rv-r">PRODUCT</p>
+        <p class="pname reveal rv-r">스킨바이브™</p>
+        <span class="ptag reveal rv-r">by JUVÉDERM® · 히알루론산 제제</span>
+        <div class="card reveal rv-r" style="padding:8px 26px;">
+          <ul class="spec">
+            <li><b>적용 부위</b><span>뺨 미세주름 · 피부 거칠기</span></li>
+            <li><b>유지 기간</b><span>약 6개월 (1회 시술)</span></li>
+            <li><b>사용목적</b><span>뺨의 미세주름 일시적 개선</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑧ 시술 정보 -->
+  <section class="sec center">
+    <p class="idx reveal">AT A GLANCE</p>
+    <h2 class="h2 reveal">시술 정보 한눈에</h2>
+    <div class="facts stag">
+      <div class="f"><span class="fxbg"><video class="fxv" autoplay muted loop playsinline preload="auto"><source src="https://cdn.jsdelivr.net/gh/byeonghoyoo/ruby_sale@672c34e8ecb3c81c0b1e80b966f05950b8bc7815/assets/skinvive-fx1.mp4" type="video/mp4"></video></span><div class="l">시술 시간</div><div class="v">약 10~20분</div></div>
+      <div class="f"><span class="fxbg"><video class="fxv" autoplay muted loop playsinline preload="auto"><source src="https://cdn.jsdelivr.net/gh/byeonghoyoo/ruby_sale@672c34e8ecb3c81c0b1e80b966f05950b8bc7815/assets/skinvive-fx2.mp4" type="video/mp4"></video></span><div class="l">주입 부위</div><div class="v">진피층</div></div>
+      <div class="f"><span class="fxbg"><video class="fxv" autoplay muted loop playsinline preload="auto"><source src="https://cdn.jsdelivr.net/gh/byeonghoyoo/ruby_sale@672c34e8ecb3c81c0b1e80b966f05950b8bc7815/assets/skinvive-fx3.mp4" type="video/mp4"></video></span><div class="l">마취</div><div class="v">리도카인 포함</div></div>
+      <div class="f"><span class="fxbg"><video class="fxv" autoplay muted loop playsinline preload="auto"><source src="https://cdn.jsdelivr.net/gh/byeonghoyoo/ruby_sale@672c34e8ecb3c81c0b1e80b966f05950b8bc7815/assets/skinvive-fx4.mp4" type="video/mp4"></video></span><div class="l">유지 기간</div><div class="v">약 6개월</div></div>
+      <div class="f"><span class="fxbg"><video class="fxv" autoplay muted loop playsinline preload="auto"><source src="https://cdn.jsdelivr.net/gh/byeonghoyoo/ruby_sale@672c34e8ecb3c81c0b1e80b966f05950b8bc7815/assets/skinvive-fx5.mp4" type="video/mp4"></video></span><div class="l">다운타임</div><div class="v">최소 · 당일 일상</div></div>
+      <div class="f"><span class="fxbg"><video class="fxv" autoplay muted loop playsinline preload="auto"><source src="https://cdn.jsdelivr.net/gh/byeonghoyoo/ruby_sale@672c34e8ecb3c81c0b1e80b966f05950b8bc7815/assets/skinvive-fx6.mp4" type="video/mp4"></video></span><div class="l">적용 부위</div><div class="v">뺨 미세주름·거칠기</div></div>
+    </div>
+    <p class="micro-note reveal" style="margin-top:18px;">※ 시술 시간·용량·부위는 피부 상태에 따라 의료진 판단으로 조절될 수 있습니다.</p>
+  </section>
+
+  <!-- ⑨ 임상 비포애프터 -->
+  <section class="sec center">
+    <p class="idx reveal">BEFORE / AFTER</p>
+    <h2 class="h2 reveal">시술 전후 비교</h2>
+    <div class="split" style="margin-top:34px;">
+      <div class="s-img">
+        <div class="img fit reveal-media" style="aspect-ratio:425/317;">
+          <img src="https://drive.google.com/thumbnail?id=1uZVBm1droBN3MFcqPezt3cvv2x_Wy_Q2&sz=w1280" alt="스킨바이브 시술 전후 비교 1">
+        </div>
+      </div>
+      <div class="s-img">
+        <div class="img fit reveal-media" style="aspect-ratio:425/317;">
+          <img src="https://drive.google.com/thumbnail?id=12fPZSE7B2ncdgfxipWEJyYG8KFkk6QBi&sz=w1280" alt="스킨바이브 시술 전후 비교 2">
+        </div>
+      </div>
+    </div>
+    <p class="ref reveal">※ 개인에 따라 결과가 다를 수 있습니다 · 시술 결과 케이스를 참고한 AI 생성 이미지입니다.</p>
+  </section>
+
+  <!-- ⑩ 추천 -->
+  <section class="sec">
+    <div class="split">
+      <div class="s-txt">
+        <p class="idx reveal rv-l">RECOMMEND</p>
+        <h2 class="h2 reveal rv-l">이런 분께<br><span class="thin">추천합니다</span></h2>
+        <div class="card reveal rv-l" style="padding:6px 26px;margin-top:8px;">
+          <ul class="reco stag">
+            <li>뺨의 미세주름·피부 거칠기가 신경 쓰이는 분</li>
+            <li>속부터 채우는 자연스러운 물광·피부결을 원하는 분</li>
+            <li>결과가 6개월간 오래 유지되길 원하는 분</li>
+            <li>통증·다운타임에 민감해 부담 없는 시술을 찾는 분</li>
+            <li>중요한 일정 전 빠르게 피부 컨디션을 올리고 싶은 분</li>
+          </ul>
+        </div>
+      </div>
+      <div class="s-img">
+        <div class="img fit reveal-media">
+          <img src="https://drive.google.com/thumbnail?id=1McFvUyFmzwarATXxLzrQ40Oq7atv2o1w&sz=w1600" alt="스킨바이브 모델컷">
+          <span class="ph"><b>IMAGE</b><span>스킨바이브 키비주얼_모델컷</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑪ 주의사항 -->
+  <section class="sec">
+    <p class="idx reveal">AFTERCARE</p>
+    <h2 class="h2 reveal">시술 후 주의사항</h2>
+    <p class="lead reveal">다운타임이 적은 시술이지만, 아래 사항을 지키면 회복과 효과 유지에 도움이 됩니다.</p>
+    <div class="card reveal" style="padding:20px 32px;margin-top:24px;">
+      <ul class="care stag">
+        <li>시술 후 1주일간 음주·사우나·격한 운동을 피해주세요.</li>
+        <li>시술 부위를 강하게 문지르거나 압박하지 마세요.</li>
+        <li>시술 당일 메이크업·세안 시 자극을 최소화해주세요.</li>
+        <li>충분한 수분 섭취와 보습으로 컨디션을 유지해주세요.</li>
+        <li>자외선 차단제를 사용하고 강한 햇빛을 피해주세요.</li>
+        <li>붓기·홍반이 있을 수 있으나 대부분 수일 내 가라앉습니다.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ⑫ FAQ -->
+  <section class="sec">
+    <p class="idx reveal">FAQ</p>
+    <h2 class="h2 reveal">자주 묻는 질문</h2>
+    <div class="card faq stag" style="padding:8px 28px;margin-top:24px;">
+      <details open><summary>스킨바이브는 어떤 시술인가요?</summary><div class="a">진피층에 직접 주입하여 성인 뺨의 미세주름과 피부 거칠기를 일시적으로 개선하는, FDA 승인의 히알루론산 제제입니다.</div></details>
+      <details><summary>효과는 얼마나 지속되나요?</summary><div class="a">1회 시술로 약 6개월간 유지되며, 반복 시술 시 만족도가 더해집니다.</div></details>
+      <details><summary>많이 아픈가요?</summary><div class="a">통증은 적은 편으로, 대부분 편안하게 시술받으실 수 있습니다. 통증에 민감하신 경우 시술 전 의료진과 상담해 주세요.</div></details>
+      <details><summary>다운타임이 있나요?</summary><div class="a">다운타임이 최소화되어 퇴근 후 시술해도 다음날 일상생활이 가능합니다. 붓기·홍반이 있을 수 있으나 대부분 수일 내 가라앉습니다.</div></details>
+      <details><summary>어느 부위에 시술하나요?</summary><div class="a">성인 안면부 뺨(cheek)의 미세주름·피부 거칠기 개선을 목적으로 합니다.</div></details>
+    </div>
+  </section>
+
+
+</div>
+
+<script>
+/* SKINVIVE v1 — 패럴랙스 / 스크롤리빌 / 카운트업 / HA막대 (IIFE 격리) */
+(function(){
+  var cs = document.querySelectorAll('.skv');
+  var c = cs[cs.length - 1];
+  if(!c) return;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* 스크롤 패럴랙스 + 보간(lerp) — 목표값으로 매 프레임 부드럽게 수렴 */
+  var items = [];
+  c.querySelectorAll('[data-px]').forEach(function(box){
+    var img = box.classList.contains('hero') ? (box.querySelector('.hero-bg video') || box.querySelector('.hero-bg img')) : box.querySelector('img');
+    if(img) items.push({ box:box, img:img, cur:0, tgt:0 });
+  });
+  function computeTargets(){
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    items.forEach(function(it){
+      var r = it.box.getBoundingClientRect();
+      if(r.bottom < -160 || r.top > vh + 160) return;
+      var depth = parseFloat(it.box.getAttribute('data-px')) || 0.12;
+      var prog = (r.top + r.height/2) / vh;            /* 0(상단)~1(하단) */
+      it.tgt = (0.5 - prog) * depth * 100;             /* % */
+    });
+  }
+  function raf(){
+    items.forEach(function(it){
+      it.cur += (it.tgt - it.cur) * 0.10;              /* 보간: 현재→목표 10%씩 */
+      it.img.style.setProperty('--py', it.cur.toFixed(3) + '%');
+    });
+    requestAnimationFrame(raf);
+  }
+  if(!reduce && items.length){
+    computeTargets(); raf();
+    window.addEventListener('scroll', computeTargets, {passive:true});
+    window.addEventListener('resize', computeTargets);
+  }
+
+  if(!('IntersectionObserver' in window)) return;
+  c.classList.add('js');
+
+  /* 숫자 롤링(오도미터) — 0에서 각 자릿수가 굴러 올라가 안착 (Lottie/JSON 불필요) */
+  function rollNumber(el){
+    var target = parseFloat(el.getAttribute('data-count'));
+    var dec = parseInt(el.getAttribute('data-dec')||'0',10);
+    var suf = el.getAttribute('data-suffix')||'';
+    var str = target.toFixed(dec);
+    el.textContent = '';
+    var di = 0;
+    for(var i=0;i<str.length;i++){
+      var ch = str.charAt(i);
+      if(ch >= '0' && ch <= '9'){
+        var d = parseInt(ch,10);
+        var win = document.createElement('span'); win.className = 'odo-d';
+        var strip = document.createElement('span'); strip.className = 'odo-strip';
+        for(var k=0;k<20;k++){ var s = document.createElement('span'); s.textContent = (k%10); strip.appendChild(s); }
+        win.appendChild(strip); el.appendChild(win);
+        strip.style.transform = 'translateY(0)';
+        strip.style.transitionDelay = (di*0.10).toFixed(2)+'s';
+        (function(st,dig){ requestAnimationFrame(function(){ requestAnimationFrame(function(){
+          st.style.transform = 'translateY(-'+(10+dig)+'em)'; }); }); })(strip,d);
+        di++;
+      } else {
+        var sym = document.createElement('span'); sym.className = 'odo-sym'; sym.textContent = ch; el.appendChild(sym);
+      }
+    }
+    if(suf){ var sf = document.createElement('span'); sf.className = 'odo-sym'; sf.textContent = suf; el.appendChild(sf); }
+  }
+
+  /* 리빌 관찰 */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(!en.isIntersecting) return;
+      var t = en.target;
+      t.classList.add('in');
+      if(t.hasAttribute('data-bars')){
+        t.querySelectorAll('.fill').forEach(function(f){ f.style.height = f.getAttribute('data-h'); });
+      }
+      t.querySelectorAll && t.querySelectorAll('[data-count]').forEach(function(n){ rollNumber(n); });
+      io.unobserve(t);
+    });
+  }, {threshold:0.18, rootMargin:'0px 0px -8% 0px'});
+
+  c.querySelectorAll('.reveal, .reveal-media, .stag, .gauges, [data-bars]').forEach(function(el){ io.observe(el); });
+  /* 스태거 자식 지연 */
+  c.querySelectorAll('.stag').forEach(function(g){
+    Array.prototype.forEach.call(g.children, function(ch,i){ ch.style.transitionDelay = (i*0.09).toFixed(2)+'s'; });
+  });
+
+  /* 글래스 렌즈(물방울) — 포인터를 부드럽게 따라다님 (backdrop-filter, 아임웹 호환) */
+  var canHover = window.matchMedia && window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+  if(canHover){
+    c.querySelectorAll('.lensfx').forEach(function(sec){
+      var lens = document.createElement('span'); lens.className = 'glass-lens';
+      sec.appendChild(lens);
+      var tx=0,ty=0,cx=0,cy=0,active=false,raf=null;
+      function loop(){
+        cx += (tx-cx)*0.16; cy += (ty-cy)*0.16;          /* 보간(damping) */
+        lens.style.transform = 'translate('+cx.toFixed(1)+'px,'+cy.toFixed(1)+'px)';
+        if(active || Math.abs(tx-cx)>0.4 || Math.abs(ty-cy)>0.4){ raf = requestAnimationFrame(loop); } else { raf=null; }
+      }
+      function show(e){
+        var r = sec.getBoundingClientRect();
+        tx = e.clientX - r.left; ty = e.clientY - r.top;
+        if(!active){ cx = tx; cy = ty; }              /* 첫 진입 시 순간이동 방지 */
+        active = true; sec.classList.add('hot');
+        if(!raf) loop();
+      }
+      sec.addEventListener('pointerenter', show);
+      sec.addEventListener('pointermove', show);
+      sec.addEventListener('pointerleave', function(){ active=false; sec.classList.remove('hot'); });
+    });
+  }
+
+  /* 시술정보 배경영상 — autoplay로 항상 재생, 화면 밖이면 일시정지(성능) */
+  c.querySelectorAll('.facts').forEach(function(sec){
+    var vids = sec.querySelectorAll('.fxv');
+    var vio = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        for(var i=0;i<vids.length;i++){
+          if(e.isIntersecting){ var p = vids[i].play(); if(p && p.catch){ p.catch(function(){}); } }
+          else { vids[i].pause(); }
+        }
+      });
+    }, {threshold:0.05});
+    vio.observe(sec);
+  });
+})();
+</script>
+</body></html>
